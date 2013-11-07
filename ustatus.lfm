@@ -1,0 +1,89 @@
+object FormStatus: TFormStatus
+  Left = 395
+  Top = 517
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Wave creation status...'
+  ClientHeight = 97
+  ClientWidth = 348
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  Position = poMainFormCenter
+  PixelsPerInch = 96
+  object labelFrame: TLabel
+    Left = 115
+    Top = 8
+    Width = 225
+    Height = 17
+    AutoSize = False
+    Caption = 'No frame in work'
+  end
+  object stCurrentFrame: TStaticText
+    Left = 8
+    Top = 8
+    Width = 90
+    Height = 17
+    Alignment = taRightJustify
+    AutoSize = False
+    Caption = 'Current frame:'
+    TabOrder = 0
+  end
+  object pgMorph: TProgressBar
+    Left = 115
+    Top = 31
+    Width = 225
+    Height = 16
+    Smooth = True
+    TabOrder = 1
+  end
+  object stMorph: TStaticText
+    Left = 8
+    Top = 31
+    Width = 90
+    Height = 17
+    Alignment = taRightJustify
+    AutoSize = False
+    Caption = 'Morph progress:'
+    TabOrder = 2
+  end
+  object stFrame: TStaticText
+    Left = 8
+    Top = 53
+    Width = 90
+    Height = 17
+    Alignment = taRightJustify
+    AutoSize = False
+    Caption = 'Frame progress:'
+    TabOrder = 3
+  end
+  object pgFrame: TProgressBar
+    Left = 115
+    Top = 53
+    Width = 225
+    Height = 16
+    Smooth = True
+    TabOrder = 4
+  end
+  object pgTotal: TProgressBar
+    Left = 115
+    Top = 75
+    Width = 225
+    Height = 16
+    Smooth = True
+    TabOrder = 5
+  end
+  object stTotal: TStaticText
+    Left = 8
+    Top = 76
+    Width = 90
+    Height = 17
+    Alignment = taRightJustify
+    AutoSize = False
+    Caption = 'Total progress:'
+    TabOrder = 6
+  end
+end

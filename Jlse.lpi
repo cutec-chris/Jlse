@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="Jlse"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+    </General>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="languages"/>
+    </i18n>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <MinorVersionNr Value="1"/>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="11">
+      <Unit0>
+        <Filename Value="Jlse.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Jlse"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="ustatus.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormStatus"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uStatus"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="ucolors.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormColors"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="ucolors"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="udelays.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormDelays"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uDelays"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="uhelplines.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormHelpLines"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uhelplines"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="uimport.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormImport"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uImport"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="umain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uMain"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="upad.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormSketchpad"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uPad"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="upick.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormPickImage"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="upick"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="upreview.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormPreview"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uPreview"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="ulaserframes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uLaserFrames"/>
+      </Unit10>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="lib"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
+      </SyntaxOptions>
+    </Parsing>
+    <Linking>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerMessages>
+        <MsgFileName Value=""/>
+      </CompilerMessages>
+      <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="4">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+      <Item4>
+        <Name Value="ERegistryException"/>
+      </Item4>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

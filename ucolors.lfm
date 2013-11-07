@@ -1,0 +1,435 @@
+object FormColors: TFormColors
+  Left = 592
+  Height = 175
+  Top = 202
+  Width = 454
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Choose colors'
+  ClientHeight = 175
+  ClientWidth = 454
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  HelpFile = 'Heathcliff.hlp'
+  Position = poMainFormCenter
+  LCLVersion = '1.3'
+  object pcColors: TPageControl
+    Left = 0
+    Height = 175
+    Top = 0
+    Width = 351
+    ActivePage = tabOthers
+    Align = alLeft
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    TabIndex = 2
+    TabOrder = 0
+    object tabColors: TTabSheet
+      Caption = 'Frame colors'
+      ClientHeight = 139
+      ClientWidth = 343
+      object groupFrameColors: TGroupBox
+        Left = 0
+        Height = 105
+        Top = 0
+        Width = 343
+        Align = alTop
+        Caption = ' Frame colors '
+        ClientHeight = 89
+        ClientWidth = 339
+        TabOrder = 0
+        object imgBack0: TImage
+          Left = 238
+          Height = 22
+          Top = 18
+          Width = 22
+          OnClick = imgBack0Click
+        end
+        object imgNorm0: TImage
+          Left = 190
+          Height = 22
+          Top = 18
+          Width = 22
+          OnClick = imgNorm0Click
+        end
+        object imgReal0: TImage
+          Left = 214
+          Height = 22
+          Top = 18
+          Width = 22
+          OnClick = imgReal0Click
+        end
+        object imgNorm1: TImage
+          Left = 190
+          Height = 22
+          Top = 42
+          Width = 22
+          OnClick = imgNorm1Click
+        end
+        object imgReal1: TImage
+          Left = 214
+          Height = 22
+          Top = 42
+          Width = 22
+          OnClick = imgReal1Click
+        end
+        object imgBack1: TImage
+          Left = 238
+          Height = 22
+          Top = 42
+          Width = 22
+          OnClick = imgBack1Click
+        end
+        object imgSel1: TImage
+          Left = 262
+          Height = 22
+          Top = 42
+          Width = 22
+          OnClick = imgSel1Click
+        end
+        object imgSel0: TImage
+          Left = 262
+          Height = 22
+          Top = 18
+          Width = 22
+          OnClick = imgSel0Click
+        end
+        object imgLink0: TImage
+          Left = 286
+          Height = 22
+          Top = 18
+          Width = 22
+          OnClick = imgLink0Click
+        end
+        object imgLink1: TImage
+          Left = 286
+          Height = 22
+          Top = 42
+          Width = 22
+          OnClick = imgLink1Click
+        end
+        object stFrameColorLinks: TStaticText
+          Left = 278
+          Height = 18
+          Top = 0
+          Width = 32
+          Alignment = taCenter
+          AutoSize = True
+          Caption = 'Links'
+          TabOrder = 6
+        end
+        object stFrameColorNormal: TStaticText
+          Left = 182
+          Height = 18
+          Top = 0
+          Width = 45
+          Alignment = taCenter
+          AutoSize = True
+          Caption = 'Normal'
+          TabOrder = 4
+        end
+        object stFrameColor0: TStaticText
+          Left = 14
+          Height = 17
+          Top = 22
+          Width = 46
+          Caption = 'Color &0:'
+          FocusControl = editColor0
+          TabOrder = 2
+        end
+        object stFrameColor1: TStaticText
+          Left = 14
+          Height = 17
+          Top = 46
+          Width = 46
+          Caption = 'Color &1:'
+          FocusControl = editColor1
+          TabOrder = 3
+        end
+        object editColor0: TEdit
+          Left = 62
+          Height = 24
+          Top = 18
+          Width = 121
+          TabOrder = 0
+          Text = 'Red'
+        end
+        object editColor1: TEdit
+          Left = 62
+          Height = 24
+          Top = 42
+          Width = 121
+          TabOrder = 1
+          Text = 'Blue'
+        end
+        object stFrameColorRound: TStaticText
+          Left = 206
+          Height = 18
+          Top = 66
+          Width = 40
+          Alignment = taCenter
+          AutoSize = True
+          Caption = 'Round'
+          TabOrder = 5
+        end
+        object stFrameColorBack: TStaticText
+          Left = 230
+          Height = 18
+          Top = 0
+          Width = 31
+          Alignment = taCenter
+          AutoSize = True
+          Caption = 'Back'
+          TabOrder = 7
+        end
+        object stFrameColorName: TStaticText
+          Left = 62
+          Height = 18
+          Top = 0
+          Width = 70
+          AutoSize = True
+          Caption = 'Color name'
+          TabOrder = 8
+        end
+        object stFrameColorSelected: TStaticText
+          Left = 256
+          Height = 18
+          Top = 66
+          Width = 21
+          Alignment = taCenter
+          AutoSize = True
+          Caption = 'Sel'
+          TabOrder = 9
+        end
+      end
+    end
+    object tabTimeline: TTabSheet
+      Caption = 'Timeline colors'
+      ClientHeight = 139
+      ClientWidth = 343
+      ImageIndex = 2
+      object groupTimeline: TGroupBox
+        Left = 0
+        Height = 121
+        Top = 0
+        Width = 343
+        Align = alTop
+        Caption = ' Timeline colors '
+        ClientHeight = 105
+        ClientWidth = 339
+        TabOrder = 0
+        object imgTimelineLines: TImage
+          Left = 6
+          Height = 22
+          Top = 5
+          Width = 22
+          OnClick = imgTimelineLinesClick
+        end
+        object imgTimelineAreas: TImage
+          Left = 6
+          Height = 22
+          Top = 29
+          Width = 22
+          OnClick = imgTimelineAreasClick
+        end
+        object imgTimelineText: TImage
+          Left = 6
+          Height = 22
+          Top = 53
+          Width = 22
+          OnClick = imgTimelineTextClick
+        end
+        object imgTimelineBack: TImage
+          Left = 6
+          Height = 22
+          Top = 77
+          Width = 22
+          OnClick = imgTimelineBackClick
+        end
+        object stTimelineLines: TStaticText
+          Left = 38
+          Height = 18
+          Top = 10
+          Width = 79
+          AutoSize = True
+          Caption = 'Color of lines'
+          TabOrder = 0
+        end
+        object stTimelineAreas: TStaticText
+          Left = 38
+          Height = 18
+          Top = 34
+          Width = 85
+          AutoSize = True
+          Caption = 'Color of areas'
+          TabOrder = 1
+        end
+        object stTimelineText: TStaticText
+          Left = 38
+          Height = 18
+          Top = 58
+          Width = 144
+          AutoSize = True
+          Caption = 'Text && time divider color'
+          TabOrder = 2
+        end
+        object stTimelineBack: TStaticText
+          Left = 38
+          Height = 18
+          Top = 82
+          Width = 103
+          AutoSize = True
+          Caption = 'Background color'
+          TabOrder = 3
+        end
+      end
+    end
+    object tabOthers: TTabSheet
+      Caption = 'Other colors'
+      ClientHeight = 139
+      ClientWidth = 343
+      ImageIndex = 1
+      object groupTextColors: TGroupBox
+        Left = 0
+        Height = 121
+        Top = 0
+        Width = 343
+        Align = alTop
+        Caption = ' Other colors '
+        ClientHeight = 105
+        ClientWidth = 339
+        TabOrder = 0
+        object imgThumbText: TImage
+          Left = 6
+          Height = 22
+          Top = 5
+          Width = 22
+          OnClick = imgThumbTextClick
+        end
+        object imgBackGround: TImage
+          Left = 6
+          Height = 22
+          Top = 29
+          Width = 22
+          OnClick = imgBackGroundClick
+        end
+        object imgHelpLines: TImage
+          Left = 6
+          Height = 22
+          Top = 53
+          Width = 22
+          OnClick = imgHelpLinesClick
+        end
+        object imgRotCenter: TImage
+          Left = 6
+          Height = 22
+          Top = 77
+          Width = 22
+          OnClick = imgRotCenterClick
+        end
+        object stTextColorsThumbText: TStaticText
+          Left = 38
+          Height = 18
+          Top = 10
+          Width = 163
+          AutoSize = True
+          Caption = 'Textcolor in frame overview'
+          TabOrder = 0
+        end
+        object stTextColorsBackGround: TStaticText
+          Left = 38
+          Height = 18
+          Top = 34
+          Width = 154
+          AutoSize = True
+          Caption = 'Background color in editor'
+          TabOrder = 1
+        end
+        object stTextColorsHelpLines: TStaticText
+          Left = 38
+          Height = 18
+          Top = 58
+          Width = 103
+          AutoSize = True
+          Caption = 'Color of helplines'
+          TabOrder = 2
+        end
+        object stTextColorsRotCenter: TStaticText
+          Left = 38
+          Height = 18
+          Top = 82
+          Width = 228
+          AutoSize = True
+          Caption = 'Color of rotation center && rotation lines'
+          TabOrder = 3
+        end
+      end
+    end
+  end
+  object bnHelp: TBitBtn
+    Left = 360
+    Height = 34
+    Top = 133
+    Width = 86
+    Anchors = [akRight, akBottom]
+    Caption = 'Hilfe'
+    Enabled = False
+    Kind = bkHelp
+    TabOrder = 1
+  end
+  object bnUse: TBitBtn
+    Left = 360
+    Height = 26
+    Top = 70
+    Width = 86
+    Anchors = [akTop, akRight]
+    Caption = 'An&wenden'
+    OnClick = bnUseClick
+    TabOrder = 2
+  end
+  object bnCancel: TBitBtn
+    Left = 360
+    Height = 28
+    Top = 39
+    Width = 86
+    Anchors = [akTop, akRight]
+    Kind = bkCancel
+    TabOrder = 3
+  end
+  object bnOK: TBitBtn
+    Left = 360
+    Height = 28
+    Top = 8
+    Width = 86
+    Anchors = [akTop, akRight]
+    Kind = bkOK
+    TabOrder = 4
+  end
+  object cdPick: TColorDialog
+    Color = clBlack
+    CustomColors.Strings = (
+      'ColorA=000000'
+      'ColorB=000080'
+      'ColorC=008000'
+      'ColorD=008080'
+      'ColorE=800000'
+      'ColorF=800080'
+      'ColorG=808000'
+      'ColorH=808080'
+      'ColorI=C0C0C0'
+      'ColorJ=0000FF'
+      'ColorK=00FF00'
+      'ColorL=00FFFF'
+      'ColorM=FF0000'
+      'ColorN=FF00FF'
+      'ColorO=FFFF00'
+      'ColorP=FFFFFF'
+      'ColorQ=C0DCC0'
+      'ColorR=F0CAA6'
+      'ColorS=F0FBFF'
+      'ColorT=A4A0A0'
+    )
+    left = 312
+  end
+end

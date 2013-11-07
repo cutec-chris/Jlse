@@ -1,0 +1,119 @@
+object FormDelays: TFormDelays
+  Left = 512
+  Height = 145
+  Top = 340
+  Width = 287
+  BorderStyle = bsDialog
+  Caption = 'Driver delays'
+  ClientHeight = 145
+  ClientWidth = 287
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Position = poMainFormCenter
+  LCLVersion = '1.3'
+  object bnOK: TBitBtn
+    Left = 190
+    Height = 30
+    Top = 8
+    Width = 89
+    Anchors = [akTop, akRight]
+    Kind = bkOK
+    TabOrder = 0
+  end
+  object bnCancel: TBitBtn
+    Left = 190
+    Height = 30
+    Top = 40
+    Width = 89
+    Anchors = [akTop, akRight]
+    Kind = bkCancel
+    TabOrder = 1
+  end
+  object bnHelp: TBitBtn
+    Left = 190
+    Height = 30
+    Top = 107
+    Width = 89
+    Anchors = [akRight, akBottom]
+    Enabled = False
+    Kind = bkHelp
+    TabOrder = 2
+  end
+  object groupSteps: TGroupBox
+    Left = 8
+    Height = 129
+    Top = 8
+    Width = 176
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Caption = ' Scan delays '
+    ClientHeight = 113
+    ClientWidth = 172
+    TabOrder = 3
+    object st5Degree: TStaticText
+      Left = 14
+      Height = 32
+      Top = 7
+      Width = 29
+      AutoSize = True
+      Caption = '5° Step'
+      TabOrder = 0
+    end
+    object st10Degree: TStaticText
+      Left = 14
+      Height = 18
+      Top = 34
+      Width = 53
+      AutoSize = True
+      Caption = '10° Step'
+      TabOrder = 1
+    end
+    object st40Degree: TStaticText
+      Left = 14
+      Height = 18
+      Top = 61
+      Width = 53
+      AutoSize = True
+      Caption = '40° Step'
+      TabOrder = 2
+    end
+    object stMax: TStaticText
+      Left = 14
+      Height = 32
+      Top = 88
+      Width = 38
+      AutoSize = True
+      Caption = 'Max. Edges'
+      TabOrder = 3
+    end
+    object editStep5: TEdit
+      Left = 80
+      Height = 24
+      Top = 4
+      Width = 73
+      TabOrder = 4
+    end
+    object editStep10: TEdit
+      Left = 80
+      Height = 24
+      Top = 31
+      Width = 73
+      TabOrder = 5
+    end
+    object editStep40: TEdit
+      Left = 80
+      Height = 24
+      Top = 58
+      Width = 73
+      TabOrder = 6
+    end
+    object editStepEdges: TEdit
+      Left = 80
+      Height = 24
+      Top = 85
+      Width = 73
+      TabOrder = 7
+    end
+  end
+end

@@ -1,0 +1,830 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tformmain.aaddframe.caption
+msgid "&Add frame"
+msgstr ""
+
+#: tformmain.aaddframe.hint
+msgid "Add another frame at the end of the show"
+msgstr ""
+
+#: tformmain.acheckalllinks.caption
+msgid "Check all &links"
+msgstr ""
+
+#: tformmain.acheckalllinks.hint
+msgid "Check links in all frames"
+msgstr ""
+
+#: tformmain.acheckframelinks.caption
+msgid "Check frame &links"
+msgstr ""
+
+#: tformmain.acheckframelinks.hint
+msgid "Check the link matrix for this frame"
+msgstr ""
+
+#: tformmain.achooseimgpart.caption
+msgid "Choose part of image..."
+msgstr ""
+
+#: tformmain.acopyframetoclipboard.caption
+msgid "&Copy frame to clipboard"
+msgstr ""
+
+#: tformmain.acreatewavefile.caption
+msgid "&Create wavefile"
+msgstr ""
+
+#: tformmain.acreatewavefile.hint
+msgid "Create a wavefile from all frames"
+msgstr ""
+
+#: tformmain.acutframetoclipboard.caption
+msgid "C&ut frame to clipboard"
+msgstr ""
+
+#: tformmain.adeleteframe.caption
+msgid "&Delete frame"
+msgstr ""
+
+#: tformmain.adeleteframe.hint
+msgid "Delete this frame"
+msgstr ""
+
+#: tformmain.aframedelay.caption
+msgid "Change frame &delay..."
+msgstr ""
+
+#: tformmain.aframedelay.hint
+msgid "Change delay for frame"
+msgstr ""
+
+#: tformmain.aframeeffectparam.caption
+msgid "Change frame effect &param..."
+msgstr ""
+
+#: tformmain.aframeeffectparam.hint
+msgid "Change the parameter of the chosen effect"
+msgstr ""
+
+#: tformmain.aframemorph.caption
+msgid "Change frame &morph/effect time..."
+msgstr ""
+
+#: tformmain.aframemorph.hint
+msgid "Change effect duration"
+msgstr ""
+
+#: tformmain.aframepreview.caption
+msgid "&Show frame-wave preview"
+msgstr ""
+
+#: tformmain.aframepreview.hint
+msgid "Show wave preview of this frame"
+msgstr ""
+
+#: tformmain.ahelpcontents.caption
+msgid "Help &Contents"
+msgstr ""
+
+#: tformmain.ahelpcontents.hint
+msgid "Show help contents"
+msgstr ""
+
+#: tformmain.aimportframe.caption
+msgid "Import &frame..."
+msgstr ""
+
+#: tformmain.aimportframe.hint
+msgid "Import a frame from a different file"
+msgstr ""
+
+#: tformmain.aimportshow.caption
+msgid "Import &show..."
+msgstr ""
+
+#: tformmain.aimportshow.hint
+msgid "Import a full show"
+msgstr ""
+
+#: tformmain.aloadbackimg.caption
+msgid "Background image: n/a"
+msgstr ""
+
+#: tformmain.anewfile.caption
+msgid "&New"
+msgstr ""
+
+#: tformmain.anewfile.hint
+msgid "Create a new file"
+msgstr ""
+
+#: tformmain.aopenfile.caption
+msgid "&Open..."
+msgstr ""
+
+#: tformmain.aopenfile.hint
+msgid "Open a file"
+msgstr ""
+
+#: tformmain.apasteframefromclipboard.caption
+msgid "&Paste frame from clipboard"
+msgstr ""
+
+#: tformmain.arenameframe.caption
+msgid "&Rename frame..."
+msgstr ""
+
+#: tformmain.arenameframe.hint
+msgid "Rename current frame"
+msgstr ""
+
+#: tformmain.asaveasfile.caption
+msgid "Save &As..."
+msgstr ""
+
+#: tformmain.asaveasfile.hint
+msgid "Save file under a different name"
+msgstr ""
+
+#: tformmain.asavefile.caption
+msgid "&Save"
+msgstr ""
+
+#: tformmain.asavefile.hint
+msgid "Save file"
+msgstr ""
+
+#: tformmain.ashowpreview.caption
+msgid "Show &preview"
+msgstr ""
+
+#: tformmain.ashowpreview.hint
+msgid "Show a screen preview of the show"
+msgstr ""
+
+#: tformmain.caption
+msgid "Heathcliff 5"
+msgstr ""
+
+#: tformmain.miabout.caption
+msgid "&About Heathcliff..."
+msgstr ""
+
+#: tformmain.micenterframe.caption
+msgid "&Center frame"
+msgstr ""
+
+#: tformmain.micenterframe.hint
+msgid "Centers frame around auxiliary center point"
+msgstr ""
+
+#: tformmain.michoosepart.caption
+msgid "Choose part of image"
+msgstr ""
+
+#: tformmain.micircles1.caption
+msgctxt "TFORMMAIN.MICIRCLES1.CAPTION"
+msgid "&1"
+msgstr ""
+
+#: tformmain.micircles2.caption
+msgctxt "TFORMMAIN.MICIRCLES2.CAPTION"
+msgid "&2"
+msgstr ""
+
+#: tformmain.micircles3.caption
+msgctxt "TFORMMAIN.MICIRCLES3.CAPTION"
+msgid "&3"
+msgstr ""
+
+#: tformmain.micircles4.caption
+msgctxt "TFORMMAIN.MICIRCLES4.CAPTION"
+msgid "&4"
+msgstr ""
+
+#: tformmain.micircles5.caption
+msgctxt "TFORMMAIN.MICIRCLES5.CAPTION"
+msgid "&5"
+msgstr ""
+
+#: tformmain.micircles6.caption
+msgctxt "TFORMMAIN.MICIRCLES6.CAPTION"
+msgid "&6"
+msgstr ""
+
+#: tformmain.micircles7.caption
+msgctxt "TFORMMAIN.MICIRCLES7.CAPTION"
+msgid "&7"
+msgstr ""
+
+#: tformmain.micircles8.caption
+msgctxt "TFORMMAIN.MICIRCLES8.CAPTION"
+msgid "&8"
+msgstr ""
+
+#: tformmain.micirclesize.caption
+msgid "Circlesize: 3..."
+msgstr ""
+
+#: tformmain.micloseloop.caption
+msgid "&Close loop"
+msgstr ""
+
+#: tformmain.micolor0.caption
+msgid "&Red"
+msgstr ""
+
+#: tformmain.micolor1.caption
+msgid "&Blue"
+msgstr ""
+
+#: tformmain.midelays.caption
+msgid "Driver &delays..."
+msgstr ""
+
+#: tformmain.midisplaypanel.caption
+msgid "&Display settings"
+msgstr ""
+
+#: tformmain.miedit.caption
+msgid "&Edit"
+msgstr ""
+
+#: tformmain.mieffectdflip.caption
+msgid "&D-Flip"
+msgstr ""
+
+#: tformmain.mieffectdrain.caption
+msgid "D&rain"
+msgstr ""
+
+#: tformmain.mieffectmorph.caption
+msgid "&Morph"
+msgstr ""
+
+#: tformmain.mieffectplode.caption
+msgid "&Im-/Explode"
+msgstr ""
+
+#: tformmain.mieffectrotate.caption
+msgid "&Rotate"
+msgstr ""
+
+#: tformmain.mieffectslide.caption
+msgid "&Slide"
+msgstr ""
+
+#: tformmain.mieffectxflip.caption
+msgid "&X-Flip"
+msgstr ""
+
+#: tformmain.mieffectyflip.caption
+msgid "&Y-Flip"
+msgstr ""
+
+#: tformmain.miequilateral.caption
+msgid "Equilateral"
+msgstr ""
+
+#: tformmain.miexit.caption
+msgid "E&xit"
+msgstr ""
+
+#: tformmain.mifile.caption
+msgid "&File"
+msgstr ""
+
+#: tformmain.mifilepanel.caption
+msgid "&File operations"
+msgstr ""
+
+#: tformmain.miflipx.caption
+msgid "Flip &X"
+msgstr ""
+
+#: tformmain.miflipy.caption
+msgid "Flip &Y"
+msgstr ""
+
+#: tformmain.miframe.caption
+msgid "F&rame"
+msgstr ""
+
+#: tformmain.miframecolors.caption
+msgid "Frame &colors..."
+msgstr ""
+
+#: tformmain.miframeflipd.caption
+msgid "Flip frame at effect center - auxiliary center axis"
+msgstr ""
+
+#: tformmain.miframeflipx2.caption
+msgid "Flip frame at &X-axis"
+msgstr ""
+
+#: tformmain.miframeflipy.caption
+msgid "Flip frame at &Y-axis"
+msgstr ""
+
+#: tformmain.mifullimg.caption
+msgid "Display full image"
+msgstr ""
+
+#: tformmain.migrid.caption
+msgid "Grid: 16..."
+msgstr ""
+
+#: tformmain.migrid128.caption
+msgid "&128"
+msgstr ""
+
+#: tformmain.migrid16.caption
+msgid "&16"
+msgstr ""
+
+#: tformmain.migrid32.caption
+msgid "&32"
+msgstr ""
+
+#: tformmain.migrid4.caption
+msgctxt "tformmain.migrid4.caption"
+msgid "&4"
+msgstr ""
+
+#: tformmain.migrid64.caption
+msgid "&64"
+msgstr ""
+
+#: tformmain.migrid8.caption
+msgctxt "tformmain.migrid8.caption"
+msgid "&8"
+msgstr ""
+
+#: tformmain.migridcustom.caption
+msgid "&47"
+msgstr ""
+
+#: tformmain.mihelp.caption
+msgid "&Help"
+msgstr ""
+
+#: tformmain.mihelplines.caption
+msgid "&Helplines..."
+msgstr ""
+
+#: tformmain.miimport.caption
+msgid "&Import"
+msgstr ""
+
+#: tformmain.milastfile0.caption
+msgid "&0 Logo.LC1"
+msgstr ""
+
+#: tformmain.milastfile1.caption
+msgctxt "TFORMMAIN.MILASTFILE1.CAPTION"
+msgid "&1"
+msgstr ""
+
+#: tformmain.milastfile2.caption
+msgctxt "TFORMMAIN.MILASTFILE2.CAPTION"
+msgid "&2"
+msgstr ""
+
+#: tformmain.milastfile3.caption
+msgctxt "TFORMMAIN.MILASTFILE3.CAPTION"
+msgid "&3"
+msgstr ""
+
+#: tformmain.milastfile4.caption
+msgctxt "TFORMMAIN.MILASTFILE4.CAPTION"
+msgid "&4"
+msgstr ""
+
+#: tformmain.milicense.caption
+msgid "&License"
+msgstr ""
+
+#: tformmain.milinkoverlay.caption
+msgid "Link &overlaying points"
+msgstr ""
+
+#: tformmain.mimousepospanel.caption
+msgid "&Mouse position"
+msgstr ""
+
+#: tformmain.mimovenoredraw.caption
+msgid "Move points &without redraw"
+msgstr ""
+
+#: tformmain.minoimg.caption
+msgid "Dont display image"
+msgstr ""
+
+#: tformmain.miopenagain.caption
+msgid "&Open again..."
+msgstr ""
+
+#: tformmain.miopt2xzoom.caption
+msgid "Optimize size for &2x zoom"
+msgstr ""
+
+#: tformmain.miopt3xzoom.caption
+msgid "Optimize size for &3x zoom"
+msgstr ""
+
+#: tformmain.mipartimg.caption
+msgid "Display part of image"
+msgstr ""
+
+#: tformmain.miplaypanel.caption
+msgid "Playback panel"
+msgstr ""
+
+#: tformmain.mipointframepanel.caption
+msgid "&Point && frame panel"
+msgstr ""
+
+#: tformmain.miprojekt.caption
+msgid "&Project"
+msgstr ""
+
+#: tformmain.mirenum.caption
+msgid "&Renumber points"
+msgstr ""
+
+#: tformmain.mirotateframe.caption
+msgid "&Rotate frame..."
+msgstr ""
+
+#: tformmain.mirotateframe.hint
+msgid "Rotates frame around auxiliary center point"
+msgstr ""
+
+#: tformmain.miscale.caption
+msgid "Scale frame..."
+msgstr ""
+
+#: tformmain.miscale.hint
+msgid "Scale frame around auxiliary center point"
+msgstr ""
+
+#: tformmain.misetrotpoint.caption
+msgid "Set effect && auxiliary center..."
+msgstr ""
+
+#: tformmain.misettings.caption
+msgid "&Settings"
+msgstr ""
+
+#: tformmain.mishowbackframe.caption
+msgid "Show &backframe"
+msgstr ""
+
+#: tformmain.mishowlinks.caption
+msgid "Show &links"
+msgstr ""
+
+#: tformmain.mishownoofpoints.caption
+msgid "Show &number of points"
+msgstr ""
+
+#: tformmain.mishowpoints.caption
+msgid "&Show points"
+msgstr ""
+
+#: tformmain.mishowreal.caption
+msgid "Show &round edges"
+msgstr ""
+
+#: tformmain.mishowruler.caption
+msgid "Show &ruler"
+msgstr ""
+
+#: tformmain.misnapgrid.caption
+msgid "Snap to grid"
+msgstr ""
+
+#: tformmain.misnaphelp.caption
+msgid "Snap to helplines"
+msgstr ""
+
+#: tformmain.mitimeline.caption
+msgid "&Timeline"
+msgstr ""
+
+#: tformmain.mitoolauxpoints.caption
+msgid "Set effect && auxiliary center &points"
+msgstr ""
+
+#: tformmain.mitoolauxpoints.hint
+msgid "Set the effect (left button) and auxiliary (right) center points"
+msgstr ""
+
+#: tformmain.mitoollink.caption
+msgid "&Link frames for morphing"
+msgstr ""
+
+#: tformmain.mitoolmoverotate.caption
+msgid "&Move and rotate frame"
+msgstr ""
+
+#: tformmain.mitoolmoverotate.hint
+msgid "Move (left) or rotate (right) the frame"
+msgstr ""
+
+#: tformmain.mitoolpanel.caption
+msgid "Working &tools"
+msgstr ""
+
+#: tformmain.mitoolsharpen.caption
+msgctxt "TFORMMAIN.MITOOLSHARPEN.CAPTION"
+msgid "&Sharpen edges && blank lines"
+msgstr ""
+
+#: tformmain.miundo.caption
+msgid "&Undo"
+msgstr ""
+
+#: tformmain.miusegrid.caption
+msgid "Show &grid"
+msgstr ""
+
+#: tformmain.miwindow.caption
+msgid "&Windows"
+msgstr ""
+
+#: tformmain.mizoom.caption
+msgid "&Zoom: 2x..."
+msgstr ""
+
+#: tformmain.mizoom1.caption
+msgctxt "tformmain.mizoom1.caption"
+msgid "&1"
+msgstr ""
+
+#: tformmain.mizoom2.caption
+msgctxt "tformmain.mizoom2.caption"
+msgid "&2"
+msgstr ""
+
+#: tformmain.mizoom3.caption
+msgctxt "tformmain.mizoom3.caption"
+msgid "&3"
+msgstr ""
+
+#: tformmain.mizoom4.caption
+msgctxt "TFORMMAIN.MIZOOM4.CAPTION"
+msgid "&4"
+msgstr ""
+
+#: tformmain.mizoom5.caption
+msgctxt "tformmain.mizoom5.caption"
+msgid "&5"
+msgstr ""
+
+#: tformmain.mizoom6.caption
+msgctxt "tformmain.mizoom6.caption"
+msgid "&6"
+msgstr ""
+
+#: tformmain.mizoom7.caption
+msgctxt "tformmain.mizoom7.caption"
+msgid "&7"
+msgstr ""
+
+#: tformmain.mizoom8.caption
+msgctxt "TFORMMAIN.MIZOOM8.CAPTION"
+msgid "&8"
+msgstr ""
+
+#: tformmain.n1.caption
+msgctxt "TFORMMAIN.N1.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.n10.caption
+msgctxt "TFORMMAIN.N10.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.n11.caption
+msgctxt "TFORMMAIN.N11.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.n12.caption
+msgctxt "TFORMMAIN.N12.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.n2.caption
+msgctxt "TFORMMAIN.N2.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.n3.caption
+msgctxt "TFORMMAIN.N3.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.n4.caption
+msgctxt "tformmain.n4.caption"
+msgid "-"
+msgstr ""
+
+#: tformmain.n6.caption
+msgctxt "TFORMMAIN.N6.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.n7.caption
+msgctxt "TFORMMAIN.N7.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.n8.caption
+msgctxt "TFORMMAIN.N8.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.n9.caption
+msgctxt "TFORMMAIN.N9.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformmain.odbitmap.title
+msgid "Open background image..."
+msgstr ""
+
+#: tformmain.odlc1.title
+msgid "Open Yoghurt file..."
+msgstr ""
+
+#: tformmain.pmichoosepart.caption
+msgid "&Choose part of image..."
+msgstr ""
+
+#: tformmain.sbblank.hint
+msgid "Blank after selected point(s)"
+msgstr ""
+
+#: tformmain.sbcloseloop.hint
+msgid "Close loop by connecting last to first point"
+msgstr ""
+
+#: tformmain.sbcolor.hint
+msgid "Choose frame color"
+msgstr ""
+
+#: tformmain.sbeffect.hint
+msgid "Choose frame effect"
+msgstr ""
+
+#: tformmain.sbflipx.hint
+msgid "Flip at X-Axis"
+msgstr ""
+
+#: tformmain.sbflipy.hint
+msgid "Flip at Y-Axis"
+msgstr ""
+
+#: tformmain.sbframe.panels[0].text
+msgid "X:200 Y:200"
+msgstr ""
+
+#: tformmain.sbframe.panels[1].text
+msgid "Heathcliff started"
+msgstr ""
+
+#: tformmain.sbfullimg.hint
+msgid "Show full background image"
+msgstr ""
+
+#: tformmain.sblock.hint
+msgid "Lock frame against moving"
+msgstr ""
+
+#: tformmain.sbnoimg.hint
+msgid "Dont show background image"
+msgstr ""
+
+#: tformmain.sbpartimg.hint
+msgid "Show only part of background image"
+msgstr ""
+
+#: tformmain.sbruler.hint
+msgid "Display ruler to the left and top of the drawing area"
+msgstr ""
+
+#: tformmain.sbsharpen.hint
+msgid "Sharpen selected point(s) (edges)"
+msgstr ""
+
+#: tformmain.sbshowbackframe.hint
+msgid "Show background frame"
+msgstr ""
+
+#: tformmain.sbshowgrid.hint
+msgid "Show (and choose) grid"
+msgstr ""
+
+#: tformmain.sbshowlinks.hint
+msgid "Show links to background frame"
+msgstr ""
+
+#: tformmain.sbshownumpoints.hint
+msgid "Show numbers of points"
+msgstr ""
+
+#: tformmain.sbshowpoints.hint
+msgid "Show points along frame"
+msgstr ""
+
+#: tformmain.sbshowreal.hint
+msgid "Show unoptimized edges"
+msgstr ""
+
+#: tformmain.sbsnapgrid.hint
+msgid "Snap points to grid"
+msgstr ""
+
+#: tformmain.sbsnaphelp.hint
+msgid "Snaps points to helplines"
+msgstr ""
+
+#: tformmain.sdlc1.title
+msgid "Save Yoghurt file..."
+msgstr ""
+
+#: tformmain.tbadd.hint
+msgid "Use this tool to add points"
+msgstr ""
+
+#: tformmain.tbdel.hint
+msgid "Use this to delete points"
+msgstr ""
+
+#: tformmain.tbgeo.hint
+msgid "Left click sets equilateral center, right click sets starting point"
+msgstr ""
+
+#: tformmain.tbmove.hint
+msgid "Use this tool to select and move points"
+msgstr ""
+
+#: tformmain.tbpointtools.hint
+msgctxt "tformmain.tbpointtools.hint"
+msgid "&Sharpen edges && blank lines"
+msgstr ""
+
+#: tformmain.tbtimeline.caption
+msgid "tbTimeline"
+msgstr ""
+
+#: tformmain.tbtimelineleft.caption
+msgid "tbTimelineLeft"
+msgstr ""
+
+#: tformmain.tbtimelineright.caption
+msgid "tbTimelineRight"
+msgstr ""
+
+#: tformmain.tbtimelinezoomin.caption
+msgid "tbTimelineZoomIn"
+msgstr ""
+
+#: tformmain.tbtimelinezoomout.caption
+msgid "tbTimelineZoomOut"
+msgstr ""
+
+#: tformmain.tbzoom.hint
+msgid "Use this to zoom in and out"
+msgstr ""
+
+#: tformmain.toolbardisplay.caption
+msgid "Display options"
+msgstr ""
+
+#: tformmain.toolbarfiles.caption
+msgid "File operations"
+msgstr ""
+
+#: tformmain.toolbarplay.caption
+msgid "toolbarPlay"
+msgstr ""
+
+#: tformmain.toolbarpointsframes.caption
+msgid "Point & frame properties"
+msgstr ""
+
+#: tformmain.toolbartools.caption
+msgid "Working tools"
+msgstr ""
+
+#: tformmain.toolwintimeline.caption
+msgid "toolwinTimeline"
+msgstr ""
+
