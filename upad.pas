@@ -103,6 +103,8 @@ end;
 procedure TFormSketchpad.ZoomIn(x,y: word);
 var cps: TPoint;
 begin
+  x := -x;
+  y := -y;
    if FormMain.ZoomFactor<8 then with FormMain do begin
       Inc(ZoomFactor);
       cps.x := (x+FormSketchpad.sbX.Position) div ZoomFactor;
@@ -132,6 +134,8 @@ end;
 
 procedure TFormSketchpad.ZoomOut(x,y: word);
 begin
+   x := -x;
+   y := -y;
    if FormMain.ZoomFactor>1 then Dec(FormMain.ZoomFactor);
    case FormMain.ZoomFactor of
       1 : FormMain.miZoom1.Checked := true;

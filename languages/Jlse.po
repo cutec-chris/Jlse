@@ -1,6 +1,134 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
+#: tformcolors.bnhelp.caption
+msgid "Hilfe"
+msgstr ""
+
+#: tformcolors.bnuse.caption
+msgid "An&wenden"
+msgstr ""
+
+#: tformcolors.caption
+msgid "Choose colors"
+msgstr ""
+
+#: tformcolors.editcolor0.text
+msgid "Red"
+msgstr ""
+
+#: tformcolors.editcolor1.text
+msgid "Blue"
+msgstr ""
+
+#: tformcolors.groupframecolors.caption
+msgid " Frame colors "
+msgstr ""
+
+#: tformcolors.grouptextcolors.caption
+msgid " Other colors "
+msgstr ""
+
+#: tformcolors.grouptimeline.caption
+msgid " Timeline colors "
+msgstr ""
+
+#: tformcolors.stframecolor0.caption
+msgid "Color &0:"
+msgstr ""
+
+#: tformcolors.stframecolor1.caption
+msgid "Color &1:"
+msgstr ""
+
+#: tformcolors.stframecolorback.caption
+msgid "Back"
+msgstr ""
+
+#: tformcolors.stframecolorlinks.caption
+msgid "Links"
+msgstr ""
+
+#: tformcolors.stframecolorname.caption
+msgid "Color name"
+msgstr ""
+
+#: tformcolors.stframecolornormal.caption
+msgid "Normal"
+msgstr ""
+
+#: tformcolors.stframecolorround.caption
+msgid "Round"
+msgstr ""
+
+#: tformcolors.stframecolorselected.caption
+msgid "Sel"
+msgstr ""
+
+#: tformcolors.sttextcolorsbackground.caption
+msgid "Background color in editor"
+msgstr ""
+
+#: tformcolors.sttextcolorshelplines.caption
+msgid "Color of helplines"
+msgstr ""
+
+#: tformcolors.sttextcolorsrotcenter.caption
+msgid "Color of rotation center && rotation lines"
+msgstr ""
+
+#: tformcolors.sttextcolorsthumbtext.caption
+msgid "Textcolor in frame overview"
+msgstr ""
+
+#: tformcolors.sttimelineareas.caption
+msgid "Color of areas"
+msgstr ""
+
+#: tformcolors.sttimelineback.caption
+msgid "Background color"
+msgstr ""
+
+#: tformcolors.sttimelinelines.caption
+msgid "Color of lines"
+msgstr ""
+
+#: tformcolors.sttimelinetext.caption
+msgid "Text && time divider color"
+msgstr ""
+
+#: tformcolors.tabcolors.caption
+msgid "Frame colors"
+msgstr ""
+
+#: tformcolors.tabothers.caption
+msgid "Other colors"
+msgstr ""
+
+#: tformcolors.tabtimeline.caption
+msgid "Timeline colors"
+msgstr ""
+
+#: tformimport.bnimport.caption
+msgid "Import"
+msgstr ""
+
+#: tformimport.caption
+msgid "Import frame"
+msgstr ""
+
+#: tformimport.labelfilename.caption
+msgid "&Filename:"
+msgstr ""
+
+#: tformimport.labelfiletype.caption
+msgid "File&type:"
+msgstr ""
+
+#: tformimport.labelsearchin.caption
+msgid "&Search in:"
+msgstr ""
+
 #: tformmain.aaddframe.caption
 msgid "&Add frame"
 msgstr ""
@@ -166,7 +294,7 @@ msgid "Show a screen preview of the show"
 msgstr ""
 
 #: tformmain.caption
-msgid "Heathcliff 5"
+msgid "Jlse"
 msgstr ""
 
 #: tformmain.miabout.caption
@@ -663,6 +791,10 @@ msgstr ""
 msgid "Open Yoghurt file..."
 msgstr ""
 
+#: tformmain.panel1.caption
+msgid "Panel1"
+msgstr ""
+
 #: tformmain.pmichoosepart.caption
 msgid "&Choose part of image..."
 msgstr ""
@@ -826,5 +958,69 @@ msgstr ""
 
 #: tformmain.toolwintimeline.caption
 msgid "toolwinTimeline"
+msgstr ""
+
+#: tformpickimage.caption
+msgid "Pick part of image, then close window"
+msgstr ""
+
+#: tformpickimage.sbar.simpletext
+msgid "Mark upper left corner with left mouse-button and lower right corner with right mouse-button."
+msgstr ""
+
+#: tformpreview.aloop.caption
+msgid "Loop"
+msgstr ""
+
+#: tformpreview.aplay.caption
+msgid "Play"
+msgstr ""
+
+#: tformpreview.arewind.caption
+msgid "Rewind"
+msgstr ""
+
+#: tformpreview.astop.caption
+msgid "Stop"
+msgstr ""
+
+#: tformpreview.bnloop.caption
+msgid "bnLoop"
+msgstr ""
+
+#: tformpreview.bnpreviewpos.caption
+msgid "bnPreviewPos"
+msgstr ""
+
+#: tformpreview.bnseparator1.caption
+msgid "bnSeparator1"
+msgstr ""
+
+#: tformpreview.bnseparator2.caption
+msgid "bnSeparator2"
+msgstr ""
+
+#: tformpreview.caption
+msgid "Show preview"
+msgstr ""
+
+#: tformpreview.toolbarpreview.caption
+msgid "toolbarPreview"
+msgstr ""
+
+#: tformsketchpad.caption
+msgid "new file"
+msgstr ""
+
+#: tformsketchpad.hint
+msgid "Alt-Click to add pointer after selected, Shift-Alt-Click to add as last. Ctrl-Click to delete point."
+msgstr ""
+
+#: tformsketchpad.panelcorner.hint
+msgid "Repaint image"
+msgstr ""
+
+#: tformsketchpad.panelframeswitcher.caption
+msgid "0"
 msgstr ""
 

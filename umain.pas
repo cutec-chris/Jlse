@@ -259,6 +259,8 @@ type
     N9: TMenuItem;
     odBitmap: TOpenDialog;
     odLC1: TOpenDialog;
+    Panel1: TPanel;
+    Panel2: TPanel;
     panelLeft: TPanel;
     pmBackImg: TPopupMenu;
     pmCircles: TPopupMenu;
@@ -298,7 +300,6 @@ type
     tbCompile: TToolButton;
     tbDel: TToolButton;
     tbGeo: TToolButton;
-    tbHelp: TToolButton;
     tbImportFrame: TToolButton;
     tbImportShow: TToolButton;
     tbLive: TToolButton;
@@ -325,7 +326,6 @@ type
     ToolbarSep971: TToolButton;
     ToolbarSep973: TToolButton;
     ToolbarSep976: TToolButton;
-    ToolbarSep977: TToolButton;
     ToolbarSep978: TToolButton;
     toolbarTools: TToolBar;
     toolwinTimeline: TPanel;
