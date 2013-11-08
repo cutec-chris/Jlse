@@ -1777,26 +1777,19 @@ object FormMain: TFormMain
         OnClick = miUseGridClick
       end
       object miSnapGrid: TMenuItem
+        Action = aSnapGrid
         AutoCheck = True
-        Caption = 'Snap to grid'
-        HelpContext = 5
         RadioItem = True
-        ShortCut = 16455
-        OnClick = miSnapGridClick
       end
       object miSnapHelp: TMenuItem
+        Action = aSnapHelp
         AutoCheck = True
-        Caption = 'Snap to helplines'
-        HelpContext = 5
         RadioItem = True
-        OnClick = miSnapHelpClick
       end
       object miShowRuler: TMenuItem
+        Action = aRuler
         AutoCheck = True
-        Caption = 'Show &ruler'
-        HelpContext = 5
         RadioItem = True
-        OnClick = miShowRulerClick
       end
       object N2: TMenuItem
         Caption = '-'
@@ -1804,60 +1797,18 @@ object FormMain: TFormMain
         RadioItem = True
       end
       object miCloseloop: TMenuItem
+        Action = aCloseLoop
         AutoCheck = True
-        Caption = '&Close loop'
-        HelpContext = 5
         RadioItem = True
-        ShortCut = 16460
-        OnClick = miCloseloopClick
       end
       object miFlipX: TMenuItem
+        Action = aFlipX
         AutoCheck = True
-        Caption = 'Flip &X'
-        HelpContext = 5
         RadioItem = True
-        ShortCut = 16472
       end
       object miFlipY: TMenuItem
+        Action = aFlipY
         AutoCheck = True
-        Caption = 'Flip Y'
-        Bitmap.Data = {
-          36040000424D3604000000000000360000002800000010000000100000000100
-          2000000000000004000064000000640000000000000000000000000000000000
-          00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-          00FF000000FF000000FF00000000000000000000000000000000000000FF0000
-          00FF008484FF008484FF008484FF008484FF008484FF008484FF008484FF0084
-          84FF008484FF008484FF000000FF000000000000000000000000000000FF00FF
-          FFFF000000FF008484FF008484FF008484FF008484FF008484FF008484FF0084
-          84FF008484FF008484FF008484FF000000FF0000000000000000000000FFFFFF
-          FFFF848484FF000000FF008484FF008484FF008484FF008484FF008484FF0084
-          84FF008484FF008484FF008484FF008484FF000000FF00000000000000FF00FF
-          FFFF848484FF000000FF008484FF008484FF008484FF008484FF008484FF0084
-          84FF008484FF008484FF008484FF008484FF008484FF000000FF000000FFFFFF
-          FFFF848484FFFFFFFFFF000000FF000000FF000000FF000000FF008484FF0084
-          84FF008484FF008484FF008484FF008484FF008484FF000000FF000000FF00FF
-          FFFF848484FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FF0000
-          00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FFFFFF
-          FFFF848484FFFFFFFFFFC6C6C6FFC6C6C6FFC6C6C6FFC6C6C6FFC6C6C6FFC6C6
-          C6FFFFFFFFFF000000FF00000000000000000000000000000000000000FF00FF
-          FFFF848484FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-          FFFFFFFFFFFF000000FF00000000000000000000000000000000000000000000
-          00FF848484FFFFFFFFFFC6C6C6FFC6C6C6FFC6C6C6FFC6C6C6FFC6C6C6FFC6C6
-          C6FFFFFFFFFF000000FF00000000000000000000000000000000000000000000
-          0000848484FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8484
-          84FF848484FF000000FF000000FF000000FF000000FF00000000000000000000
-          0000848484FFFFFFFFFFC6C6C6FFC6C6C6FFC6C6C6FFC6C6C6FF848484FF0000
-          FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF000000FF000000000000
-          0000848484FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF848484FF0000
-          FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF000000FF000000000000
-          0000848484FF848484FF848484FF848484FF848484FF848484FF848484FF8484
-          84FF848484FF000000FF000000FF000000FF000000FF00000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000
-        }
-        ImageIndex = 11
         RadioItem = True
       end
       object N1: TMenuItem
@@ -5113,7 +5064,7 @@ object FormMain: TFormMain
     object aSnapGrid: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aSnapGrid'
+      Caption = 'Snap to grid'
       DisableIfNoHandler = False
       Hint = 'Snap points to grid'
       ImageIndex = 50
@@ -5121,7 +5072,7 @@ object FormMain: TFormMain
     object aSnapHelp: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aSnapHelp'
+      Caption = 'Snap to helplines'
       Hint = 'Snaps points to helplines'
       ImageIndex = 62
       OnExecute = DoRedraw
@@ -5129,7 +5080,7 @@ object FormMain: TFormMain
     object aRuler: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aRuler'
+      Caption = 'Show &ruler'
       Hint = 'Display ruler to the left and top of the drawing area'
       ImageIndex = 61
       OnExecute = aRulerExecute
@@ -5192,7 +5143,7 @@ object FormMain: TFormMain
     object aCloseLoop: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aCloseLoop'
+      Caption = 'Close Loop'
       Hint = 'Close loop by connecting last to first point'
       ImageIndex = 48
       OnExecute = DoRedraw
@@ -5200,7 +5151,7 @@ object FormMain: TFormMain
     object aFlipX: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aFlipX'
+      Caption = 'Flip X'
       Hint = 'Flip at X-Axis'
       ImageIndex = 54
       OnExecute = DoRedraw
@@ -5208,7 +5159,7 @@ object FormMain: TFormMain
     object aFlipY: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aFlipY'
+      Caption = 'Flip Y'
       Hint = 'Flip at Y-Axis'
       ImageIndex = 28
       OnExecute = DoRedraw

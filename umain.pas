@@ -412,7 +412,6 @@ type
     procedure miCircles7Click(Sender: TObject);
     procedure miCircles8Click(Sender: TObject);
     procedure miCirclesizeClick(Sender: TObject);
-    procedure miCloseloopClick(Sender: TObject);
     procedure miDelaysClick(Sender: TObject);
     procedure miDisplayPanelClick(Sender: TObject);
     procedure miEffectDFlipClick(Sender: TObject);
@@ -464,9 +463,6 @@ type
     procedure miShowNoOfPointsClick(Sender: TObject);
     procedure miShowPointsClick(Sender: TObject);
     procedure miShowRealClick(Sender: TObject);
-    procedure miShowRulerClick(Sender: TObject);
-    procedure miSnapGridClick(Sender: TObject);
-    procedure miSnapHelpClick(Sender: TObject);
     procedure miTimelineClick(Sender: TObject);
     procedure miToolAuxPointsClick(Sender: TObject);
     procedure miToolLinkClick(Sender: TObject);
@@ -3867,13 +3863,6 @@ begin
   Redraw;
 end;
 
-procedure TFormMain.miSnapGridClick(Sender: TObject);
-begin
-  miSnapGrid.Checked := not miSnapGrid.Checked;
-  sbSnapGrid.Down := miSnapGrid.Checked;
-  Redraw;
-end;
-
 procedure TFormMain.miFullImgClick(Sender: TObject);
 begin
   miFullImg.Checked := True;
@@ -3887,20 +3876,6 @@ begin
   sbNoImg.Down := True;
   Redraw;
 
-end;
-
-procedure TFormMain.miCloseloopClick(Sender: TObject);
-begin
-  miCloseLoop.Checked := not miCloseLoop.Checked;
-  sbCloseLoop.Down := miCloseLoop.Checked;
-  Redraw;
-end;
-
-procedure TFormMain.miShowRulerClick(Sender: TObject);
-begin
-  miShowRuler.Checked := not miShowRuler.Checked;
-  sbRuler.Down := miShowRuler.Checked;
-  ReDraw;
 end;
 
 procedure TFormMain.miOpenAgainClick(Sender: TObject);
@@ -3999,13 +3974,6 @@ begin
         TLaserFrame(FFile.frames[currentframe]).ImgRect := DataRect;
         miPartImg.Checked := True;
       end;
-end;
-
-procedure TFormMain.miSnapHelpClick(Sender: TObject);
-begin
-  miSnapHelp.Checked := not miSnapHelp.Checked;
-  sbSnapHelp.Down := miSnapHelp.Checked;
-  Redraw;
 end;
 
 procedure TFormMain.miHelpLinesClick(Sender: TObject);

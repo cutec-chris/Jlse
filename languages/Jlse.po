@@ -176,7 +176,7 @@ msgid "Choose part of image..."
 msgstr ""
 
 #: tformmain.acloseloop.caption
-msgid "aCloseLoop"
+msgid "Close Loop"
 msgstr ""
 
 #: tformmain.acloseloop.hint
@@ -236,7 +236,7 @@ msgid "Choose frame effect"
 msgstr ""
 
 #: tformmain.aflipx.caption
-msgid "aFlipX"
+msgid "Flip X"
 msgstr ""
 
 #: tformmain.aflipx.hint
@@ -245,7 +245,7 @@ msgid "Flip at X-Axis"
 msgstr ""
 
 #: tformmain.aflipy.caption
-msgid "aFlipY"
+msgid "Flip Y"
 msgstr ""
 
 #: tformmain.aflipy.hint
@@ -380,7 +380,7 @@ msgid "Rename current frame"
 msgstr ""
 
 #: tformmain.aruler.caption
-msgid "aRuler"
+msgid "Show &ruler"
 msgstr ""
 
 #: tformmain.aruler.hint
@@ -485,7 +485,7 @@ msgid "Show unoptimized edges"
 msgstr ""
 
 #: tformmain.asnapgrid.caption
-msgid "aSnapGrid"
+msgid "Snap to grid"
 msgstr ""
 
 #: tformmain.asnapgrid.hint
@@ -494,7 +494,7 @@ msgid "Snap points to grid"
 msgstr ""
 
 #: tformmain.asnaphelp.caption
-msgid "aSnapHelp"
+msgid "Snap to helplines"
 msgstr ""
 
 #: tformmain.asnaphelp.hint
@@ -575,10 +575,6 @@ msgstr ""
 msgid "Circlesize: 3..."
 msgstr ""
 
-#: tformmain.micloseloop.caption
-msgid "&Close loop"
-msgstr ""
-
 #: tformmain.midelays.caption
 msgid "Driver &delays..."
 msgstr ""
@@ -637,14 +633,6 @@ msgstr ""
 
 #: tformmain.mifilepanel.caption
 msgid "&File operations"
-msgstr ""
-
-#: tformmain.miflipx.caption
-msgid "Flip &X"
-msgstr ""
-
-#: tformmain.miflipy.caption
-msgid "Flip Y"
 msgstr ""
 
 #: tformmain.miframe.caption
@@ -831,18 +819,6 @@ msgstr ""
 
 #: tformmain.mishowreal.caption
 msgid "Show &round edges"
-msgstr ""
-
-#: tformmain.mishowruler.caption
-msgid "Show &ruler"
-msgstr ""
-
-#: tformmain.misnapgrid.caption
-msgid "Snap to grid"
-msgstr ""
-
-#: tformmain.misnaphelp.caption
-msgid "Snap to helplines"
 msgstr ""
 
 #: tformmain.mitimeline.caption
