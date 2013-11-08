@@ -137,6 +137,10 @@ msgstr ""
 msgid "Add another frame at the end of the show"
 msgstr ""
 
+#: tformmain.acflipy.caption
+msgid "acFlipY"
+msgstr ""
+
 #: tformmain.acheckalllinks.caption
 msgid "Check all &links"
 msgstr ""
@@ -434,7 +438,7 @@ msgid "Flip &X"
 msgstr ""
 
 #: tformmain.miflipy.caption
-msgid "Flip &Y"
+msgid "Flip Y"
 msgstr ""
 
 #: tformmain.miframe.caption
@@ -817,10 +821,6 @@ msgstr ""
 
 #: tformmain.sbflipx.hint
 msgid "Flip at X-Axis"
-msgstr ""
-
-#: tformmain.sbflipy.hint
-msgid "Flip at Y-Axis"
 msgstr ""
 
 #: tformmain.sbframe.panels[0].text

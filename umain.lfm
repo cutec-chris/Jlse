@@ -254,7 +254,9 @@ object FormMain: TFormMain
         Left = 1
         Hint = 'Use this to zoom in and out'
         Top = 96
+        AllowAllUp = True
         DropdownMenu = pmZoom
+        Grouped = True
         ImageIndex = 3
         OnClick = tbZoomClick
         ParentShowHint = False
@@ -265,7 +267,9 @@ object FormMain: TFormMain
         Left = 1
         Hint = '&Sharpen edges && blank lines'
         Top = 124
+        AllowAllUp = True
         DropdownMenu = pmPoints
+        Grouped = True
         ImageIndex = 4
         OnClick = tbPointToolsClick
         ParentShowHint = False
@@ -276,7 +280,9 @@ object FormMain: TFormMain
         Left = 1
         Hint = 'Left click sets equilateral center, right click sets starting point'
         Top = 152
+        AllowAllUp = True
         DropdownMenu = pmGeo
+        Grouped = True
         ImageIndex = 8
         OnClick = tbGeoClick
         ParentShowHint = False
@@ -494,10 +500,9 @@ object FormMain: TFormMain
       end
       object sbFlipY: TToolButton
         Left = 439
-        Hint = 'Flip at Y-Axis'
         Top = 2
+        Action = acFlipY
         AllowAllUp = True
-        ImageIndex = 11
         OnClick = sbFlipYClick
         ParentShowHint = False
         ShowHint = True
@@ -1215,7 +1220,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
       end
       object miFrameCopyFrame: TMenuItem
         Action = aCopyFrameToClipboard
@@ -1255,7 +1259,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
       end
       object miFramePasteFrame: TMenuItem
         Action = aPasteFrameFromClipboard
@@ -1295,20 +1298,16 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
       end
       object N12: TMenuItem
         Caption = '-'
-        GroupIndex = 1
       end
       object miFrameFrameDelay: TMenuItem
         Action = aFrameDelay
-        GroupIndex = 1
         HelpContext = 5
       end
       object miFrameFrameMorph: TMenuItem
         Action = aFrameMorph
-        GroupIndex = 1
         HelpContext = 5
       end
       object miBackImg: TMenuItem
@@ -1349,7 +1348,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
       end
       object miChoosePart: TMenuItem
@@ -1391,7 +1389,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
         ImageIndex = 5
       end
@@ -1433,14 +1430,12 @@ object FormMain: TFormMain
           0000848484FF000000FF000000000000000000000000848484FF000000000000
           00000000000000000000848484FF000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
         ImageIndex = 21
         OnClick = miHelpLinesClick
       end
       object N10: TMenuItem
         Caption = '-'
-        GroupIndex = 1
         HelpContext = 5
       end
       object miFrameFlipX2: TMenuItem
@@ -1481,7 +1476,6 @@ object FormMain: TFormMain
           000000000000000000000000000000000000000000FF00000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         ImageIndex = 28
         OnClick = miFrameFlipX2Click
       end
@@ -1523,19 +1517,16 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         ImageIndex = 27
         OnClick = miFrameFlipYClick
       end
       object miFrameFlipD: TMenuItem
         Caption = 'Flip frame at effect center - auxiliary center axis'
-        GroupIndex = 1
         ShortCut = 16454
         OnClick = miFrameFlipDClick
       end
       object miCenterFrame: TMenuItem
         Caption = '&Center frame'
-        GroupIndex = 1
         Hint = 'Centers frame around auxiliary center point'
         ShortCut = 16451
         OnClick = miCenterFrameClick
@@ -1578,7 +1569,6 @@ object FormMain: TFormMain
           000000000000000000000000000000000000000000FF00000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         Hint = 'Rotates frame around auxiliary center point'
         ImageIndex = 29
         ShortCut = 16466
@@ -1586,7 +1576,6 @@ object FormMain: TFormMain
       end
       object miScale: TMenuItem
         Caption = 'Scale frame...'
-        GroupIndex = 1
         Hint = 'Scale frame around auxiliary center point'
         OnClick = miScaleClick
       end
@@ -1628,14 +1617,12 @@ object FormMain: TFormMain
           000000000000000000000000000000000000848484FF00000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         ImageIndex = 30
         ShortCut = 24658
         OnClick = miSetRotPointClick
       end
       object N3: TMenuItem
         Caption = '-'
-        GroupIndex = 1
       end
       object miRenum: TMenuItem
         Caption = '&Renumber points'
@@ -1675,7 +1662,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000FF0000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
         ImageIndex = 9
         OnClick = miRenumClick
@@ -1718,7 +1704,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
         ImageIndex = 20
         OnClick = miLinkOverlayClick
@@ -1761,7 +1746,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000FF000000FF000000FF000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
       end
       object miShowFrameWavePreview: TMenuItem
@@ -1802,7 +1786,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
       end
     end
@@ -1810,11 +1793,13 @@ object FormMain: TFormMain
       Caption = '&Settings'
       HelpContext = 5
       object miMoveNoRedraw: TMenuItem
+        AutoCheck = True
         Caption = 'Move points &without redraw'
         HelpContext = 5
         OnClick = miMoveNoRedrawClick
       end
       object miShowPoints: TMenuItem
+        AutoCheck = True
         Caption = '&Show points'
         Checked = True
         HelpContext = 5
@@ -1822,96 +1807,94 @@ object FormMain: TFormMain
         OnClick = miShowPointsClick
       end
       object miShowNoOfPoints: TMenuItem
+        AutoCheck = True
         Caption = 'Show &number of points'
         Checked = True
         HelpContext = 5
         OnClick = miShowNoOfPointsClick
       end
       object miShowBackframe: TMenuItem
+        AutoCheck = True
         Caption = 'Show &backframe'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
         ShortCut = 16450
         OnClick = miShowBackframeClick
       end
       object miShowLinks: TMenuItem
+        AutoCheck = True
         Caption = 'Show &links'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
         OnClick = miShowLinksClick
       end
       object miShowReal: TMenuItem
+        AutoCheck = True
         Caption = 'Show &round edges'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
         OnClick = miShowRealClick
       end
       object miUseGrid: TMenuItem
+        AutoCheck = True
         Caption = 'Show &grid'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
         ShortCut = 49223
         OnClick = miUseGridClick
       end
       object miSnapGrid: TMenuItem
+        AutoCheck = True
         Caption = 'Snap to grid'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
         ShortCut = 16455
         OnClick = miSnapGridClick
       end
       object miSnapHelp: TMenuItem
+        AutoCheck = True
         Caption = 'Snap to helplines'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
         OnClick = miSnapHelpClick
       end
       object miShowRuler: TMenuItem
+        AutoCheck = True
         Caption = 'Show &ruler'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
         OnClick = miShowRulerClick
       end
       object N2: TMenuItem
         Caption = '-'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
       end
       object miCloseloop: TMenuItem
+        AutoCheck = True
         Caption = '&Close loop'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
         ShortCut = 16460
         OnClick = miCloseloopClick
       end
       object miFlipX: TMenuItem
+        AutoCheck = True
         Caption = 'Flip &X'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
         ShortCut = 16472
         OnClick = miFlipXClick
       end
       object miFlipY: TMenuItem
-        Caption = 'Flip &Y'
-        GroupIndex = 1
-        HelpContext = 5
+        AutoCheck = True
+        Caption = 'Flip Y'
+        ImageIndex = 11
         RadioItem = True
-        ShortCut = 16473
         OnClick = miFlipYClick
       end
       object N1: TMenuItem
         Caption = '-'
-        GroupIndex = 1
         HelpContext = 5
         RadioItem = True
       end
@@ -1953,7 +1936,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           00000000FFFF0000FFFF0000FFFF000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
         ImageIndex = 18
         RadioItem = True
@@ -1961,7 +1943,6 @@ object FormMain: TFormMain
       end
       object miDelays: TMenuItem
         Caption = 'Driver &delays...'
-        GroupIndex = 1
         RadioItem = True
         OnClick = miDelaysClick
       end
@@ -2003,7 +1984,6 @@ object FormMain: TFormMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
         ImageIndex = 17
         RadioItem = True
@@ -2047,7 +2027,6 @@ object FormMain: TFormMain
           000000000000848484FF000000FF000000FF848484FF00000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
         ImageIndex = 16
         RadioItem = True
@@ -2091,7 +2070,6 @@ object FormMain: TFormMain
           0000000000FF00000000000000000000000000000000000000FF000000000000
           00000000000000000000000000FF000000000000000000000000
         }
-        GroupIndex = 1
         HelpContext = 5
         ImageIndex = 7
         RadioItem = True
@@ -2104,6 +2082,7 @@ object FormMain: TFormMain
         RadioItem = True
       end
       object miNoImg: TMenuItem
+        AutoCheck = True
         Caption = 'Dont display image'
         Checked = True
         GroupIndex = 1
@@ -2112,6 +2091,7 @@ object FormMain: TFormMain
         OnClick = miNoImgClick
       end
       object miPartImg: TMenuItem
+        AutoCheck = True
         Caption = 'Display part of image'
         GroupIndex = 1
         HelpContext = 5
@@ -2119,6 +2099,7 @@ object FormMain: TFormMain
         OnClick = miPartImgClick
       end
       object miFullImg: TMenuItem
+        AutoCheck = True
         Caption = 'Display full image'
         GroupIndex = 1
         HelpContext = 5
@@ -5374,5 +5355,16 @@ object FormMain: TFormMain
     Title = 'Open background image...'
     left = 400
     top = 142
+  end
+  object ActionList1: TActionList
+    Images = ilOptions
+    left = 552
+    top = 112
+    object acFlipY: TAction
+      AutoCheck = True
+      Caption = 'acFlipY'
+      ImageIndex = 11
+      OnExecute = acFlipYExecute
+    end
   end
 end

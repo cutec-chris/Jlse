@@ -26,25 +26,26 @@ unit uStatus;
 interface
 
 uses
-   LCLIntf, LCLType, LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-   StdCtrls, ComCtrls, ExtCtrls;
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Classes, Graphics,
+  Controls, Forms, Dialogs,
+  StdCtrls, ComCtrls, ExtCtrls;
 
 type
-   TFormStatus = class(TForm)
-      labelFrame: TLabel;
-      pgFrame: TProgressBar;
-      pgMorph: TProgressBar;
-      pgTotal: TProgressBar;
-      stCurrentFrame: TStaticText;
-      stFrame: TStaticText;
-      stMorph: TStaticText;
-      stTotal: TStaticText;
-   private
-   public
-   end;
+  TFormStatus = class(TForm)
+    labelFrame: TLabel;
+    pgFrame: TProgressBar;
+    pgMorph: TProgressBar;
+    pgTotal: TProgressBar;
+    stCurrentFrame: TStaticText;
+    stFrame: TStaticText;
+    stMorph: TStaticText;
+    stTotal: TStaticText;
+  private
+  public
+  end;
 
 var
-   FormStatus: TFormStatus;
+  FormStatus: TFormStatus;
 
 implementation
 

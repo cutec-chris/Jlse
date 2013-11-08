@@ -26,81 +26,91 @@ unit uImport;
 interface
 
 uses
-   LCLIntf, LCLType, LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-   StdCtrls, Buttons, ComCtrls, ShellCtrls, FileUtil, uLaserFrames,
-   uMain;
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Classes, Graphics,
+  Controls, Forms, Dialogs,
+  StdCtrls, Buttons, ComCtrls, ShellCtrls, FileUtil, uLaserFrames,
+  uMain;
 
 type
-   TFormImport = class(TForm)
-      bnCancel: TBitBtn;
-      bnHelp: TBitBtn;
-      bnImport: TBitBtn;
-      cbFiletype: TComboBox;
-      editFilename: TEdit;
-      labelFilename: TStaticText;
-      labelFiletype: TStaticText;
-      labelSearchIn: TStaticText;
-      lb: TListBox;
-      scbDrives: TComboBox;
-      slvFiles: TListView;
-      procedure cbFiletypeChange(Sender: TObject);
-      procedure editFilenameChange(Sender: TObject);
-      procedure FormCreate(Sender: TObject);
-      procedure lbClick(Sender: TObject);
-      procedure lbDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
-      procedure slvFilesClick(Sender: TObject);
-   private
-   public
-      FFile: TLaserFrames;
-   end;
+  TFormImport = class(TForm)
+    bnCancel: TBitBtn;
+    bnHelp: TBitBtn;
+    bnImport: TBitBtn;
+    cbFiletype: TComboBox;
+    editFilename: TEdit;
+    labelFilename: TStaticText;
+    labelFiletype: TStaticText;
+    labelSearchIn: TStaticText;
+    lb: TListBox;
+    scbDrives: TComboBox;
+    slvFiles: TListView;
+    procedure cbFiletypeChange(Sender: TObject);
+    procedure editFilenameChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure lbClick(Sender: TObject);
+    procedure lbDrawItem(Control: TWinControl; Index: integer;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure slvFilesClick(Sender: TObject);
+  private
+  public
+    FFile: TLaserFrames;
+  end;
 
 var
-   FormImport: TFormImport;
+  FormImport: TFormImport;
 
 implementation
 
 {$R *.lfm}
 
-procedure TFormImport.lbDrawItem(Control: TWinControl; Index: Integer;
+procedure TFormImport.lbDrawItem(Control: TWinControl; Index: integer;
   Rect: TRect; State: TOwnerDrawState);
-var clLine: TColor;
-    sEffectName: string;
+var
+  clLine: TColor;
+  sEffectName: string;
 begin
-   if Assigned(FFile)
-    then if index<FFile.Count
-     then with (Control as TListBox).Canvas
-   do begin
-      Brush.Color := clBlack;
-      FillRect(Rect);
-      Pen.Color := clGreen;
-      Pen.Width := 1;
-      if (odSelected in State) then begin
-         Pen.Style := psDot;
-         Rectangle(Rect.Left,Rect.Top,Rect.Right,Rect.Bottom);
+  if Assigned(FFile) then
+    if index < FFile.Count then
+      with (Control as TListBox).Canvas do
+      begin
+        Brush.Color := clBlack;
+        FillRect(Rect);
+        Pen.Color := clGreen;
+        Pen.Width := 1;
+        if (odSelected in State) then
+        begin
+          Pen.Style := psDot;
+          Rectangle(Rect.Left, Rect.Top, Rect.Right, Rect.Bottom);
+        end;
+        Pen.Style := psSolid;
+        //MoveTo(Rect.Left,Rect.Bottom-1); LineTo(Rect.Right,Rect.Bottom-1);
+        if ((TLaserFrame(FFile.frames[index]).Bits and 1) = 0) then
+          clLine := FormMain.MyColors[0, 0]
+        else
+          clLine := FormMain.MyColors[1, 0];
+        FormMain.DrawThumb(TLaserFrame(FFile.frames[index]),
+          (Control as TListBox).Canvas, Rect.Left, Rect.Top + 2, 4, clLine);
+        Font.Color := clLime;
+        TextOut(Rect.Left + 66, Rect.Top + 2, 'Frame: ');
+        TextOut(Rect.Left + 66, Rect.Top + 20, 'Delay: ');
+        TextOut(Rect.Left + 66, Rect.Top + 34, 'Morph: ');
+        TextOut(Rect.Left + 66, Rect.Top + 48, 'Effect: ');
+        TextOut(Rect.Left + 106, Rect.Top + 2, TLaserFrame(FFile.frames[index]).framename);
+        TextOut(Rect.Left + 106, Rect.Top + 20, IntToStr(
+          TLaserFrame(FFile.frames[index]).Delay));
+        TextOut(Rect.Left + 106, Rect.Top + 34, IntToStr(
+          TLaserFrame(FFile.frames[index]).Morph));
+        case TLaserFrame(FFile.frames[index]).effect of
+          0: sEffectName := 'Slide';
+          1: sEffectName := 'Morph';
+          2: sEffectName := '-plode';
+          3: sEffectName := 'X-Flip';
+          4: sEffectName := 'Y-Flip';
+          else
+            sEffectName := '?';
+        end;
+        TextOut(Rect.Left + 106, Rect.Top + 48, sEffectName);
       end;
-      Pen.Style := psSolid;
-      //MoveTo(Rect.Left,Rect.Bottom-1); LineTo(Rect.Right,Rect.Bottom-1);
-      if ((TLaserFrame(FFile.frames[index]).Bits and 1)=0)
-       then clLine := FormMain.MyColors[0,0] else clLine := FormMain.MyColors[1,0];
-      FormMain.DrawThumb(TLaserFrame(FFile.frames[index]),(Control as TListBox).Canvas, Rect.Left,Rect.Top+2,4,clLine);
-      Font.Color := clLime;
-      TextOut(Rect.Left+66,Rect.Top+2,'Frame: ');
-      TextOut(Rect.Left+66,Rect.Top+20,'Delay: ');
-      TextOut(Rect.Left+66,Rect.Top+34,'Morph: ');
-      TextOut(Rect.Left+66,Rect.Top+48,'Effect: ');
-      TextOut(Rect.Left+106,Rect.Top+2,TLaserFrame(FFile.frames[index]).framename);
-      TextOut(Rect.Left+106,Rect.Top+20,IntToStr(TLaserFrame(FFile.frames[index]).Delay));
-      TextOut(Rect.Left+106,Rect.Top+34,IntToStr(TLaserFrame(FFile.frames[index]).Morph));
-      case TLaserFrame(FFile.frames[index]).effect of
-         0 : sEffectName := 'Slide';
-         1 : sEffectName := 'Morph';
-         2 : sEffectName := '-plode';
-         3 : sEffectName := 'X-Flip';
-         4 : sEffectName := 'Y-Flip';
-      else sEffectName := '?';
-      end;
-      TextOut(Rect.Left+106,Rect.Top+48,sEffectName);
-   end;
 end;
 
 procedure TFormImport.cbFiletypeChange(Sender: TObject);
@@ -115,35 +125,39 @@ end;
 
 procedure TFormImport.slvFilesClick(Sender: TObject);
 begin
-   if Assigned(slvFiles.Selected) then begin
-      //TODO:editFilename.Text := slvFiles.SelectedFolder.PathName + slvFiles.Selected.Caption;
-      bnImport.Enabled := false;
-   end;
+  if Assigned(slvFiles.Selected) then
+  begin
+    //TODO:editFilename.Text := slvFiles.SelectedFolder.PathName + slvFiles.Selected.Caption;
+    bnImport.Enabled := False;
+  end;
 end;
 
 procedure TFormImport.editFilenameChange(Sender: TObject);
-var i: integer;
+var
+  i: integer;
 begin
-   if FileExistsUTF8(editFilename.Text) { *Converted from FileExists* } then begin
-      lb.items.clear;
-      FormMain.LoadFromFile(editFilename.Text, FFile, false);
-      if Assigned(FFile)
-      then for i := 0 to Pred(FFile.Count) do begin
-         lb.items.add(TLaserFrame(FFile.Frames[i]).FrameName);
+  if FileExistsUTF8(editFilename.Text) { *Converted from FileExists* } then
+  begin
+    lb.items.Clear;
+    FormMain.LoadFromFile(editFilename.Text, FFile, False);
+    if Assigned(FFile) then
+      for i := 0 to Pred(FFile.Count) do
+      begin
+        lb.items.add(TLaserFrame(FFile.Frames[i]).FrameName);
       end;
-   end;
+  end;
 end;
 
 procedure TFormImport.FormCreate(Sender: TObject);
 begin
-   // ptDrive.SelectedFolder.Pathname := ExtractFilePath(ParamStr(0));
-   // ptFiles.Folder.Pathname := ExtractFilePath(ParamStr(0));
-   cbFiletype.ItemIndex := 0;
+  // ptDrive.SelectedFolder.Pathname := ExtractFilePath(ParamStr(0));
+  // ptFiles.Folder.Pathname := ExtractFilePath(ParamStr(0));
+  cbFiletype.ItemIndex := 0;
 end;
 
 procedure TFormImport.lbClick(Sender: TObject);
 begin
-   bnImport.Enabled := (lb.ItemIndex>-1);
+  bnImport.Enabled := (lb.ItemIndex > -1);
 end;
 
 end.

@@ -3,17 +3,15 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="25">
+    <Units Count="26">
       <Unit0>
         <Filename Value="Jlse.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Jlse"/>
-        <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="32"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
@@ -23,11 +21,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uStatus"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
@@ -38,11 +36,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ucolors"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -54,12 +52,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uDelays"/>
-        <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="32"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
@@ -69,11 +65,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uhelplines"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
@@ -84,13 +80,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uImport"/>
-        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="32"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
@@ -100,12 +93,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="2600"/>
-        <CursorPos X="39" Y="2614"/>
-        <UsageCount Value="32"/>
+        <TopLine Value="2662"/>
+        <CursorPos X="4" Y="2676"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -117,13 +109,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPad"/>
-        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="114"/>
         <CursorPos X="1" Y="139"/>
-        <UsageCount Value="32"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit7>
       <Unit8>
@@ -133,13 +122,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="upick"/>
-        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="32"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit8>
       <Unit9>
@@ -149,11 +135,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPreview"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="89" Y="12"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -162,11 +148,12 @@
         <Filename Value="ulaserframes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uLaserFrames"/>
-        <EditorIndex Value="7"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
+        <TopLine Value="283"/>
         <CursorPos X="1" Y="22"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit10>
@@ -292,127 +279,39 @@
         <CursorPos X="37" Y="134"/>
         <UsageCount Value="10"/>
       </Unit24>
+      <Unit25>
+        <Filename Value="umain.lfm"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="2062"/>
+        <CursorPos X="31" Y="2077"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit25>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="5" HistoryIndex="4">
       <Position1>
-        <Filename Value="ustatus.pas"/>
-        <Caret Line="35" Column="92" TopLine="28"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="2620" Column="1" TopLine="2614"/>
       </Position1>
       <Position2>
-        <Filename Value="ucolors.pas"/>
-        <Caret Line="43" Column="25" TopLine="22"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="2616" Column="1" TopLine="2614"/>
       </Position2>
       <Position3>
         <Filename Value="umain.pas"/>
-        <Caret Line="118" Column="1" TopLine="102"/>
+        <Caret Line="2617" Column="1" TopLine="2611"/>
       </Position3>
       <Position4>
-        <Filename Value="uhelplines.pas"/>
-        <Caret Line="39" Column="46" TopLine="25"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="2676" Column="1" TopLine="2674"/>
       </Position4>
       <Position5>
-        <Filename Value="upick.pas"/>
-        <Caret Line="43" Column="28" TopLine="22"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="108" Column="1" TopLine="92"/>
       </Position5>
-      <Position6>
-        <Filename Value="upad.pas"/>
-        <Caret Line="705" Column="25" TopLine="677"/>
-      </Position6>
-      <Position7>
-        <Filename Value="umain.pas"/>
-        <Caret Line="41" Column="4" TopLine="24"/>
-      </Position7>
-      <Position8>
-        <Filename Value="uimport.pas"/>
-        <Caret Line="117" Column="79" TopLine="1"/>
-      </Position8>
-      <Position9>
-        <Filename Value="upreview.pas"/>
-        <Caret Line="43" Column="26" TopLine="43"/>
-      </Position9>
-      <Position10>
-        <Filename Value="umain.pas"/>
-        <Caret Line="584" Column="1" TopLine="567"/>
-      </Position10>
-      <Position11>
-        <Filename Value="umain.pas"/>
-        <Caret Line="588" Column="11" TopLine="571"/>
-      </Position11>
-      <Position12>
-        <Filename Value="umain.pas"/>
-        <Caret Line="2862" Column="1" TopLine="2845"/>
-      </Position12>
-      <Position13>
-        <Filename Value="umain.pas"/>
-        <Caret Line="2882" Column="9" TopLine="2858"/>
-      </Position13>
-      <Position14>
-        <Filename Value="umain.pas"/>
-        <Caret Line="2896" Column="15" TopLine="2874"/>
-      </Position14>
-      <Position15>
-        <Filename Value="umain.pas"/>
-        <Caret Line="2904" Column="72" TopLine="2885"/>
-      </Position15>
-      <Position16>
-        <Filename Value="Jlse.lpr"/>
-        <Caret Line="39" Column="27" TopLine="18"/>
-      </Position16>
-      <Position17>
-        <Filename Value="Jlse.lpr"/>
-        <Caret Line="25" Column="1" TopLine="8"/>
-      </Position17>
-      <Position18>
-        <Filename Value="Jlse.lpr"/>
-        <Caret Line="28" Column="1" TopLine="11"/>
-      </Position18>
-      <Position19>
-        <Filename Value="Jlse.lpr"/>
-        <Caret Line="31" Column="52" TopLine="15"/>
-      </Position19>
-      <Position20>
-        <Filename Value="Jlse.lpr"/>
-        <Caret Line="44" Column="1" TopLine="15"/>
-      </Position20>
-      <Position21>
-        <Filename Value="umain.pas"/>
-        <Caret Line="9" Column="77" TopLine="1"/>
-      </Position21>
-      <Position22>
-        <Filename Value="upad.pas"/>
-        <Caret Line="8" Column="58" TopLine="1"/>
-      </Position22>
-      <Position23>
-        <Filename Value="umain.pas"/>
-        <Caret Line="54" Column="10" TopLine="26"/>
-      </Position23>
-      <Position24>
-        <Filename Value="umain.pas"/>
-        <Caret Line="101" Column="41" TopLine="92"/>
-      </Position24>
-      <Position25>
-        <Filename Value="umain.pas"/>
-        <Caret Line="108" Column="1" TopLine="91"/>
-      </Position25>
-      <Position26>
-        <Filename Value="umain.pas"/>
-        <Caret Line="99" Column="61" TopLine="69"/>
-      </Position26>
-      <Position27>
-        <Filename Value="umain.pas"/>
-        <Caret Line="108" Column="1" TopLine="91"/>
-      </Position27>
-      <Position28>
-        <Filename Value="umain.pas"/>
-        <Caret Line="3412" Column="15" TopLine="3394"/>
-      </Position28>
-      <Position29>
-        <Filename Value="umain.pas"/>
-        <Caret Line="3415" Column="32" TopLine="3329"/>
-      </Position29>
     </JumpHistory>
   </ProjectSession>
   <EditorMacros Count="0"/>

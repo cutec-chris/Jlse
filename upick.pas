@@ -26,66 +26,74 @@ unit upick;
 interface
 
 uses
-   LCLIntf, LCLType, LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-   ExtCtrls, ComCtrls;
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Classes, Graphics,
+  Controls, Forms, Dialogs,
+  ExtCtrls, ComCtrls;
 
 type
-   TFormPickImage = class(TForm)
-      img: TImage;
-      sbar: TStatusBar;
-      procedure FormActivate(Sender: TObject);
-      procedure FormCreate(Sender: TObject);
-      procedure imgMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-   private
-   public
-      DataRect: TRect;
-      DataImage: TBitmap;
-      procedure Redraw;
-   end;
+  TFormPickImage = class(TForm)
+    img: TImage;
+    sbar: TStatusBar;
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure imgMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: integer);
+  private
+  public
+    DataRect: TRect;
+    DataImage: TBitmap;
+    procedure Redraw;
+  end;
 
 var
-   FormPickImage: TFormPickImage;
+  FormPickImage: TFormPickImage;
 
 implementation
 
 {$R *.lfm}
 
 procedure TFormPickImage.Redraw;
-var rContent: TRect;
+var
+  rContent: TRect;
 begin
-   if (DataRect.Left>-1) and (DataRect.Right>-1) then begin
-      with img.canvas do begin
-         Brush.Color := clRed;
-         rContent := Rect(0,0,DataImage.Width,DataImage.Height);
-         CopyRect(rContent,DataImage.Canvas,rContent);
-         //FrameRect(myrect);
-         DrawFocusRect(DataRect);
-      end;
-   end;
+  if (DataRect.Left > -1) and (DataRect.Right > -1) then
+  begin
+    with img.canvas do
+    begin
+      Brush.Color := clRed;
+      rContent := Rect(0, 0, DataImage.Width, DataImage.Height);
+      CopyRect(rContent, DataImage.Canvas, rContent);
+      //FrameRect(myrect);
+      DrawFocusRect(DataRect);
+    end;
+  end;
 end;
 
 procedure TFormPickImage.FormCreate(Sender: TObject);
 begin
-   DataRect.left := -1;
-   DataRect.right := -1;
+  DataRect.left := -1;
+  DataRect.right := -1;
 end;
 
 procedure TFormPickImage.imgMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
+  Shift: TShiftState; X, Y: integer);
 begin
-   if Button = mbLeft then begin
-      DataRect.left := x;
-      DataRect.top := y;
-   end else if mbRight = Button then begin
-      DataRect.right := x;
-      DataRect.bottom := y;
-   end;
-   ReDraw;
+  if Button = mbLeft then
+  begin
+    DataRect.left := x;
+    DataRect.top := y;
+  end
+  else if mbRight = Button then
+  begin
+    DataRect.right := x;
+    DataRect.bottom := y;
+  end;
+  ReDraw;
 end;
 
 procedure TFormPickImage.FormActivate(Sender: TObject);
 begin
-   Redraw;
+  Redraw;
 end;
 
 end.

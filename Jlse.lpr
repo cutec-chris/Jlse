@@ -24,30 +24,30 @@ program Jlse;
 {$MODE Delphi}
 
 uses
-   Forms, Interfaces,
-   uStatus in 'FormUnitStatus.pas' {FormStatus},
-   ucolors in 'FormUnitColors.pas' {FormColors},
-   uDelays in 'FormUnitDelays.pas' {FormDelays},
-   uhelplines in 'FormUnitHelpLines.pas' {FormHelpLines},
-   uImport in 'FormUnitImport.pas' {fImport},
-   uMain in 'FormUnitMain.pas' {FormMain},
-   uPad in 'FormUnitPad.pas' {FormSketchpad},
-   upick in 'FormUnitPick.pas' {FormPickImage},
-   uPreview in 'FormUnitPreview.pas' {FormPreview};
+  Forms,
+  Interfaces,
+  uStatus in 'FormUnitStatus.pas' {FormStatus},
+  ucolors in 'FormUnitColors.pas' {FormColors},
+  uDelays in 'FormUnitDelays.pas' {FormDelays},
+  uhelplines in 'FormUnitHelpLines.pas' {FormHelpLines},
+  uImport in 'FormUnitImport.pas' {fImport},
+  uMain in 'FormUnitMain.pas' {FormMain},
+  uPad in 'FormUnitPad.pas' {FormSketchpad},
+  upick in 'FormUnitPick.pas' {FormPickImage},
+  uPreview in 'FormUnitPreview.pas' {FormPreview};
 
 {$R *.res}
 
 begin
-   Application.Initialize;
-   Application.CreateForm(TFormMain, FormMain);
-   Application.CreateForm(TFormStatus, FormStatus);
-   Application.CreateForm(TFormColors, FormColors);
-   Application.CreateForm(TFormDelays, FormDelays);
-   Application.CreateForm(TFormHelpLines, FormHelpLines);
-   Application.CreateForm(TFormImport, FormImport);
-   Application.CreateForm(TFormSketchpad, FormSketchpad);
-   Application.CreateForm(TFormPickImage, FormPickImage);
-   Application.CreateForm(TFormPreview, FormPreview);
-   Application.Run;
+  Application.Initialize;
+  Application.CreateForm(TFormMain, FormMain);
+  Application.CreateForm(TFormStatus, FormStatus);
+  Application.CreateForm(TFormColors, FormColors);
+  Application.CreateForm(TFormDelays, FormDelays);
+  Application.CreateForm(TFormHelpLines, FormHelpLines);
+  Application.CreateForm(TFormImport, FormImport);
+  Application.CreateForm(TFormSketchpad, FormSketchpad);
+  Application.CreateForm(TFormPickImage, FormPickImage);
+  Application.CreateForm(TFormPreview, FormPreview);
+  Application.Run;
 end.
-
