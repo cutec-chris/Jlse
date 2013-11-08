@@ -93,6 +93,14 @@ type
     aAdd: TAction;
     aColor: TAction;
     aBlank: TAction;
+    aCloseLoop: TAction;
+    aFlipY: TAction;
+    aFlipX: TAction;
+    aShowreal: TAction;
+    aShowLinks: TAction;
+    aShowBackFrame: TAction;
+    aShowNumPoints: TAction;
+    aNoImg: TAction;
     aShowPoints: TAction;
     aFullImg: TAction;
     aRuler: TAction;
@@ -128,7 +136,6 @@ type
     dockBottom: TPanel;
     dockFiles1: TPanel;
     dockTools: TPanel;
-    ilOptions: TImageList;
     ilWork: TImageList;
     imgTimeLine: TImageList;
     iTimeline: TImage;
@@ -419,8 +426,6 @@ type
     procedure miEffectYFlipClick(Sender: TObject);
     procedure miExitClick(Sender: TObject);
     procedure miFilePanelClick(Sender: TObject);
-    procedure miFlipXClick(Sender: TObject);
-    procedure miFlipYClick(Sender: TObject);
     procedure miFramecolorsClick(Sender: TObject);
     procedure miFrameFlipDClick(Sender: TObject);
     procedure miFrameFlipX2Click(Sender: TObject);
@@ -483,23 +488,9 @@ type
     procedure pmiChoosePartClick(Sender: TObject);
     procedure sbAddClick(Sender: TObject);
     procedure sbAnimClick(Sender: TObject);
-    procedure sbCloseLoopClick(Sender: TObject);
     procedure sbDelClick(Sender: TObject);
-    procedure sbFlipXClick(Sender: TObject);
-    procedure sbFullImgClick(Sender: TObject);
     procedure sbMoveClick(Sender: TObject);
-    procedure sbNoImgClick(Sender: TObject);
-    procedure sbPartImgClick(Sender: TObject);
     procedure sbPointTypeClick(Sender: TObject);
-    procedure sbRulerClick(Sender: TObject);
-    procedure sbShowBackframeClick(Sender: TObject);
-    procedure sbShowGridClick(Sender: TObject);
-    procedure sbShowLinksClick(Sender: TObject);
-    procedure sbShowNumPointsClick(Sender: TObject);
-    procedure sbShowPointsClick(Sender: TObject);
-    procedure sbShowRealClick(Sender: TObject);
-    procedure sbSnapGridClick(Sender: TObject);
-    procedure sbSnapHelpClick(Sender: TObject);
     procedure tbLiveClick(Sender: TObject);
     procedure tbPlayClick(Sender: TObject);
     procedure tbRepeatClick(Sender: TObject);
@@ -2036,11 +2027,6 @@ begin
   workstate := sPointType;
 end;
 
-procedure TFormMain.sbRulerClick(Sender: TObject);
-begin
-
-end;
-
 procedure TFormMain.miGridClick(Sender: TObject);
 var
   s: string;
@@ -3015,69 +3001,6 @@ begin
   Redraw;
 end;
 
-procedure TFormMain.sbShowNumPointsClick(Sender: TObject);
-begin
-  miShowNoOfPoints.Checked := sbShowNumPoints.Down;
-  Redraw;
-end;
-
-procedure TFormMain.sbShowPointsClick(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.sbShowLinksClick(Sender: TObject);
-begin
-  miShowLinks.Checked := sbShowLinks.Down;
-  Redraw;
-end;
-
-procedure TFormMain.sbShowRealClick(Sender: TObject);
-begin
-  miShowReal.Checked := sbShowReal.Down;
-  Redraw;
-end;
-
-procedure TFormMain.sbSnapGridClick(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.sbSnapHelpClick(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.sbCloseLoopClick(Sender: TObject);
-begin
-  miCloseloop.Checked := sbCloseLoop.Down;
-  Redraw;
-end;
-
-procedure TFormMain.sbNoImgClick(Sender: TObject);
-begin
-  miNoImg.Checked := sbNoImg.Down;
-  Redraw;
-end;
-
-procedure TFormMain.sbPartImgClick(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.sbFlipXClick(Sender: TObject);
-begin
-  Application.ProcessMessages;
-  miFlipX.Checked := not miFlipX.Checked;
-  sbFlipX.Down := miFlipX.Checked;
-  Redraw;
-end;
-
-procedure TFormMain.sbFullImgClick(Sender: TObject);
-begin
-
-end;
-
 procedure TFormMain.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin
   if FileChanged then
@@ -3951,20 +3874,6 @@ begin
   Redraw;
 end;
 
-procedure TFormMain.miFlipXClick(Sender: TObject);
-begin
-  miFlipX.Checked := not miFlipX.Checked;
-  sbFlipX.Down := miFlipX.Checked;
-  Redraw;
-end;
-
-procedure TFormMain.miFlipYClick(Sender: TObject);
-begin
-  miFlipY.Checked := not miFlipY.Checked;
-  sbFlipY.Down := miFlipY.Checked;
-  Redraw;
-end;
-
 procedure TFormMain.miFullImgClick(Sender: TObject);
 begin
   miFullImg.Checked := True;
@@ -4072,7 +3981,6 @@ begin
         TLaserFrame(FFile.frames[currentframe]).ImgRect := DataRect;
         miPartImg.Checked := True;
       end;
-  sbPartImgClick(Sender);
 end;
 
 procedure TFormMain.aChooseImgPartExecute(Sender: TObject);
@@ -4091,7 +3999,6 @@ begin
         TLaserFrame(FFile.frames[currentframe]).ImgRect := DataRect;
         miPartImg.Checked := True;
       end;
-  sbPartImgClick(Sender);
 end;
 
 procedure TFormMain.miSnapHelpClick(Sender: TObject);
@@ -4418,17 +4325,6 @@ begin
       by := 255;
     myp.y := by;
   end;
-end;
-
-procedure TFormMain.sbShowBackframeClick(Sender: TObject);
-begin
-  miShowBackframe.Checked := sbShowBackframe.Down;
-  Redraw;
-end;
-
-procedure TFormMain.sbShowGridClick(Sender: TObject);
-begin
-
 end;
 
 procedure TFormMain.miRotateFrameClick(Sender: TObject);

@@ -175,6 +175,15 @@ msgstr ""
 msgid "Choose part of image..."
 msgstr ""
 
+#: tformmain.acloseloop.caption
+msgid "aCloseLoop"
+msgstr ""
+
+#: tformmain.acloseloop.hint
+msgctxt "TFORMMAIN.ACLOSELOOP.HINT"
+msgid "Close loop by connecting last to first point"
+msgstr ""
+
 #: tformmain.acolor.caption
 msgid "aColor"
 msgstr ""
@@ -224,6 +233,23 @@ msgstr ""
 #: tformmain.aeffect.hint
 msgctxt "TFORMMAIN.AEFFECT.HINT"
 msgid "Choose frame effect"
+msgstr ""
+
+#: tformmain.aflipx.caption
+msgid "aFlipX"
+msgstr ""
+
+#: tformmain.aflipx.hint
+msgctxt "TFORMMAIN.AFLIPX.HINT"
+msgid "Flip at X-Axis"
+msgstr ""
+
+#: tformmain.aflipy.caption
+msgid "aFlipY"
+msgstr ""
+
+#: tformmain.aflipy.hint
+msgid "Flip at Y-Axis"
 msgstr ""
 
 #: tformmain.aframedelay.caption
@@ -320,6 +346,15 @@ msgstr ""
 msgid "Create a new file"
 msgstr ""
 
+#: tformmain.anoimg.caption
+msgid "aNoImg"
+msgstr ""
+
+#: tformmain.anoimg.hint
+msgctxt "TFORMMAIN.ANOIMG.HINT"
+msgid "Dont show background image"
+msgstr ""
+
 #: tformmain.aopenfile.caption
 msgid "&Open..."
 msgstr ""
@@ -387,6 +422,15 @@ msgctxt "TFORMMAIN.ASHARPEN.HINT"
 msgid "Sharpen selected point(s) (edges)"
 msgstr ""
 
+#: tformmain.ashowbackframe.caption
+msgid "aShowBackFrame"
+msgstr ""
+
+#: tformmain.ashowbackframe.hint
+msgctxt "TFORMMAIN.ASHOWBACKFRAME.HINT"
+msgid "Show background frame"
+msgstr ""
+
 #: tformmain.ashowgrid.caption
 msgid "aShowGrid"
 msgstr ""
@@ -394,6 +438,24 @@ msgstr ""
 #: tformmain.ashowgrid.hint
 msgctxt "TFORMMAIN.ASHOWGRID.HINT"
 msgid "Show (and choose) grid"
+msgstr ""
+
+#: tformmain.ashowlinks.caption
+msgid "aShowLinks"
+msgstr ""
+
+#: tformmain.ashowlinks.hint
+msgctxt "TFORMMAIN.ASHOWLINKS.HINT"
+msgid "Show links to background frame"
+msgstr ""
+
+#: tformmain.ashownumpoints.caption
+msgid "aShowNumPoints"
+msgstr ""
+
+#: tformmain.ashownumpoints.hint
+msgctxt "TFORMMAIN.ASHOWNUMPOINTS.HINT"
+msgid "Show numbers of points"
 msgstr ""
 
 #: tformmain.ashowpoints.caption
@@ -411,6 +473,15 @@ msgstr ""
 
 #: tformmain.ashowpreview.hint
 msgid "Show a screen preview of the show"
+msgstr ""
+
+#: tformmain.ashowreal.caption
+msgid "aShowreal"
+msgstr ""
+
+#: tformmain.ashowreal.hint
+msgctxt "TFORMMAIN.ASHOWREAL.HINT"
+msgid "Show unoptimized edges"
 msgstr ""
 
 #: tformmain.asnapgrid.caption
@@ -934,45 +1005,12 @@ msgstr ""
 msgid "&Choose part of image..."
 msgstr ""
 
-#: tformmain.sbcloseloop.hint
-msgid "Close loop by connecting last to first point"
-msgstr ""
-
-#: tformmain.sbflipx.hint
-msgid "Flip at X-Axis"
-msgstr ""
-
-#: tformmain.sbflipy.caption
-msgctxt "TFORMMAIN.SBFLIPY.CAPTION"
-msgid "acFlipY"
-msgstr ""
-
 #: tformmain.sbframe.panels[0].text
 msgid "X:200 Y:200"
 msgstr ""
 
 #: tformmain.sbframe.panels[1].text
 msgid "Heathcliff started"
-msgstr ""
-
-#: tformmain.sbnoimg.hint
-msgid "Dont show background image"
-msgstr ""
-
-#: tformmain.sbshowbackframe.hint
-msgid "Show background frame"
-msgstr ""
-
-#: tformmain.sbshowlinks.hint
-msgid "Show links to background frame"
-msgstr ""
-
-#: tformmain.sbshownumpoints.hint
-msgid "Show numbers of points"
-msgstr ""
-
-#: tformmain.sbshowreal.hint
-msgid "Show unoptimized edges"
 msgstr ""
 
 #: tformmain.sdlc1.title
