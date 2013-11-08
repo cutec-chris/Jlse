@@ -710,7 +710,6 @@ begin
         { *Converted from FileExists* }
         FormMain.miFullImg.Enabled := FormMain.miPartImg.Enabled;
         FormMain.miChoosePart.Enabled := FormMain.miPartImg.Enabled;
-        FormMain.sbPartImg.Enabled := FormMain.miPartImg.Enabled;
         FormMain.sbFullImg.Enabled := FormMain.miPartImg.Enabled;
         case TLaserFrame(FormMain.FFile.Frames[sbFrames.Position]).Effect of
           0: FormMain.miEffectSlide.Checked := True;

@@ -93,6 +93,12 @@ type
     aAdd: TAction;
     aColor: TAction;
     aBlank: TAction;
+    aShowPoints: TAction;
+    aFullImg: TAction;
+    aRuler: TAction;
+    aSnapHelp: TAction;
+    aSnapGrid: TAction;
+    aShowGrid: TAction;
     aEffect: TAction;
     aSharpen: TAction;
     aLock: TAction;
@@ -292,7 +298,6 @@ type
     sbFullImg: TToolButton;
     sbLock: TToolButton;
     sbNoImg: TToolButton;
-    sbPartImg: TToolButton;
     sbRuler: TToolButton;
     sbSharpen: TToolButton;
     sbShowBackframe: TToolButton;
@@ -364,10 +369,12 @@ type
     procedure aPasteFrameFromClipboardExecute(Sender: TObject);
     procedure aPointToolsExecute(Sender: TObject);
     procedure aRenameFrameExecute(Sender: TObject);
+    procedure aRulerExecute(Sender: TObject);
     procedure aSaveAsFileExecute(Sender: TObject);
     procedure aSaveFileExecute(Sender: TObject);
     procedure aSelectMoveExecute(Sender: TObject);
     procedure aSharpenExecute(Sender: TObject);
+    procedure DoRedraw(Sender: TObject);
     procedure aShowPreviewExecute(Sender: TObject);
     procedure aZoomExecute(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -441,7 +448,6 @@ type
     procedure miOpenAgainClick(Sender: TObject);
     procedure miOpt2xZoomClick(Sender: TObject);
     procedure miOpt3xZoomClick(Sender: TObject);
-    procedure miPartImgClick(Sender: TObject);
     procedure miPlayPanelClick(Sender: TObject);
     procedure miPointFramePanelClick(Sender: TObject);
     procedure miRenumClick(Sender: TObject);
@@ -477,20 +483,15 @@ type
     procedure pmiChoosePartClick(Sender: TObject);
     procedure sbAddClick(Sender: TObject);
     procedure sbAnimClick(Sender: TObject);
-    procedure sbBlankClick(Sender: TObject);
     procedure sbCloseLoopClick(Sender: TObject);
     procedure sbDelClick(Sender: TObject);
-    procedure sbEffectClick(Sender: TObject);
     procedure sbFlipXClick(Sender: TObject);
-    procedure sbFlipYClick(Sender: TObject);
     procedure sbFullImgClick(Sender: TObject);
-    procedure sbLockClick(Sender: TObject);
     procedure sbMoveClick(Sender: TObject);
     procedure sbNoImgClick(Sender: TObject);
     procedure sbPartImgClick(Sender: TObject);
     procedure sbPointTypeClick(Sender: TObject);
     procedure sbRulerClick(Sender: TObject);
-    procedure sbSharpenClick(Sender: TObject);
     procedure sbShowBackframeClick(Sender: TObject);
     procedure sbShowGridClick(Sender: TObject);
     procedure sbShowLinksClick(Sender: TObject);
@@ -499,18 +500,14 @@ type
     procedure sbShowRealClick(Sender: TObject);
     procedure sbSnapGridClick(Sender: TObject);
     procedure sbSnapHelpClick(Sender: TObject);
-    procedure tbGeoClick(Sender: TObject);
     procedure tbLiveClick(Sender: TObject);
-    procedure tbMoveClick(Sender: TObject);
     procedure tbPlayClick(Sender: TObject);
-    procedure tbPointToolsClick(Sender: TObject);
     procedure tbRepeatClick(Sender: TObject);
     procedure tbStopClick(Sender: TObject);
     procedure tbTimelineLeftClick(Sender: TObject);
     procedure tbTimelineRightClick(Sender: TObject);
     procedure tbTimeLineZoomInClick(Sender: TObject);
     procedure tbTimeLineZoomOutClick(Sender: TObject);
-    procedure tbZoomClick(Sender: TObject);
     procedure TimeLineRedraw;
     procedure toolbarDisplayClose(Sender: TObject);
     procedure toolbarFilesClose(Sender: TObject);
@@ -552,7 +549,7 @@ type
     MyIcons: array[0..0] of HIcon;
     MyTimes: TimingArray;
 
-    procedure ReDraw;
+    procedure Redraw;
     procedure DrawGrid(cv: TCanvas; clGrid: TColor);
     procedure DrawRulers;
     procedure DrawHelpLines(f: TLaserFrame; cv: TCanvas; clLines: TColor);
@@ -1369,7 +1366,7 @@ begin
   end; // for i
 end;
 
-procedure TFormMain.ReDraw;
+procedure TFormMain.Redraw;
 var
   mycopyrect: TRect;
   myf: TLaserFrame;
@@ -1566,7 +1563,6 @@ begin
           tbLive.Down := GetValueDefault('LivePreview', True);
           case GetValueDefault('Image', 0) of
             0: sbNoImg.Down := True;
-            1: sbPartImg.Down := True;
             else
               sbFullImg.Down := True;
           end;
@@ -1771,8 +1767,7 @@ begin
         miFullImg.Enabled := True;
         miPartImg.Enabled := True;
         miChoosePart.Enabled := True;
-        sbPartImg.Enabled := True;
-        sbFullImg.Enabled := True;
+        aFullImg.Enabled := True;
       end;
     end;
   end
@@ -2031,24 +2026,19 @@ begin
   workstate := sDel;
 end;
 
-procedure TFormMain.sbEffectClick(Sender: TObject);
-begin
-
-end;
-
 procedure TFormMain.sbAnimClick(Sender: TObject);
 begin
   workstate := sAnim;
 end;
 
-procedure TFormMain.sbBlankClick(Sender: TObject);
-begin
-
-end;
-
 procedure TFormMain.sbPointTypeClick(Sender: TObject);
 begin
   workstate := sPointType;
+end;
+
+procedure TFormMain.sbRulerClick(Sender: TObject);
+begin
+
 end;
 
 procedure TFormMain.miGridClick(Sender: TObject);
@@ -2106,7 +2096,7 @@ begin
         SetValue('LivePreview', tbLive.Down);
         if sbNoImg.Down then
           SetValue('Image', 0)
-        else if sbPartImg.Down then
+        else if miChoosePart.Checked then
           SetValue('Image', 1)
         else if sbFullImg.Down then
           SetValue('Image', 2);
@@ -2873,6 +2863,11 @@ begin
   Redraw;
 end;
 
+procedure TFormMain.DoRedraw(Sender: TObject);
+begin
+  Redraw;
+end;
+
 procedure TFormMain.aSaveAsFileExecute(Sender: TObject);
 begin
   sdLC1.Filename := FFile.Filename;
@@ -3026,6 +3021,11 @@ begin
   Redraw;
 end;
 
+procedure TFormMain.sbShowPointsClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFormMain.sbShowLinksClick(Sender: TObject);
 begin
   miShowLinks.Checked := sbShowLinks.Down;
@@ -3038,21 +3038,20 @@ begin
   Redraw;
 end;
 
+procedure TFormMain.sbSnapGridClick(Sender: TObject);
+begin
+
+end;
+
+procedure TFormMain.sbSnapHelpClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFormMain.sbCloseLoopClick(Sender: TObject);
 begin
   miCloseloop.Checked := sbCloseLoop.Down;
   Redraw;
-end;
-
-procedure TFormMain.sbShowGridClick(Sender: TObject);
-begin
-  miUseGrid.Checked := sbShowGrid.Down;
-  Redraw;
-end;
-
-procedure TFormMain.sbSnapGridClick(Sender: TObject);
-begin
-  miSnapGrid.Checked := sbSnapGrid.Down;
 end;
 
 procedure TFormMain.sbNoImgClick(Sender: TObject);
@@ -3062,19 +3061,6 @@ begin
 end;
 
 procedure TFormMain.sbPartImgClick(Sender: TObject);
-begin
-  miPartImg.Checked := sbPartImg.Down;
-  Redraw;
-end;
-
-procedure TFormMain.sbFullImgClick(Sender: TObject);
-begin
-  Application.ProcessMessages;
-  miFullImg.Checked := sbFullImg.Down;
-  Redraw;
-end;
-
-procedure TFormMain.sbLockClick(Sender: TObject);
 begin
 
 end;
@@ -3087,16 +3073,9 @@ begin
   Redraw;
 end;
 
-procedure TFormMain.sbFlipYClick(Sender: TObject);
+procedure TFormMain.sbFullImgClick(Sender: TObject);
 begin
 
-end;
-
-procedure TFormMain.sbShowPointsClick(Sender: TObject);
-begin
-  Application.ProcessMessages;
-  miShowPoints.Checked := sbShowPoints.Down;
-  Redraw;
 end;
 
 procedure TFormMain.FormCloseQuery(Sender: TObject; var CanClose: boolean);
@@ -3175,6 +3154,21 @@ begin
     TLaserFrame(FFile.frames[CurrentFrame]).FrameName := lbThumbs.Items[CurrentFrame];
   end;
   lbThumbs.Refresh;
+end;
+
+procedure TFormMain.aRulerExecute(Sender: TObject);
+begin
+  Redraw;
+  if sbRuler.Down then
+  begin
+    Width := Width + LeftRulerWidth;
+    Height := Height + TopRulerHeight;
+  end
+  else
+  begin
+    Width := Width - LeftRulerWidth;
+    Height := Height - TopRulerHeight;
+  end;
 end;
 
 procedure TFormMain.aFrameDelayExecute(Sender: TObject);
@@ -3915,27 +3909,6 @@ begin
     MessageDlg(s, mtWarning, [mbOK], 0);
 end;
 
-procedure TFormMain.sbRulerClick(Sender: TObject);
-begin
-  miShowRuler.Checked := sbRuler.Down;
-  Redraw;
-  if sbRuler.Down then
-  begin
-    Width := Width + LeftRulerWidth;
-    Height := Height + TopRulerHeight;
-  end
-  else
-  begin
-    Width := Width - LeftRulerWidth;
-    Height := Height - TopRulerHeight;
-  end;
-end;
-
-procedure TFormMain.sbSharpenClick(Sender: TObject);
-begin
-
-end;
-
 procedure TFormMain.miShowPointsClick(Sender: TObject);
 begin
   miShowPoints.Checked := not miShowPoints.Checked;
@@ -3989,13 +3962,6 @@ procedure TFormMain.miFlipYClick(Sender: TObject);
 begin
   miFlipY.Checked := not miFlipY.Checked;
   sbFlipY.Down := miFlipY.Checked;
-  Redraw;
-end;
-
-procedure TFormMain.miPartImgClick(Sender: TObject);
-begin
-  miPartImg.Checked := True;
-  sbPartImg.Down := True;
   Redraw;
 end;
 
@@ -4070,7 +4036,6 @@ begin
       miFullImg.Enabled := True;
       miPartImg.Enabled := True;
       miChoosePart.Enabled := True;
-      sbPartImg.Enabled := True;
       sbFullImg.Enabled := True;
     end;
   end;
@@ -4129,17 +4094,6 @@ begin
   sbPartImgClick(Sender);
 end;
 
-procedure TFormMain.sbSnapHelpClick(Sender: TObject);
-begin
-  miSnapHelp.Checked := sbSnapHelp.Down;
-  Redraw;
-end;
-
-procedure TFormMain.tbGeoClick(Sender: TObject);
-begin
-
-end;
-
 procedure TFormMain.miSnapHelpClick(Sender: TObject);
 begin
   miSnapHelp.Checked := not miSnapHelp.Checked;
@@ -4174,11 +4128,6 @@ begin
     else
       MessageDlg('You need to compile this show first.', mtError, [mbOK], 0);
   end;
-end;
-
-procedure TFormMain.tbPointToolsClick(Sender: TObject);
-begin
-
 end;
 
 procedure TFormMain.tbStopClick(Sender: TObject);
@@ -4272,11 +4221,6 @@ procedure TFormMain.tbLiveClick(Sender: TObject);
 begin
   tbLive.Down := not tbLive.Down;
   ReCreatePreview;
-end;
-
-procedure TFormMain.tbMoveClick(Sender: TObject);
-begin
-
 end;
 
 procedure TFormMain.miFrameFlipYClick(Sender: TObject);
@@ -4482,6 +4426,11 @@ begin
   Redraw;
 end;
 
+procedure TFormMain.sbShowGridClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFormMain.miRotateFrameClick(Sender: TObject);
 var
   myf: TLaserFrame;
@@ -4619,21 +4568,21 @@ procedure TFormMain.miToolSharpenClick(Sender: TObject);
 begin
   tbPointTools.ImageIndex := miToolSharpen.ImageIndex;
   tbPointTools.Hint := miToolSharpen.Hint;
-  tbPointToolsClick(Sender);
+  aPointTools.Execute;
 end;
 
 procedure TFormMain.miToolLinkClick(Sender: TObject);
 begin
   tbPointTools.ImageIndex := miToolLink.ImageIndex;
   tbPointTools.Hint := miToolLink.Hint;
-  tbPointToolsClick(Sender);
+  aPointTools.Execute;
 end;
 
 procedure TFormMain.miToolMoveRotateClick(Sender: TObject);
 begin
   tbPointTools.ImageIndex := miToolMoveRotate.ImageIndex;
   tbPointTools.Hint := miToolMoveRotate.Hint;
-  tbPointToolsClick(Sender);
+  aPointTools.Execute;
 end;
 
 procedure TFormMain.miEffectDrainClick(Sender: TObject);
@@ -4651,7 +4600,7 @@ procedure TFormMain.miToolAuxPointsClick(Sender: TObject);
 begin
   tbPointTools.ImageIndex := miToolAuxPoints.ImageIndex;
   tbPointTools.Hint := miToolAuxPoints.Hint;
-  tbPointToolsClick(Sender);
+  aPointTools.Execute;
 end;
 
 procedure TFormMain.miCenterFrameClick(Sender: TObject);
@@ -4980,11 +4929,6 @@ procedure TFormMain.tbTimeLineZoomOutClick(Sender: TObject);
 begin
   tbTimeLineZoomIn.Tag := tbTimeLineZoomIn.Tag * 2;
   TimeLineRedraw;
-end;
-
-procedure TFormMain.tbZoomClick(Sender: TObject);
-begin
-
 end;
 
 procedure TFormMain.miTimelineClick(Sender: TObject);

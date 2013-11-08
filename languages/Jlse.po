@@ -258,6 +258,15 @@ msgstr ""
 msgid "Show wave preview of this frame"
 msgstr ""
 
+#: tformmain.afullimg.caption
+msgid "aFullImg"
+msgstr ""
+
+#: tformmain.afullimg.hint
+msgctxt "TFORMMAIN.AFULLIMG.HINT"
+msgid "Show full background image"
+msgstr ""
+
 #: tformmain.ageo.caption
 msgid "aGeo"
 msgstr ""
@@ -335,6 +344,15 @@ msgstr ""
 msgid "Rename current frame"
 msgstr ""
 
+#: tformmain.aruler.caption
+msgid "aRuler"
+msgstr ""
+
+#: tformmain.aruler.hint
+msgctxt "TFORMMAIN.ARULER.HINT"
+msgid "Display ruler to the left and top of the drawing area"
+msgstr ""
+
 #: tformmain.asaveasfile.caption
 msgid "Save &As..."
 msgstr ""
@@ -369,12 +387,48 @@ msgctxt "TFORMMAIN.ASHARPEN.HINT"
 msgid "Sharpen selected point(s) (edges)"
 msgstr ""
 
+#: tformmain.ashowgrid.caption
+msgid "aShowGrid"
+msgstr ""
+
+#: tformmain.ashowgrid.hint
+msgctxt "TFORMMAIN.ASHOWGRID.HINT"
+msgid "Show (and choose) grid"
+msgstr ""
+
+#: tformmain.ashowpoints.caption
+msgid "aShowPoints"
+msgstr ""
+
+#: tformmain.ashowpoints.hint
+msgctxt "TFORMMAIN.ASHOWPOINTS.HINT"
+msgid "Show points along frame"
+msgstr ""
+
 #: tformmain.ashowpreview.caption
 msgid "Show &preview"
 msgstr ""
 
 #: tformmain.ashowpreview.hint
 msgid "Show a screen preview of the show"
+msgstr ""
+
+#: tformmain.asnapgrid.caption
+msgid "aSnapGrid"
+msgstr ""
+
+#: tformmain.asnapgrid.hint
+msgctxt "TFORMMAIN.ASNAPGRID.HINT"
+msgid "Snap points to grid"
+msgstr ""
+
+#: tformmain.asnaphelp.caption
+msgid "aSnapHelp"
+msgstr ""
+
+#: tformmain.asnaphelp.hint
+msgctxt "TFORMMAIN.ASNAPHELP.HINT"
+msgid "Snaps points to helplines"
 msgstr ""
 
 #: tformmain.azoom.caption
@@ -391,7 +445,7 @@ msgid "Jlse"
 msgstr ""
 
 #: tformmain.miabout.caption
-msgid "&About Heathcliff..."
+msgid "&About"
 msgstr ""
 
 #: tformmain.micenterframe.caption
@@ -614,10 +668,6 @@ msgstr ""
 #: tformmain.milastfile4.caption
 msgctxt "TFORMMAIN.MILASTFILE4.CAPTION"
 msgid "&4"
-msgstr ""
-
-#: tformmain.milicense.caption
-msgid "&License"
 msgstr ""
 
 #: tformmain.milinkoverlay.caption
@@ -884,23 +934,8 @@ msgstr ""
 msgid "&Choose part of image..."
 msgstr ""
 
-#: tformmain.sbblank.hint
-msgctxt "tformmain.sbblank.hint"
-msgid "Blank after selected point(s)"
-msgstr ""
-
 #: tformmain.sbcloseloop.hint
 msgid "Close loop by connecting last to first point"
-msgstr ""
-
-#: tformmain.sbcolor.hint
-msgctxt "tformmain.sbcolor.hint"
-msgid "Choose frame color"
-msgstr ""
-
-#: tformmain.sbeffect.hint
-msgctxt "tformmain.sbeffect.hint"
-msgid "Choose frame effect"
 msgstr ""
 
 #: tformmain.sbflipx.hint
@@ -920,38 +955,12 @@ msgstr ""
 msgid "Heathcliff started"
 msgstr ""
 
-#: tformmain.sbfullimg.hint
-msgid "Show full background image"
-msgstr ""
-
-#: tformmain.sblock.hint
-msgctxt "tformmain.sblock.hint"
-msgid "Lock frame against moving"
-msgstr ""
-
 #: tformmain.sbnoimg.hint
 msgid "Dont show background image"
 msgstr ""
 
-#: tformmain.sbpartimg.hint
-msgid "Show only part of background image"
-msgstr ""
-
-#: tformmain.sbruler.hint
-msgid "Display ruler to the left and top of the drawing area"
-msgstr ""
-
-#: tformmain.sbsharpen.hint
-msgctxt "tformmain.sbsharpen.hint"
-msgid "Sharpen selected point(s) (edges)"
-msgstr ""
-
 #: tformmain.sbshowbackframe.hint
 msgid "Show background frame"
-msgstr ""
-
-#: tformmain.sbshowgrid.hint
-msgid "Show (and choose) grid"
 msgstr ""
 
 #: tformmain.sbshowlinks.hint
@@ -962,20 +971,8 @@ msgstr ""
 msgid "Show numbers of points"
 msgstr ""
 
-#: tformmain.sbshowpoints.hint
-msgid "Show points along frame"
-msgstr ""
-
 #: tformmain.sbshowreal.hint
 msgid "Show unoptimized edges"
-msgstr ""
-
-#: tformmain.sbsnapgrid.hint
-msgid "Snap points to grid"
-msgstr ""
-
-#: tformmain.sbsnaphelp.hint
-msgid "Snaps points to helplines"
 msgstr ""
 
 #: tformmain.sdlc1.title
