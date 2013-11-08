@@ -132,10 +132,13 @@ object FormMain: TFormMain
     TabOrder = 1
     object toolbarPointsFrames: TToolBar
       Left = 0
-      Height = 110
-      Top = 156
+      Height = 170
+      Top = 250
       Width = 32
       HelpContext = 3
+      Align = alNone
+      ButtonHeight = 28
+      ButtonWidth = 28
       Caption = 'Point & frame properties'
       EdgeBorders = []
       Images = ilOptions
@@ -143,7 +146,7 @@ object FormMain: TFormMain
       object sbLock: TToolButton
         Left = 1
         Hint = 'Lock frame against moving'
-        Top = 22
+        Top = 10
         AllowAllUp = True
         ImageIndex = 17
         OnClick = sbLockClick
@@ -153,7 +156,7 @@ object FormMain: TFormMain
       object sbSharpen: TToolButton
         Left = 1
         Hint = 'Sharpen selected point(s) (edges)'
-        Top = 44
+        Top = 38
         AllowAllUp = True
         ImageIndex = 13
         OnClick = sbSharpenClick
@@ -163,13 +166,13 @@ object FormMain: TFormMain
       object ToolbarSep976: TToolButton
         Left = 1
         Top = 0
-        Width = 10
+        Width = 28
         Style = tbsSeparator
       end
       object sbEffect: TToolButton
         Left = 1
         Hint = 'Choose frame effect'
-        Top = 110
+        Top = 122
         AllowAllUp = True
         DropdownMenu = pmEffect
         ImageIndex = 16
@@ -191,7 +194,7 @@ object FormMain: TFormMain
       object sbColor: TToolButton
         Left = 1
         Hint = 'Choose frame color'
-        Top = 88
+        Top = 94
         AllowAllUp = True
         DropdownMenu = pmColor
         ImageIndex = 15
@@ -203,18 +206,20 @@ object FormMain: TFormMain
     end
     object toolbarTools: TToolBar
       Left = 0
-      Height = 156
+      Height = 200
       Top = 0
       Width = 32
       HelpContext = 3
-      AutoSize = True
+      Align = alNone
+      ButtonHeight = 28
+      ButtonWidth = 28
       Caption = 'Working tools'
       Images = ilTools
       TabOrder = 1
       object tbDel: TToolButton
         Left = 1
         Hint = 'Use this to delete points'
-        Top = 68
+        Top = 40
         Grouped = True
         ImageIndex = 2
         OnClick = tbDelClick
@@ -225,7 +230,7 @@ object FormMain: TFormMain
       object tbMove: TToolButton
         Left = 1
         Hint = 'Use this tool to select and move points'
-        Top = 24
+        Top = 12
         Down = True
         Grouped = True
         ImageIndex = 0
@@ -237,7 +242,7 @@ object FormMain: TFormMain
       object tbAdd: TToolButton
         Left = 1
         Hint = 'Use this tool to add points'
-        Top = 46
+        Top = 68
         Grouped = True
         ImageIndex = 1
         OnClick = tbAddClick
@@ -248,7 +253,7 @@ object FormMain: TFormMain
       object tbZoom: TToolButton
         Left = 1
         Hint = 'Use this to zoom in and out'
-        Top = 90
+        Top = 96
         DropdownMenu = pmZoom
         ImageIndex = 3
         OnClick = tbZoomClick
@@ -259,7 +264,7 @@ object FormMain: TFormMain
       object tbPointTools: TToolButton
         Left = 1
         Hint = '&Sharpen edges && blank lines'
-        Top = 112
+        Top = 124
         DropdownMenu = pmPoints
         ImageIndex = 4
         OnClick = tbPointToolsClick
@@ -270,7 +275,7 @@ object FormMain: TFormMain
       object tbGeo: TToolButton
         Left = 1
         Hint = 'Left click sets equilateral center, right click sets starting point'
-        Top = 134
+        Top = 152
         DropdownMenu = pmGeo
         ImageIndex = 8
         OnClick = tbGeoClick
@@ -281,7 +286,7 @@ object FormMain: TFormMain
       object ToolbarSep978: TToolButton
         Left = 1
         Top = 2
-        Width = 10
+        Width = 28
         Style = tbsSeparator
       end
     end
@@ -392,16 +397,18 @@ object FormMain: TFormMain
     TabOrder = 4
     object toolbarFiles: TToolBar
       Left = 0
-      Height = 40
+      Height = 31
       Top = 0
-      Width = 184
+      Width = 224
       HelpContext = 3
-      Align = alLeft
-      ButtonHeight = 32
-      ButtonWidth = 32
+      Align = alNone
+      ButtonHeight = 28
+      ButtonWidth = 28
       Caption = 'File operations'
+      Flat = False
       Images = ilWork
-      ShowCaptions = True
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 0
       object tbNew: TToolButton
         Left = 1
@@ -412,7 +419,7 @@ object FormMain: TFormMain
         ShowHint = True
       end
       object tbSave: TToolButton
-        Left = 161
+        Left = 95
         Top = 2
         Action = aSaveFile
         AllowAllUp = True
@@ -420,7 +427,7 @@ object FormMain: TFormMain
         ShowHint = True
       end
       object tbOpen: TToolButton
-        Left = 129
+        Left = 123
         Top = 2
         Action = aOpenFile
         AllowAllUp = True
@@ -430,38 +437,41 @@ object FormMain: TFormMain
         Style = tbsDropDown
       end
       object tbImportFrame: TToolButton
-        Left = 65
+        Left = 39
         Top = 2
         Action = aImportFrame
         ParentShowHint = False
         ShowHint = True
       end
       object tbImportShow: TToolButton
-        Left = 97
+        Left = 67
         Top = 2
         Action = aImportShow
         ParentShowHint = False
         ShowHint = True
       end
       object ToolbarSep973: TToolButton
-        Left = 33
+        Left = 29
         Top = 2
-        Width = 32
+        Width = 10
         Style = tbsSeparator
       end
     end
     object toolbarDisplay: TToolBar
-      Left = 232
-      Height = 24
+      Left = 185
+      Height = 31
       Top = 0
-      Width = 448
+      Width = 520
       HelpContext = 3
       Align = alNone
+      ButtonHeight = 28
+      ButtonWidth = 28
       Caption = 'Display options'
+      Flat = False
       Images = ilOptions
       TabOrder = 1
       object sbFlipX: TToolButton
-        Left = 129
+        Left = 411
         Hint = 'Flip at X-Axis'
         Top = 2
         AllowAllUp = True
@@ -471,7 +481,7 @@ object FormMain: TFormMain
         ShowHint = True
       end
       object sbShowPoints: TToolButton
-        Left = 257
+        Left = 203
         Hint = 'Show points along frame'
         Top = 2
         AllowAllUp = True
@@ -483,7 +493,7 @@ object FormMain: TFormMain
         Style = tbsDropDown
       end
       object sbFlipY: TToolButton
-        Left = 327
+        Left = 439
         Hint = 'Flip at Y-Axis'
         Top = 2
         AllowAllUp = True
@@ -493,19 +503,17 @@ object FormMain: TFormMain
         ShowHint = True
       end
       object sbShowNumPoints: TToolButton
-        Left = 350
+        Left = 271
         Hint = 'Show numbers of points'
         Top = 2
         AllowAllUp = True
-        DropdownMenu = pmCircles
         ImageIndex = 1
         OnClick = sbShowNumPointsClick
         ParentShowHint = False
         ShowHint = True
-        Style = tbsDropDown
       end
       object sbFullImg: TToolButton
-        Left = 187
+        Left = 135
         Hint = 'Show full background image'
         Top = 2
         AllowAllUp = True
@@ -517,91 +525,77 @@ object FormMain: TFormMain
         Style = tbsDropDown
       end
       object sbPartImg: TToolButton
-        Left = 59
+        Left = 175
         Hint = 'Show only part of background image'
         Top = 2
         AllowAllUp = True
-        DropdownMenu = pmBackImg
         ImageIndex = 9
         OnClick = sbPartImgClick
         ParentShowHint = False
         ShowHint = True
-        Style = tbsDropDown
       end
       object sbShowBackframe: TToolButton
-        Left = 385
+        Left = 299
         Hint = 'Show background frame'
         Top = 2
         AllowAllUp = True
-        DropdownMenu = pmCircles
         ImageIndex = 2
         OnClick = sbShowBackframeClick
         ParentShowHint = False
         ShowHint = True
-        Style = tbsDropDown
       end
       object sbNoImg: TToolButton
-        Left = 292
+        Left = 243
         Hint = 'Dont show background image'
         Top = 2
         AllowAllUp = True
-        Down = True
-        DropdownMenu = pmBackImg
         ImageIndex = 8
         OnClick = sbNoImgClick
         ParentShowHint = False
         ShowHint = True
-        Style = tbsDropDown
       end
       object sbShowLinks: TToolButton
-        Left = 1
+        Left = 327
         Hint = 'Show links to background frame'
-        Top = 24
+        Top = 2
         AllowAllUp = True
-        DropdownMenu = pmCircles
         ImageIndex = 3
         OnClick = sbShowLinksClick
         ParentShowHint = False
         ShowHint = True
-        Style = tbsDropDown
       end
       object sbShowReal: TToolButton
-        Left = 36
+        Left = 355
         Hint = 'Show unoptimized edges'
-        Top = 24
+        Top = 2
         AllowAllUp = True
-        DropdownMenu = pmCircles
         ImageIndex = 4
         OnClick = sbShowRealClick
         ParentShowHint = False
         ShowHint = True
-        Style = tbsDropDown
       end
       object sbSnapGrid: TToolButton
-        Left = 94
+        Left = 51
         Hint = 'Snap points to grid'
         Top = 2
         AllowAllUp = True
-        DropdownMenu = pmGrid
         ImageIndex = 7
         OnClick = sbSnapGridClick
         ParentShowHint = False
         ShowHint = True
-        Style = tbsDropDown
       end
       object sbCloseLoop: TToolButton
-        Left = 71
+        Left = 383
         Hint = 'Close loop by connecting last to first point'
-        Top = 24
+        Top = 2
         AllowAllUp = True
-        DropdownMenu = pmCircles
         ImageIndex = 5
         OnClick = sbCloseLoopClick
         ParentShowHint = False
         ShowHint = True
       end
       object sbShowGrid: TToolButton
-        Left = 24
+        Left = 11
         Hint = 'Show (and choose) grid'
         Top = 2
         AllowAllUp = True
@@ -615,32 +609,28 @@ object FormMain: TFormMain
       object ToolbarSep971: TToolButton
         Left = 1
         Top = 2
-        Width = 23
+        Width = 10
         Style = tbsSeparator
       end
       object sbRuler: TToolButton
-        Left = 222
+        Left = 107
         Hint = 'Display ruler to the left and top of the drawing area'
         Top = 2
         AllowAllUp = True
-        DropdownMenu = pmGrid
         ImageIndex = 18
         OnClick = sbRulerClick
         ParentShowHint = False
         ShowHint = True
-        Style = tbsDropDown
       end
       object sbSnapHelp: TToolButton
-        Left = 152
+        Left = 79
         Hint = 'Snaps points to helplines'
         Top = 2
         AllowAllUp = True
-        DropdownMenu = pmGrid
         ImageIndex = 19
         OnClick = sbSnapHelpClick
         ParentShowHint = False
         ShowHint = True
-        Style = tbsDropDown
       end
     end
   end
@@ -5200,14 +5190,6 @@ object FormMain: TFormMain
       OnClick = miToolAuxPointsClick
     end
   end
-  object odBitmap: TOpenDialog
-    Title = 'Open background image...'
-    FileName = '*.bmp'
-    Filter = 'Bitmaps|*.bmp'
-    InitialDir = 'd:\daten\wallpapers'
-    left = 400
-    top = 142
-  end
   object pmGeo: TPopupMenu
     Images = ilTools
     left = 296
@@ -5387,5 +5369,10 @@ object FormMain: TFormMain
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000
     }
+  end
+  object odBitmap: TOpenPictureDialog
+    Title = 'Open background image...'
+    left = 400
+    top = 142
   end
 end

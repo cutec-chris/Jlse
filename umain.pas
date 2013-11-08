@@ -28,7 +28,7 @@ interface
 uses
    LCLIntf, LCLType, LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
    StdCtrls, ExtCtrls, ComCtrls, ToolWin, Buttons, Spin, Menus, ImgList,
-   ActnList, Registry, ClipBrd, FileUtil, Math, uLaserFrames,
+   ActnList, Registry, ClipBrd, ExtDlgs, FileUtil, Math, uLaserFrames,
    uhelplines;
 
 const
@@ -257,7 +257,7 @@ type
     N7: TMenuItem;
     N8: TMenuItem;
     N9: TMenuItem;
-    odBitmap: TOpenDialog;
+    odBitmap: TOpenPictureDialog;
     odLC1: TOpenDialog;
     Panel1: TPanel;
     Panel2: TPanel;
@@ -2591,8 +2591,7 @@ end;
 
 procedure TFormMain.sbShowGridClick(Sender: TObject);
 begin
-   miUseGrid.Checked := not miUseGrid.Checked;
-   sbShowGrid.Down := miUseGrid.Checked;
+   miUseGrid.Checked := sbShowGrid.Down;
    Redraw;
 
 end;
@@ -2608,19 +2607,18 @@ begin
    miNoImg.Checked := true;
    sbNoImg.Down := miNoImg.Checked;
    Redraw;
-
 end;
 
 procedure TFormMain.sbPartImgClick(Sender: TObject);
 begin
-   miPartImg.Checked := true;
-   sbPartImg.Down := miPartImg.Checked;
+   miPartImg.Checked := sbPartImg.Down;
    Redraw;
 
 end;
 
 procedure TFormMain.sbFullImgClick(Sender: TObject);
 begin
+   Application.ProcessMessages;
    miFullImg.Checked := true;
    sbFullImg.Down := miFullImg.Checked;
    Redraw;
@@ -2629,6 +2627,7 @@ end;
 
 procedure TFormMain.sbFlipYClick(Sender: TObject);
 begin
+   Application.ProcessMessages;
    miFlipY.Checked := not miFlipY.Checked;
    sbFlipY.Down := miFlipY.Checked;
    Redraw;
@@ -2637,6 +2636,7 @@ end;
 
 procedure TFormMain.sbFlipXClick(Sender: TObject);
 begin
+   Application.ProcessMessages;
    miFlipX.Checked := not miFlipX.Checked;
    sbFlipX.Down := miFlipX.Checked;
    Redraw;
@@ -2645,6 +2645,7 @@ end;
 
 procedure TFormMain.sbShowPointsClick(Sender: TObject);
 begin
+   Application.ProcessMessages;
    miShowPoints.Checked := not miShowPoints.Checked;
    sbShowPoints.Down := miShowPoints.Checked;
    Redraw;
@@ -3404,12 +3405,16 @@ end;
 
 procedure TFormMain.aLoadBackImgExecute(Sender: TObject);
 var myf: TLaserFrame;
+  aPic: TPicture;
 begin
    myf := FFile.frames[Currentframe];
    if odBitmap.Execute then begin
       if FileExistsUTF8(odBitmap.Filename) { *Converted from FileExists* } then begin
+         aPic := TPicture.Create;
+         aPic.LoadFromFile(odBitmap.FileName);
          if myf.Bitmap=nil then myf.Bitmap := TBitmap.Create;
-         myf.Bitmap.LoadFromFile(odBitmap.Filename);
+         myf.Bitmap.Assign(aPic.Bitmap);
+         aPic.free;
          aLoadBackImg.Caption := 'Background image: '+ExtractFileName(odBitmap.Filename);
          myf := FFile.frames[currentframe];
          myf.ImgName := odBitmap.filename;
