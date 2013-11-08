@@ -90,8 +90,17 @@ type
     aChooseImgPart: TAction;
     aCopyFrameToClipboard: TAction;
     aCreateWavefile: TAction;
-    acFlipY: TAction;
-    ActionList1: TActionList;
+    aAdd: TAction;
+    aColor: TAction;
+    aBlank: TAction;
+    aEffect: TAction;
+    aSharpen: TAction;
+    aLock: TAction;
+    aGeo: TAction;
+    aPointTools: TAction;
+    aZoom: TAction;
+    aDelete: TAction;
+    aSelectMove: TAction;
     aCutFrameToClipboard: TAction;
     aDeleteFrame: TAction;
     aFrameDelay: TAction;
@@ -114,7 +123,6 @@ type
     dockFiles1: TPanel;
     dockTools: TPanel;
     ilOptions: TImageList;
-    ilTools: TImageList;
     ilWork: TImageList;
     imgTimeLine: TImageList;
     iTimeline: TImage;
@@ -135,8 +143,6 @@ type
     miCircles8: TMenuItem;
     miCirclesize: TMenuItem;
     miCloseloop: TMenuItem;
-    miColor0: TMenuItem;
-    miColor1: TMenuItem;
     miCopyFrame: TMenuItem;
     miCreatePreview: TMenuItem;
     miCutFrame: TMenuItem;
@@ -195,7 +201,6 @@ type
     miLastFile2: TMenuItem;
     miLastFile3: TMenuItem;
     miLastFile4: TMenuItem;
-    miLicense: TMenuItem;
     miLinkOverlay: TMenuItem;
     miLoad: TMenuItem;
     miMakeWave: TMenuItem;
@@ -248,7 +253,7 @@ type
     miZoom7: TMenuItem;
     miZoom8: TMenuItem;
     //mpPreview: TMediaPlayer;
-    myal: TActionList;
+    alWork: TActionList;
     menuMain: TMainMenu;
     N1: TMenuItem;
     N10: TMenuItem;
@@ -268,7 +273,6 @@ type
     panelLeft: TPanel;
     pmBackImg: TPopupMenu;
     pmCircles: TPopupMenu;
-    pmColor: TPopupMenu;
     pmEffect: TPopupMenu;
     pmFrame: TPopupMenu;
     pmGeo: TPopupMenu;
@@ -333,7 +337,9 @@ type
     ToolbarSep978: TToolButton;
     toolbarTools: TToolBar;
     toolwinTimeline: TPanel;
+    procedure aAddExecute(Sender: TObject);
     procedure aAddFrameExecute(Sender: TObject);
+    procedure aBlankExecute(Sender: TObject);
     procedure acFlipYExecute(Sender: TObject);
     procedure aCheckAllLinksExecute(Sender: TObject);
     procedure aCheckFrameLinksExecute(Sender: TObject);
@@ -341,22 +347,29 @@ type
     procedure aCopyFrameToClipboardExecute(Sender: TObject);
     procedure aCreateWavefileExecute(Sender: TObject);
     procedure aCutFrameToClipboardExecute(Sender: TObject);
+    procedure aDeleteExecute(Sender: TObject);
     procedure aDeleteFrameExecute(Sender: TObject);
+    procedure aEffectExecute(Sender: TObject);
     procedure aFrameDelayExecute(Sender: TObject);
     procedure aFrameEffectParamExecute(Sender: TObject);
     procedure aFrameMorphExecute(Sender: TObject);
     procedure aFramePreviewExecute(Sender: TObject);
-    procedure aHelpContentsExecute(Sender: TObject);
+    procedure aGeoExecute(Sender: TObject);
     procedure aImportFrameExecute(Sender: TObject);
     procedure aImportShowExecute(Sender: TObject);
     procedure aLoadBackImgExecute(Sender: TObject);
+    procedure aLockExecute(Sender: TObject);
     procedure aNewFileExecute(Sender: TObject);
     procedure aOpenFileExecute(Sender: TObject);
     procedure aPasteFrameFromClipboardExecute(Sender: TObject);
+    procedure aPointToolsExecute(Sender: TObject);
     procedure aRenameFrameExecute(Sender: TObject);
     procedure aSaveAsFileExecute(Sender: TObject);
     procedure aSaveFileExecute(Sender: TObject);
+    procedure aSelectMoveExecute(Sender: TObject);
+    procedure aSharpenExecute(Sender: TObject);
     procedure aShowPreviewExecute(Sender: TObject);
+    procedure aZoomExecute(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
@@ -386,8 +399,6 @@ type
     procedure miCircles8Click(Sender: TObject);
     procedure miCirclesizeClick(Sender: TObject);
     procedure miCloseloopClick(Sender: TObject);
-    procedure miColor0Click(Sender: TObject);
-    procedure miColor1Click(Sender: TObject);
     procedure miDelaysClick(Sender: TObject);
     procedure miDisplayPanelClick(Sender: TObject);
     procedure miEffectDFlipClick(Sender: TObject);
@@ -468,7 +479,6 @@ type
     procedure sbAnimClick(Sender: TObject);
     procedure sbBlankClick(Sender: TObject);
     procedure sbCloseLoopClick(Sender: TObject);
-    procedure sbColorClick(Sender: TObject);
     procedure sbDelClick(Sender: TObject);
     procedure sbEffectClick(Sender: TObject);
     procedure sbFlipXClick(Sender: TObject);
@@ -489,8 +499,6 @@ type
     procedure sbShowRealClick(Sender: TObject);
     procedure sbSnapGridClick(Sender: TObject);
     procedure sbSnapHelpClick(Sender: TObject);
-    procedure tbAddClick(Sender: TObject);
-    procedure tbDelClick(Sender: TObject);
     procedure tbGeoClick(Sender: TObject);
     procedure tbLiveClick(Sender: TObject);
     procedure tbMoveClick(Sender: TObject);
@@ -1679,8 +1687,6 @@ begin
           MyColors[1, 4] := GetValueDefault('Link1', clYellow);
           MyColorNames[0] := GetValueDefault('Name0', '&Red');
           MyColorNames[1] := GetValueDefault('Name1', '&Blue');
-          miColor0.Caption := MyColorNames[0];
-          miColor1.Caption := MyColorNames[1];
           MyTextColors[0] := GetValueDefault('ThumbText', clLime);
           MyOtherColors[myoc_bg] := GetValueDefault('Background', clBlack);
           MyOtherColors[myoc_help] := GetValueDefault('HelpLines', clLime);
@@ -2025,9 +2031,19 @@ begin
   workstate := sDel;
 end;
 
+procedure TFormMain.sbEffectClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFormMain.sbAnimClick(Sender: TObject);
 begin
   workstate := sAnim;
+end;
+
+procedure TFormMain.sbBlankClick(Sender: TObject);
+begin
+
 end;
 
 procedure TFormMain.sbPointTypeClick(Sender: TObject);
@@ -2522,34 +2538,6 @@ begin
 
 end;
 
-procedure TFormMain.miColor0Click(Sender: TObject);
-var
-  myf: TLaserFrame;
-begin
-  FileChanged := True;
-  myf := FFile.frames[Currentframe];
-  if (myf.Bits and 1) = 1 then
-    Dec(myf.Bits);
-  //if (myf.bits and 1)=0 then Inc(myf.bits);
-  lbThumbs.Refresh;
-  miColor0.Checked := True;
-  Redraw;
-end;
-
-procedure TFormMain.miColor1Click(Sender: TObject);
-var
-  myf: TLaserFrame;
-begin
-  FileChanged := True;
-  myf := FFile.frames[Currentframe];
-  //if (myf.bits and 1)=1 then Dec(myf.bits);
-  if (myf.Bits and 1) = 0 then
-    Inc(myf.Bits);
-  lbThumbs.Refresh;
-  miColor1.Checked := True;
-  Redraw;
-end;
-
 procedure TFormMain.miEffectSlideClick(Sender: TObject);
 var
   myf: TLaserFrame;
@@ -2724,8 +2712,6 @@ begin
   MyColors[1, myc_link] := FormColors.imgLink1.Tag;
   MyColorNames[0] := FormColors.editColor0.Text;
   MyColorNames[1] := FormColors.editColor1.Text;
-  miColor0.Caption := MyColorNames[0];
-  miColor1.Caption := MyColorNames[1];
   MyTextColors[mytc_thumb] := FormColors.imgThumbText.Tag;
   MyOtherColors[myoc_bg] := FormColors.imgBackground.Tag;
   MyOtherColors[myoc_help] := FormColors.imgHelpLines.Tag;
@@ -2847,6 +2833,46 @@ begin
   FileChanged := False;
 end;
 
+procedure TFormMain.aSelectMoveExecute(Sender: TObject);
+begin
+  workstate := sMove;
+  FormSketchpad.pad.Cursor := crMovePoint;
+end;
+
+procedure TFormMain.aSharpenExecute(Sender: TObject);
+var
+  myf: TLaserFrame;
+  myp: TSmallPoint;
+  i: integer;
+begin
+  FileChanged := True;
+  myf := FFile.frames[currentframe];
+  if FormSketchpad.MultiSelect then
+  begin
+    for i := 0 to Pred(myf.Points.Count) do
+    begin
+      myp := myf.Points[i];
+      if ((myp.p and 1) > 0) then
+        if ((myp.bits and 1) = 0) then
+          Inc(myp.bits)
+        else
+          Dec(myp.bits);
+    end;
+  end
+  else
+  begin
+    if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
+    begin
+      myp := myf.Points[SelectedPoint];
+      if ((myp.bits and 1) = 0) then
+        Inc(myp.bits)
+      else
+        Dec(myp.bits);
+    end;
+  end;
+  Redraw;
+end;
+
 procedure TFormMain.aSaveAsFileExecute(Sender: TObject);
 begin
   sdLC1.Filename := FFile.Filename;
@@ -2923,6 +2949,29 @@ begin
   DeleteFrame(CurrentFrame, myf);
 end;
 
+procedure TFormMain.aEffectExecute(Sender: TObject);
+var
+  myf: TLaserFrame;
+begin
+  FileChanged := True;
+  myf := FFile.frames[Currentframe];
+  Inc(myf.Effect);
+  if myf.Effect > 7 then
+    myf.Effect := 0;
+  case myf.Effect of
+    effect_slide: miEffectSlide.Checked := True;
+    effect_morph: miEffectMorph.Checked := True;
+    effect_plode: miEffectPlode.Checked := True;
+    effect_xflip: miEffectXFlip.Checked := True;
+    effect_yflip: miEffectYFlip.Checked := True;
+    effect_dflip: miEffectDFlip.Checked := True;
+    effect_rotate: miEffectRotate.Checked := True;
+    effect_drain: miEffectDrain.Checked := True;
+  end;
+  lbThumbs.Refresh;
+  Redraw;
+end;
+
 procedure TFormMain.aImportFrameExecute(Sender: TObject);
 begin
   FormImport.lb.Items.Clear;
@@ -2969,11 +3018,6 @@ begin
   end;
   lbThumbs.Refresh;
   Redraw;
-end;
-
-procedure TFormMain.aHelpContentsExecute(Sender: TObject);
-begin
-  //Application.HelpJump('HelpContents');
 end;
 
 procedure TFormMain.sbShowNumPointsClick(Sender: TObject);
@@ -3030,6 +3074,11 @@ begin
   Redraw;
 end;
 
+procedure TFormMain.sbLockClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFormMain.sbFlipXClick(Sender: TObject);
 begin
   Application.ProcessMessages;
@@ -3062,29 +3111,6 @@ begin
     CanClose := True;
 end;
 
-procedure TFormMain.sbEffectClick(Sender: TObject);
-var
-  myf: TLaserFrame;
-begin
-  FileChanged := True;
-  myf := FFile.frames[Currentframe];
-  Inc(myf.Effect);
-  if myf.Effect > 7 then
-    myf.Effect := 0;
-  case myf.Effect of
-    effect_slide: miEffectSlide.Checked := True;
-    effect_morph: miEffectMorph.Checked := True;
-    effect_plode: miEffectPlode.Checked := True;
-    effect_xflip: miEffectXFlip.Checked := True;
-    effect_yflip: miEffectYFlip.Checked := True;
-    effect_dflip: miEffectDFlip.Checked := True;
-    effect_rotate: miEffectRotate.Checked := True;
-    effect_drain: miEffectDrain.Checked := True;
-  end;
-  lbThumbs.Refresh;
-  Redraw;
-end;
-
 procedure TFormMain.aAddFrameExecute(Sender: TObject);
 var
   myf: TLaserFrame;
@@ -3092,6 +3118,46 @@ begin
   myf := FFile.Add;
   lbThumbs.Items.Add('');
   FormSketchpad.sbFrames.Max := Pred(FFile.Count);
+end;
+
+procedure TFormMain.aBlankExecute(Sender: TObject);
+var
+  myf: TLaserFrame;
+  myp: TSmallPoint;
+  i: integer;
+begin
+  FileChanged := True;
+  myf := FFile.frames[currentframe];
+  if FormSketchpad.MultiSelect then
+  begin
+    for i := 0 to Pred(myf.Points.Count) do
+    begin
+      myp := myf.Points[i];
+      if ((myp.p and 1) > 0) then
+        if ((myp.bits and 2) = 0) then
+          Inc(myp.bits, 2)
+        else
+          Dec(myp.bits, 2);
+    end;
+  end
+  else
+  begin
+    if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
+    begin
+      myp := myf.Points[SelectedPoint];
+      if ((myp.bits and 2) = 0) then
+        Inc(myp.bits, 2)
+      else
+        Dec(myp.bits, 2);
+    end;
+  end;
+  Redraw;
+end;
+
+procedure TFormMain.aAddExecute(Sender: TObject);
+begin
+  workstate := sAdd;
+  FormSketchpad.pad.Cursor := crAddPoint;
 end;
 
 procedure TFormMain.acFlipYExecute(Sender: TObject);
@@ -3143,30 +3209,6 @@ begin
       myf.Morph := i;
   end;
   lbThumbs.Refresh;
-end;
-
-procedure TFormMain.tbMoveClick(Sender: TObject);
-begin
-  workstate := sMove;
-  FormSketchpad.pad.Cursor := crMovePoint;
-end;
-
-procedure TFormMain.tbAddClick(Sender: TObject);
-begin
-  workstate := sAdd;
-  FormSketchpad.pad.Cursor := crAddPoint;
-end;
-
-procedure TFormMain.tbDelClick(Sender: TObject);
-begin
-  workstate := sDel;
-  FormSketchpad.pad.Cursor := crDelPoint;
-end;
-
-procedure TFormMain.tbZoomClick(Sender: TObject);
-begin
-  workstate := sZoom;
-  FormSketchpad.pad.Cursor := crZoom;
 end;
 
 procedure TFormMain.toolbarFilesClose(Sender: TObject);
@@ -3342,6 +3384,17 @@ begin
    else
       FormDebug.Caption := 'waveform preview -- no wave available...';
    FormDebug.Show;}
+end;
+
+procedure TFormMain.aGeoExecute(Sender: TObject);
+begin
+  case tbGeo.ImageIndex of
+    8:
+    begin
+      workstate := sEquilateral;
+      FormSketchpad.pad.Cursor := crMovePoint;
+    end;
+  end;
 end;
 
 procedure TFormMain.aCreateWavefileExecute(Sender: TObject);
@@ -3878,6 +3931,11 @@ begin
   end;
 end;
 
+procedure TFormMain.sbSharpenClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFormMain.miShowPointsClick(Sender: TObject);
 begin
   miShowPoints.Checked := not miShowPoints.Checked;
@@ -4018,6 +4076,21 @@ begin
   end;
 end;
 
+procedure TFormMain.aLockExecute(Sender: TObject);
+var
+  myf: TLaserFrame;
+begin
+  FileChanged := True;
+  myf := FFile.frames[Currentframe];
+  if (myf.Bits and 2) = 0 then
+    Inc(myf.Bits, 2)
+  else
+    Dec(myf.Bits, 2);
+  sbLock.Down := ((myf.Bits and 2) = 2);
+  lbThumbs.Refresh;
+  Redraw;
+end;
+
 procedure TFormMain.pmiChoosePartClick(Sender: TObject);
 var
   myf: TLaserFrame;
@@ -4062,6 +4135,11 @@ begin
   Redraw;
 end;
 
+procedure TFormMain.tbGeoClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFormMain.miSnapHelpClick(Sender: TObject);
 begin
   miSnapHelp.Checked := not miSnapHelp.Checked;
@@ -4096,6 +4174,11 @@ begin
     else
       MessageDlg('You need to compile this show first.', mtError, [mbOK], 0);
   end;
+end;
+
+procedure TFormMain.tbPointToolsClick(Sender: TObject);
+begin
+
 end;
 
 procedure TFormMain.tbStopClick(Sender: TObject);
@@ -4189,6 +4272,11 @@ procedure TFormMain.tbLiveClick(Sender: TObject);
 begin
   tbLive.Down := not tbLive.Down;
   ReCreatePreview;
+end;
+
+procedure TFormMain.tbMoveClick(Sender: TObject);
+begin
+
 end;
 
 procedure TFormMain.miFrameFlipYClick(Sender: TObject);
@@ -4352,6 +4440,12 @@ begin
   end;
 end;
 
+procedure TFormMain.aZoomExecute(Sender: TObject);
+begin
+  workstate := sZoom;
+  FormSketchpad.pad.Cursor := crZoom;
+end;
+
 procedure TFormMain.RotateFrame(f: TLaserFrame; degrees: real);
 var
   myp: TSmallPoint;
@@ -4484,33 +4578,7 @@ begin
   end;
 end;
 
-procedure TFormMain.aCutFrameToClipboardExecute(Sender: TObject);
-begin
-  DeleteFrame(CurrentFrame, ClipBoardFrame);
-end;
-
-procedure TFormMain.miToolSharpenClick(Sender: TObject);
-begin
-  tbPointTools.ImageIndex := miToolSharpen.ImageIndex;
-  tbPointTools.Hint := miToolSharpen.Hint;
-  tbPointToolsClick(Sender);
-end;
-
-procedure TFormMain.miToolLinkClick(Sender: TObject);
-begin
-  tbPointTools.ImageIndex := miToolLink.ImageIndex;
-  tbPointTools.Hint := miToolLink.Hint;
-  tbPointToolsClick(Sender);
-end;
-
-procedure TFormMain.miToolMoveRotateClick(Sender: TObject);
-begin
-  tbPointTools.ImageIndex := miToolMoveRotate.ImageIndex;
-  tbPointTools.Hint := miToolMoveRotate.Hint;
-  tbPointToolsClick(Sender);
-end;
-
-procedure TFormMain.tbPointToolsClick(Sender: TObject);
+procedure TFormMain.aPointToolsExecute(Sender: TObject);
 begin
   case tbPointTools.ImageIndex of
     6:
@@ -4536,104 +4604,36 @@ begin
   end;
 end;
 
-procedure TFormMain.sbSharpenClick(Sender: TObject);
-var
-  myf: TLaserFrame;
-  myp: TSmallPoint;
-  i: integer;
+procedure TFormMain.aCutFrameToClipboardExecute(Sender: TObject);
 begin
-  FileChanged := True;
-  myf := FFile.frames[currentframe];
-  if FormSketchpad.MultiSelect then
-  begin
-    for i := 0 to Pred(myf.Points.Count) do
-    begin
-      myp := myf.Points[i];
-      if ((myp.p and 1) > 0) then
-        if ((myp.bits and 1) = 0) then
-          Inc(myp.bits)
-        else
-          Dec(myp.bits);
-    end;
-  end
-  else
-  begin
-    if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
-    begin
-      myp := myf.Points[SelectedPoint];
-      if ((myp.bits and 1) = 0) then
-        Inc(myp.bits)
-      else
-        Dec(myp.bits);
-    end;
-  end;
-  Redraw;
+  DeleteFrame(CurrentFrame, ClipBoardFrame);
 end;
 
-procedure TFormMain.sbBlankClick(Sender: TObject);
-var
-  myf: TLaserFrame;
-  myp: TSmallPoint;
-  i: integer;
+procedure TFormMain.aDeleteExecute(Sender: TObject);
 begin
-  FileChanged := True;
-  myf := FFile.frames[currentframe];
-  if FormSketchpad.MultiSelect then
-  begin
-    for i := 0 to Pred(myf.Points.Count) do
-    begin
-      myp := myf.Points[i];
-      if ((myp.p and 1) > 0) then
-        if ((myp.bits and 2) = 0) then
-          Inc(myp.bits, 2)
-        else
-          Dec(myp.bits, 2);
-    end;
-  end
-  else
-  begin
-    if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
-    begin
-      myp := myf.Points[SelectedPoint];
-      if ((myp.bits and 2) = 0) then
-        Inc(myp.bits, 2)
-      else
-        Dec(myp.bits, 2);
-    end;
-  end;
-  Redraw;
+  workstate := sDel;
+  FormSketchpad.pad.Cursor := crDelPoint;
 end;
 
-procedure TFormMain.sbColorClick(Sender: TObject);
+procedure TFormMain.miToolSharpenClick(Sender: TObject);
 begin
-  FileChanged := True;
-  if miColor0.Checked then
-  begin
-    miColor1.Checked := True;
-    miColor1Click(Sender);
-  end
-  else
-  begin
-    miColor0.Checked := True;
-    miColor0Click(Sender);
-  end;
-
+  tbPointTools.ImageIndex := miToolSharpen.ImageIndex;
+  tbPointTools.Hint := miToolSharpen.Hint;
+  tbPointToolsClick(Sender);
 end;
 
-procedure TFormMain.sbLockClick(Sender: TObject);
-var
-  myf: TLaserFrame;
+procedure TFormMain.miToolLinkClick(Sender: TObject);
 begin
-  FileChanged := True;
-  myf := FFile.frames[Currentframe];
-  if (myf.Bits and 2) = 0 then
-    Inc(myf.Bits, 2)
-  else
-    Dec(myf.Bits, 2);
-  sbLock.Down := ((myf.Bits and 2) = 2);
-  lbThumbs.Refresh;
-  Redraw;
+  tbPointTools.ImageIndex := miToolLink.ImageIndex;
+  tbPointTools.Hint := miToolLink.Hint;
+  tbPointToolsClick(Sender);
+end;
 
+procedure TFormMain.miToolMoveRotateClick(Sender: TObject);
+begin
+  tbPointTools.ImageIndex := miToolMoveRotate.ImageIndex;
+  tbPointTools.Hint := miToolMoveRotate.Hint;
+  tbPointToolsClick(Sender);
 end;
 
 procedure TFormMain.miEffectDrainClick(Sender: TObject);
@@ -4863,18 +4863,6 @@ begin
     end;
   FormMain.Redraw;
 end;
-
-procedure TFormMain.tbGeoClick(Sender: TObject);
-begin
-  case tbGeo.ImageIndex of
-    8:
-    begin
-      workstate := sEquilateral;
-      FormSketchpad.pad.Cursor := crMovePoint;
-    end;
-  end;
-end;
-
 procedure TFormMain.TimeLineRedraw;
 var
   iFrame: integer;
@@ -4992,6 +4980,11 @@ procedure TFormMain.tbTimeLineZoomOutClick(Sender: TObject);
 begin
   tbTimeLineZoomIn.Tag := tbTimeLineZoomIn.Tag * 2;
   TimeLineRedraw;
+end;
+
+procedure TFormMain.tbZoomClick(Sender: TObject);
+begin
+
 end;
 
 procedure TFormMain.miTimelineClick(Sender: TObject);

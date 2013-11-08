@@ -719,10 +719,6 @@ begin
           3: FormMain.miEffectXFlip.Checked := True;
           4: FormMain.miEffectYFlip.Checked := True;
         end;
-        if (TLaserFrame(FormMain.FFile.Frames[sbFrames.Position]).Bits and 1) = 0 then
-          FormMain.miColor0.Checked := True
-        else
-          FormMain.miColor1.Checked := True;
         FormMain.sbLock.Down :=
           (TLaserFrame(FormMain.FFile.Frames[sbFrames.Position]).Bits and 2) = 2;
         FormMain.lbThumbs.ItemIndex := sbFrames.Position;

@@ -129,6 +129,15 @@ msgstr ""
 msgid "&Search in:"
 msgstr ""
 
+#: tformmain.aadd.caption
+msgid "aAdd"
+msgstr ""
+
+#: tformmain.aadd.hint
+msgctxt "TFORMMAIN.AADD.HINT"
+msgid "Use this tool to add points"
+msgstr ""
+
 #: tformmain.aaddframe.caption
 msgid "&Add frame"
 msgstr ""
@@ -137,8 +146,13 @@ msgstr ""
 msgid "Add another frame at the end of the show"
 msgstr ""
 
-#: tformmain.acflipy.caption
-msgid "acFlipY"
+#: tformmain.ablank.caption
+msgid "aBlank"
+msgstr ""
+
+#: tformmain.ablank.hint
+msgctxt "TFORMMAIN.ABLANK.HINT"
+msgid "Blank after selected point(s)"
 msgstr ""
 
 #: tformmain.acheckalllinks.caption
@@ -161,6 +175,15 @@ msgstr ""
 msgid "Choose part of image..."
 msgstr ""
 
+#: tformmain.acolor.caption
+msgid "aColor"
+msgstr ""
+
+#: tformmain.acolor.hint
+msgctxt "TFORMMAIN.ACOLOR.HINT"
+msgid "Choose frame color"
+msgstr ""
+
 #: tformmain.acopyframetoclipboard.caption
 msgid "&Copy frame to clipboard"
 msgstr ""
@@ -177,12 +200,30 @@ msgstr ""
 msgid "C&ut frame to clipboard"
 msgstr ""
 
+#: tformmain.adelete.caption
+msgid "aDelete"
+msgstr ""
+
+#: tformmain.adelete.hint
+msgctxt "TFORMMAIN.ADELETE.HINT"
+msgid "Use this to delete points"
+msgstr ""
+
 #: tformmain.adeleteframe.caption
 msgid "&Delete frame"
 msgstr ""
 
 #: tformmain.adeleteframe.hint
 msgid "Delete this frame"
+msgstr ""
+
+#: tformmain.aeffect.caption
+msgid "aEffect"
+msgstr ""
+
+#: tformmain.aeffect.hint
+msgctxt "TFORMMAIN.AEFFECT.HINT"
+msgid "Choose frame effect"
 msgstr ""
 
 #: tformmain.aframedelay.caption
@@ -217,6 +258,14 @@ msgstr ""
 msgid "Show wave preview of this frame"
 msgstr ""
 
+#: tformmain.ageo.caption
+msgid "aGeo"
+msgstr ""
+
+#: tformmain.ageo.hint
+msgid "ick sets equilateral center, right click sets starting point"
+msgstr ""
+
 #: tformmain.ahelpcontents.caption
 msgid "Help &Contents"
 msgstr ""
@@ -245,6 +294,15 @@ msgstr ""
 msgid "Background image: n/a"
 msgstr ""
 
+#: tformmain.alock.caption
+msgid "aLock"
+msgstr ""
+
+#: tformmain.alock.hint
+msgctxt "TFORMMAIN.ALOCK.HINT"
+msgid "Lock frame against moving"
+msgstr ""
+
 #: tformmain.anewfile.caption
 msgid "&New"
 msgstr ""
@@ -263,6 +321,10 @@ msgstr ""
 
 #: tformmain.apasteframefromclipboard.caption
 msgid "&Paste frame from clipboard"
+msgstr ""
+
+#: tformmain.apointtools.caption
+msgid "aPointTools"
 msgstr ""
 
 #: tformmain.arenameframe.caption
@@ -289,12 +351,39 @@ msgstr ""
 msgid "Save file"
 msgstr ""
 
+#: tformmain.aselectmove.caption
+msgid "aSelectMove"
+msgstr ""
+
+#: tformmain.aselectmove.hint
+msgctxt "TFORMMAIN.ASELECTMOVE.HINT"
+msgid "Use this tool to select and move points"
+msgstr ""
+
+#: tformmain.asharpen.caption
+msgid "aSharpen"
+msgstr ""
+
+#: tformmain.asharpen.hint
+msgctxt "TFORMMAIN.ASHARPEN.HINT"
+msgid "Sharpen selected point(s) (edges)"
+msgstr ""
+
 #: tformmain.ashowpreview.caption
 msgid "Show &preview"
 msgstr ""
 
 #: tformmain.ashowpreview.hint
 msgid "Show a screen preview of the show"
+msgstr ""
+
+#: tformmain.azoom.caption
+msgid "aZoom"
+msgstr ""
+
+#: tformmain.azoom.hint
+msgctxt "TFORMMAIN.AZOOM.HINT"
+msgid "Use this to zoom in and out"
 msgstr ""
 
 #: tformmain.caption
@@ -363,14 +452,6 @@ msgstr ""
 
 #: tformmain.micloseloop.caption
 msgid "&Close loop"
-msgstr ""
-
-#: tformmain.micolor0.caption
-msgid "&Red"
-msgstr ""
-
-#: tformmain.micolor1.caption
-msgid "&Blue"
 msgstr ""
 
 #: tformmain.midelays.caption
@@ -804,6 +885,7 @@ msgid "&Choose part of image..."
 msgstr ""
 
 #: tformmain.sbblank.hint
+msgctxt "tformmain.sbblank.hint"
 msgid "Blank after selected point(s)"
 msgstr ""
 
@@ -812,15 +894,22 @@ msgid "Close loop by connecting last to first point"
 msgstr ""
 
 #: tformmain.sbcolor.hint
+msgctxt "tformmain.sbcolor.hint"
 msgid "Choose frame color"
 msgstr ""
 
 #: tformmain.sbeffect.hint
+msgctxt "tformmain.sbeffect.hint"
 msgid "Choose frame effect"
 msgstr ""
 
 #: tformmain.sbflipx.hint
 msgid "Flip at X-Axis"
+msgstr ""
+
+#: tformmain.sbflipy.caption
+msgctxt "TFORMMAIN.SBFLIPY.CAPTION"
+msgid "acFlipY"
 msgstr ""
 
 #: tformmain.sbframe.panels[0].text
@@ -836,6 +925,7 @@ msgid "Show full background image"
 msgstr ""
 
 #: tformmain.sblock.hint
+msgctxt "tformmain.sblock.hint"
 msgid "Lock frame against moving"
 msgstr ""
 
@@ -852,6 +942,7 @@ msgid "Display ruler to the left and top of the drawing area"
 msgstr ""
 
 #: tformmain.sbsharpen.hint
+msgctxt "tformmain.sbsharpen.hint"
 msgid "Sharpen selected point(s) (edges)"
 msgstr ""
 
@@ -891,25 +982,9 @@ msgstr ""
 msgid "Save Yoghurt file..."
 msgstr ""
 
-#: tformmain.tbadd.hint
-msgid "Use this tool to add points"
-msgstr ""
-
-#: tformmain.tbdel.hint
-msgid "Use this to delete points"
-msgstr ""
-
-#: tformmain.tbgeo.hint
-msgid "Left click sets equilateral center, right click sets starting point"
-msgstr ""
-
-#: tformmain.tbmove.hint
-msgid "Use this tool to select and move points"
-msgstr ""
-
 #: tformmain.tbpointtools.hint
 msgctxt "tformmain.tbpointtools.hint"
-msgid "&Sharpen edges && blank lines"
+msgid "Use this tools to modify points"
 msgstr ""
 
 #: tformmain.tbtimeline.caption
@@ -930,10 +1005,6 @@ msgstr ""
 
 #: tformmain.tbtimelinezoomout.caption
 msgid "tbTimelineZoomOut"
-msgstr ""
-
-#: tformmain.tbzoom.hint
-msgid "Use this to zoom in and out"
 msgstr ""
 
 #: tformmain.toolbardisplay.caption
