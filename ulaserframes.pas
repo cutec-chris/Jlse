@@ -73,7 +73,7 @@ type
     property Frames[FrameIndex: integer]: TLaserFrame read GetFrames;
   end;
 
-  TSmallPoint = class(TObject)
+  TLaserPoint = class(TObject)
   public
     Caption: string[5];
     X, Y: word;
@@ -82,7 +82,7 @@ type
     overlay: boolean;
     constructor Create;
     destructor Destroy; reintroduce;
-    procedure Assign(sp: TSmallPoint);
+    procedure Assign(sp: TLaserPoint);
   end;
 
 implementation
@@ -148,7 +148,7 @@ var
   f: file;
   i: integer;
   fFrame: TLaserFrame;
-  pPoint: TSmallPoint;
+  pPoint: TLaserPoint;
   s1: array[1..4] of char;
   s2: array[1..11] of char;
   w: word;
@@ -289,7 +289,7 @@ begin
               BlockRead(f, s2, 11)
             else
               BlockRead(f, s2, 9);
-            pPoint := TSmallPoint.Create;
+            pPoint := TLaserPoint.Create;
             pPoint.Caption := s2[1] + s2[2] + s2[3] + s2[4] + s2[5];
             if Pos(#0, pPoint.Caption) > 0 then
               pPoint.Caption := Copy(pPoint.Caption, 1, Pos(#0, pPoint.Caption) - 1);
@@ -365,7 +365,7 @@ end;
 procedure TLaserFrame.Assign(sf: TLaserFrame);
 var
   i, j: integer;
-  newp, myp: TSmallPoint;
+  newp, myp: TLaserPoint;
 begin
   self.Bitmap.Assign(sf.Bitmap);
   self.Bits := sf.Bits;
@@ -402,28 +402,28 @@ begin
   self.Points.Clear;
   for i := 0 to Pred(sf.Points.Count) do
   begin
-    newp := TSmallPoint.Create;
+    newp := TLaserPoint.Create;
     myp := sf.Points[i];
     newp.Assign(myp);
     self.Points.add(newp);
   end;
 end;
 
-{ TSmallPoint }
+{ TLaserPoint }
 
-constructor TSmallPoint.Create;
+constructor TLaserPoint.Create;
 begin
   p := -1;
   overlay := False;
   inherited Create;
 end;
 
-destructor TSmallPoint.Destroy;
+destructor TLaserPoint.Destroy;
 begin
   inherited Destroy;
 end;
 
-procedure TSmallPoint.Assign(sp: TSmallPoint);
+procedure TLaserPoint.Assign(sp: TLaserPoint);
 begin
   Caption := sp.Caption;
   x := sp.X;

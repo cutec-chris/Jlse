@@ -78,7 +78,7 @@ type
     Op: Tstates;
     Pos: integer;
     x, y: byte;
-    Point: TSmallPoint;
+    Point: TLaserPoint;
   end;
 
   { TFormMain }
@@ -735,7 +735,7 @@ procedure TFormMain.FrameToArray(f: TLaserFrame; var mya: atp;
   var myb: atb; var framed: longint);
 var
   i, j: integer;
-  p, np, pp: TSmallPoint;
+  p, np, pp: TLaserPoint;
   dx, dy: integer;
   ax, ay: word;
   tx, ty, t, tsub: word;
@@ -1078,7 +1078,7 @@ var
   ps: array of TPoint;
   i: integer;
   iPointCount: integer;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
 begin
   iPointCount := f.Points.Count;
   SetLength(ps, iPointCount);
@@ -1116,7 +1116,7 @@ var
   ps: array of TPoint;
   i: integer;
   iPointCount: integer;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   p1, p2: TPoint;
   cl: TColor;
   circlefactor: integer;
@@ -1178,11 +1178,11 @@ begin
             p1.y := (ps[i].y + ps[i - 1].y) div 2;
             p2.x := (ps[i + 1].x + ps[i].x) div 2;
             p2.y := (ps[i + 1].y + ps[i].y) div 2;
-            if ((TSmallPoint(f.Points[i]).bits and 1) = 0) then
+            if ((TLaserPoint(f.Points[i]).bits and 1) = 0) then
               PolyBezier([p1, ps[i], ps[i], p2]);
             if Length(ps) > 2 then
             begin
-              if ((TSmallPoint(f.Points[0]).bits and 1) = 0) then
+              if ((TLaserPoint(f.Points[0]).bits and 1) = 0) then
               begin
                 p1.x := (ps[0].x + ps[Length(ps) - 1].x) div 2;
                 p1.y := (ps[0].y + ps[Length(ps) - 1].y) div 2;
@@ -1190,7 +1190,7 @@ begin
                 p2.y := (ps[1].y + ps[0].y) div 2;
                 PolyBezier([p1, ps[0], ps[0], p2]);
               end;
-              if ((TSmallPoint(f.Points[Length(ps) - 1]).bits and 1) = 0) then
+              if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 1) = 0) then
               begin
                 p1.x := (ps[Length(ps) - 1].x + ps[Length(ps) - 2].x) div 2;
                 p1.y := (ps[Length(ps) - 1].y + ps[Length(ps) - 2].y) div 2;
@@ -1204,7 +1204,7 @@ begin
         Font.Color := clNorm;
         for i := 0 to Length(ps) - 2 do
         begin
-          if ((TSmallPoint(f.Points[i]).bits and 2) = 0) then
+          if ((TLaserPoint(f.Points[i]).bits and 2) = 0) then
           begin
             Pen.Width := 2;
             Pen.Style := psSolid;
@@ -1220,7 +1220,7 @@ begin
       end;
       if (miCloseLoop.Checked) and (Length(ps) > 2) then
       begin
-        if ((TSmallPoint(f.Points[Length(ps) - 1]).bits and 2) = 0) then
+        if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 2) = 0) then
         begin
           Pen.Width := 2;
           Pen.Style := psSolid;
@@ -1300,7 +1300,7 @@ end;
 
 procedure TFormMain.DrawLinks(fThis, fOld: TLaserFrame; cv: TCanvas; clLink: TColor);
 var
-  pThis, pOld: TSmallPoint;
+  pThis, pOld: TLaserPoint;
   i, j: integer;
   pfrom, pto: TPoint;
   dx, dy: integer;
@@ -1469,7 +1469,7 @@ end;
 procedure TFormMain.RenumberList;
 var
   i: integer;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   myf: TLaserFrame;
 begin
   myf := FFile.Frames[currentframe];
@@ -1790,7 +1790,7 @@ var //f: file of TPoint;
   bData: byte;
   wFrameCount: word;
   fFrame: TLaserFrame;
-  pPoint: TSmallPoint;
+  pPoint: TLaserPoint;
   sMagic: array[1..4] of AnsiChar;
   aPoint: array[1..11] of byte;
   wSize: word;
@@ -2814,7 +2814,7 @@ end;
 procedure TFormMain.aSharpenExecute(Sender: TObject);
 var
   myf: TLaserFrame;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   i: integer;
 begin
   FileChanged := True;
@@ -3021,7 +3021,7 @@ end;
 procedure TFormMain.aBlankExecute(Sender: TObject);
 var
   myf: TLaserFrame;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   i: integer;
 begin
   FileChanged := True;
@@ -3187,7 +3187,7 @@ procedure TFormMain.miLinkOverlayClick(Sender: TObject);
 var
   iCurrent, iPrevious, f: integer;
   fCurrent, fPrevious: TLaserFrame;
-  myp, mypp: TSmallPoint;
+  myp, mypp: TLaserPoint;
   dx, dy: integer;
 begin
   f := 0;
@@ -3223,7 +3223,7 @@ end;
 procedure TFormMain.aFramePreviewExecute(Sender: TObject);
 var
   myf: TLaserFrame;
-  myp, mynp: TSmallPoint;
+  myp, mynp: TLaserPoint;
   i, j: integer;
   dx, dy: integer;
   tx, ty, t: word;
@@ -3313,7 +3313,7 @@ end;
 procedure TFormMain.aCreateWavefileExecute(Sender: TObject);
 var
   myf, mynf, mypf, frameDummy: TLaserFrame;
-  myp, mypp, dummyp: TSmallPoint;
+  myp, mypp, dummyp: TLaserPoint;
   j, framecounter: integer;
   bx, by: integer;
   iFrameDuration, iMorphDuration: longint;
@@ -3582,8 +3582,8 @@ var
     begin
       mypf := FFile.frames[Pred(framecounter)];
       // ### stetig: lastpoint -> topoint
-      topoint.x := TSmallPoint(mypf.Points[0]).x;
-      topoint.y := TSmallPoint(mypf.Points[0]).y;
+      topoint.x := TLaserPoint(mypf.Points[0]).x;
+      topoint.y := TLaserPoint(mypf.Points[0]).y;
       Stetigkeit(lastpoint, topoint, ((Frame1.Bits and 1) = 1), True);
       iMorphDuration := 0;
       iMorphSamples := Frame1.Morph * 44100 div 1000;
@@ -3604,7 +3604,7 @@ var
               begin
                 myp := Frame1.Points[j];
                 mypp := mypf.Points[i];
-                dummyp := TSmallPoint.Create;
+                dummyp := TLaserPoint.Create;
                 dummyp.x := mypp.x + (Round((myp.x - mypp.x) * calc));
                 dummyp.y := mypp.y + (Round((myp.y - mypp.y) * calc));
                 dummyp.bits := mypp.bits;
@@ -4101,7 +4101,7 @@ end;
 procedure TFormMain.miFrameFlipYClick(Sender: TObject);
 var
   myf: TLaserFrame;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   i: integer;
 begin
   myf := FFile.frames[CurrentFrame];
@@ -4116,7 +4116,7 @@ end;
 procedure TFormMain.miFrameFlipX2Click(Sender: TObject);
 var
   myf: TLaserFrame;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   i: integer;
 begin
   myf := FFile.frames[CurrentFrame];
@@ -4223,8 +4223,8 @@ begin
     end;
     sMove:
     begin
-      TSmallPoint(myf.Points[Undo.Pos]).x := Undo.x;
-      TSmallPoint(myf.Points[Undo.Pos]).y := Undo.y;
+      TLaserPoint(myf.Points[Undo.Pos]).x := Undo.x;
+      TLaserPoint(myf.Points[Undo.Pos]).y := Undo.y;
     end;
     sDel:
     begin
@@ -4267,7 +4267,7 @@ end;
 
 procedure TFormMain.RotateFrame(f: TLaserFrame; degrees: real);
 var
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   i: integer;
   radius, pw: real;
   bx, by: integer;
@@ -4472,7 +4472,7 @@ var
   point1, point2, dp, erg: TPoint;
   iPoint: integer;
   fCurrentFrame: TLaserFrame;
-  spCurrentPoint: TSmallPoint;
+  spCurrentPoint: TLaserPoint;
 begin
   fCurrentFrame := FFile.frames[CurrentFrame];
   if fCurrentFrame <> nil then
@@ -4519,7 +4519,7 @@ end;
 procedure TFormMain.miFrameFlipDClick(Sender: TObject);
 var
   myf: TLaserFrame;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   a, b, c, v, dp: TPoint;
   i: integer;
   br: real;
@@ -4574,7 +4574,7 @@ var
   p, ap: TPoint;
   i: integer;
   myf: TLaserFrame;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   s: string;
   ec: integer;
   r: real;
@@ -4623,7 +4623,7 @@ procedure TFormMain.Equilateral(center, start: TPoint);
 var
   fCurrent, fPrevious: TLaserFrame;
   sides: integer;
-  newp: TSmallPoint;
+  newp: TLaserPoint;
   radius, alpha, beta: real;
   i, ec: integer;
   x, y: integer;
@@ -4661,7 +4661,7 @@ begin
             y := 0;
           if y > 255 then
             y := 255;
-          newp := TSmallPoint.Create;
+          newp := TLaserPoint.Create;
           newp.X := x;
           newp.Y := y;
           fCurrent.Points.Add(newp);

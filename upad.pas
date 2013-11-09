@@ -184,7 +184,7 @@ var
   cps: TPoint;
   found: boolean;
   myf, mytf: TLaserFrame;
-  myp, myoldp: TSmallPoint;
+  myp, myoldp: TLaserPoint;
   oldpoint: integer;
   ox, oy: byte;
   newlink: array of array of boolean;
@@ -297,7 +297,7 @@ begin
                 MouseDownPos.y := y;
                 if not multiselect then
                   for j := 0 to myf.Points.Count - 1 do
-                    TSmallPoint(myf.Points[j]).p := 0;
+                    TLaserPoint(myf.Points[j]).p := 0;
                 multiselect := True;
                 if ((myp.p and 1) = 0) then
                   Inc(myp.p)
@@ -308,7 +308,7 @@ begin
               begin
                 multiselect := False;
                 for j := 0 to myf.Points.Count - 1 do
-                  TSmallPoint(myf.Points[j]).p := 0;
+                  TLaserPoint(myf.Points[j]).p := 0;
               end;
               if (not found) and not (multiselect) then
               begin
@@ -358,7 +358,7 @@ begin
         if (((x + FormSketchpad.sbX.Position) div ZoomFactor) < 256) and
           (((y + FormSketchpad.sbY.Position) div ZoomFactor) < 256) then
         begin
-          myp := TSmallPoint.Create;
+          myp := TLaserPoint.Create;
           myp.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
           myp.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
           if FormMain.miSnapGrid.Checked then
@@ -447,7 +447,7 @@ procedure TFormSketchpad.padMouseMove(Sender: TObject; Shift: TShiftState;
   X, Y: integer);
 var
   myf: TLaserFrame;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   ox, oy: byte;
   p1, p2: TPoint;
   winkel: real;
@@ -563,7 +563,7 @@ var
   myf: TLaserFrame;
   winkel: real;
   wp1, wp2: TPoint;
-  myp: TSmallPoint;
+  myp: TLaserPoint;
   p1, erg: TPoint;
   i: integer;
 begin
