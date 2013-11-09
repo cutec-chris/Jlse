@@ -57,16 +57,16 @@ var
   rContent: TRect;
 begin
   if (DataRect.Left > -1) and (DataRect.Right > -1) then
-  begin
-    with img.canvas do
     begin
+    with img.canvas do
+      begin
       Brush.Color := clRed;
       rContent := Rect(0, 0, DataImage.Width, DataImage.Height);
       CopyRect(rContent, DataImage.Canvas, rContent);
       //FrameRect(myrect);
       DrawFocusRect(DataRect);
+      end;
     end;
-  end;
 end;
 
 procedure TFormPickImage.FormCreate(Sender: TObject);
@@ -79,15 +79,15 @@ procedure TFormPickImage.imgMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
   if Button = mbLeft then
-  begin
+    begin
     DataRect.left := x;
     DataRect.top := y;
-  end
+    end
   else if mbRight = Button then
-  begin
+    begin
     DataRect.right := x;
     DataRect.bottom := y;
-  end;
+    end;
   ReDraw;
 end;
 

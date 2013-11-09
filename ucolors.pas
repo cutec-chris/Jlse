@@ -115,162 +115,162 @@ uses uMain;
 procedure FillCanvas(c: TImage; cl: TColor);
 begin
   with c.canvas do
-  begin
+    begin
     Brush.Color := cl;
     FillRect(ClipRect);
     c.Tag := cl;
-  end;
+    end;
 end;
 
 procedure TFormColors.imgNorm0Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgNorm0.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgNorm0.Tag := Color;
       FillCanvas(imgNorm0, Color);
+      end;
     end;
-  end;
 end;
 
 procedure TFormColors.imgNorm1Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgNorm1.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgNorm1.Tag := Color;
       FillCanvas(imgNorm1, Color);
+      end;
     end;
-  end;
 
 end;
 
 procedure TFormColors.imgReal0Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgReal0.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgReal0.Tag := Color;
       FillCanvas(imgReal0, Color);
+      end;
     end;
-  end;
 
 end;
 
 procedure TFormColors.imgReal1Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgReal1.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgReal1.Tag := Color;
       FillCanvas(imgReal1, Color);
+      end;
     end;
-  end;
 
 end;
 
 procedure TFormColors.imgBack0Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgBack0.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgBack0.Tag := Color;
       FillCanvas(imgBack0, Color);
+      end;
     end;
-  end;
 
 end;
 
 procedure TFormColors.imgBack1Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgBack1.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgBack1.Tag := Color;
       FillCanvas(imgBack1, Color);
+      end;
     end;
-  end;
 
 end;
 
 procedure TFormColors.imgSel0Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgSel0.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgSel0.Tag := Color;
       FillCanvas(imgSel0, Color);
+      end;
     end;
-  end;
 
 end;
 
 procedure TFormColors.imgSel1Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgSel1.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgSel1.Tag := Color;
       FillCanvas(imgSel1, Color);
+      end;
     end;
-  end;
 end;
 
 procedure TFormColors.imgLink0Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgLink0.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgLink0.Tag := Color;
       FillCanvas(imgLink0, Color);
+      end;
     end;
-  end;
 
 end;
 
 procedure TFormColors.imgLink1Click(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgLink1.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgLink1.Tag := Color;
       FillCanvas(imgLink1, Color);
+      end;
     end;
-  end;
 
 end;
 
 procedure TFormColors.imgThumbTextClick(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgThumbText.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgThumbText.Tag := Color;
       FillCanvas(imgThumbText, Color);
+      end;
     end;
-  end;
 end;
 
 procedure TFormColors.bnUseClick(Sender: TObject);
@@ -283,92 +283,92 @@ end;
 procedure TFormColors.imgBackGroundClick(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgBackground.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgBackground.Tag := Color;
       FillCanvas(imgBackground, Color);
+      end;
     end;
-  end;
 end;
 
 procedure TFormColors.imgHelpLinesClick(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgHelpLines.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgHelpLines.Tag := Color;
       FillCanvas(imgHelpLines, Color);
+      end;
     end;
-  end;
 end;
 
 procedure TFormColors.imgRotCenterClick(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgRotCenter.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgRotCenter.Tag := Color;
       FillCanvas(imgRotCenter, Color);
+      end;
     end;
-  end;
 end;
 
 procedure TFormColors.imgTimelineLinesClick(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgTimelineLines.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgTimelineLines.Tag := Color;
       FillCanvas(imgTimelineLines, Color);
+      end;
     end;
-  end;
 end;
 
 procedure TFormColors.imgTimelineAreasClick(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgTimelineAreas.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgTimelineAreas.Tag := Color;
       FillCanvas(imgTimelineAreas, Color);
+      end;
     end;
-  end;
 end;
 
 procedure TFormColors.imgTimelineTextClick(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgTimelineText.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgTimelineText.Tag := Color;
       FillCanvas(imgTimelineText, Color);
+      end;
     end;
-  end;
 end;
 
 procedure TFormColors.imgTimelineBackClick(Sender: TObject);
 begin
   with cdPick do
-  begin
+    begin
     Color := imgTimelineBack.Tag;
     if cdPick.Execute then
-    begin
+      begin
       imgTimelineBack.Tag := Color;
       FillCanvas(imgTimelineBack, Color);
+      end;
     end;
-  end;
 end;
 
 end.

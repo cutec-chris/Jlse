@@ -69,7 +69,7 @@ begin
   editStepEdges.Text := IntToStr(StepMax);
   Result := ShowModal = mrOk;
   if Result then
-  begin
+    begin
     sStep := editStep5.Text;
     Val(sStep, i, iErrorCode);
     if iErrorCode = 0 then
@@ -87,7 +87,7 @@ begin
     if iErrorCode = 0 then
       StepMax := i;
 
-  end;
+    end;
 end;
 
 end.

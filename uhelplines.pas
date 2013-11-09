@@ -102,24 +102,24 @@ begin
   sXText := editX.Text;
   Val(sXText, i, iErrorCode);
   if iErrorCode = 0 then
-  begin
-    if lbX.Items.IndexOf(IntToStr(i)) < 01 then
     begin
+    if lbX.Items.IndexOf(IntToStr(i)) < 01 then
+      begin
       lbX.Items.Add(IntToStr(i));
-    end;
-  end
+      end;
+    end
   else
-  begin
+    begin
     editX.Text := '';
-  end;
+    end;
 end;
 
 procedure TFormHelpLines.bnDelXClick(Sender: TObject);
 begin
   if lbX.Items.IndexOf(editX.Text) > -1 then
-  begin
+    begin
     lbX.Items.Delete(lbX.Items.IndexOf(editX.Text));
-  end;
+    end;
 end;
 
 procedure TFormHelpLines.bnAddYClick(Sender: TObject);
@@ -130,32 +130,32 @@ begin
   sYText := editY.Text;
   Val(sYText, i, iErrorCode);
   if iErrorCode = 0 then
-  begin
-    if lbY.Items.IndexOf(IntToStr(i)) < 0 then
     begin
+    if lbY.Items.IndexOf(IntToStr(i)) < 0 then
+      begin
       lbY.Items.Add(IntToStr(i));
-    end;
-  end
+      end;
+    end
   else
-  begin
+    begin
     editY.Text := '';
-  end;
+    end;
 end;
 
 procedure TFormHelpLines.bnDelYClick(Sender: TObject);
 begin
   if lbY.Items.IndexOf(editY.Text) > -1 then
-  begin
+    begin
     lbY.Items.Delete(lbY.Items.IndexOf(editY.Text));
-  end;
+    end;
 end;
 
 procedure TFormHelpLines.lbYClick(Sender: TObject);
 begin
   if lbY.ItemIndex > -1 then
-  begin
+    begin
     editY.Text := lbY.Items[lbY.ItemIndex];
-  end;
+    end;
 end;
 
 procedure TFormHelpLines.bnUseClick(Sender: TObject);
@@ -178,18 +178,18 @@ begin
     lbY.Items.Add(IntToStr(HelpLines.y[iHelpLine]));
   lv2P.Items.Clear;
   for iHelpLine := 0 to Pred(Length(HelpLines.d[0])) do
-  begin
+    begin
     li := lv2P.Items.Add;
     li.Caption := IntToStr(HelpLines.d[0, iHelpLine].x);
     li.SubItems.Add(IntToStr(HelpLines.d[0, iHelpLine].y));
     li.SubItems.Add(IntToStr(HelpLines.d[1, iHelpLine].x));
     li.SubItems.Add(IntToStr(HelpLines.d[1, iHelpLine].y));
-  end;
+    end;
   Result := ShowModal = mrOk;
   if Result then
-  begin
+    begin
     ApplyNow;
-  end;
+    end;
 end;
 
 procedure TFormHelpLines.lv2PClick(Sender: TObject);
@@ -197,13 +197,13 @@ var
   li: TListItem;
 begin
   if Assigned(lv2P.Selected) then
-  begin
+    begin
     li := lv2P.Selected;
     editX1.Text := li.Caption;
     editY1.Text := li.SubItems[0];
     editX2.Text := li.SubItems[1];
     editY2.Text := li.SubItems[2];
-  end;
+    end;
 end;
 
 procedure TFormHelpLines.ApplyNow;
@@ -213,24 +213,24 @@ var
 begin
   SetLength(FHelpLines.x, lbX.Items.Count);
   for iHelpLine := 0 to Pred(lbX.Items.Count) do
-  begin
+    begin
     Val(lbX.Items[iHelpLine], iCoordinate, iErrorCode);
     if iErrorCode <> 0 then
       iCoordinate := 0;
     FHelpLines.x[iHelpLine] := iCoordinate;
-  end;
+    end;
   SetLength(FHelpLines.y, lbY.Items.Count);
   for iHelpLine := 0 to lbY.Items.Count - 1 do
-  begin
+    begin
     Val(lbY.Items[iHelpLine], iCoordinate, iErrorCode);
     if iErrorCode <> 0 then
       iCoordinate := 0;
     FHelpLines.y[iHelpLine] := iCoordinate;
-  end;
+    end;
   SetLength(FHelpLines.d[0], lv2P.Items.Count);
   SetLength(FHelpLines.d[1], lv2P.Items.Count);
   for iHelpLine := 0 to lv2P.Items.Count - 1 do
-  begin
+    begin
     li := lv2P.Items[iHelpLine];
     Val(li.Caption, iCoordinate, iErrorCode);
     if iErrorCode <> 0 then
@@ -248,7 +248,7 @@ begin
     if iErrorCode <> 0 then
       iCoordinate := 0;
     FHelpLines.d[1, iHelpLine].y := iCoordinate;
-  end;
+    end;
 end;
 
 procedure TFormHelpLines.bnAdd2PClick(Sender: TObject);
@@ -265,9 +265,9 @@ end;
 procedure TFormHelpLines.bnDel2PClick(Sender: TObject);
 begin
   if Assigned(lv2P.Selected) then
-  begin
+    begin
     lv2P.Items.Delete(lv2P.Selected.Index);
-  end;
+    end;
 end;
 
 end.

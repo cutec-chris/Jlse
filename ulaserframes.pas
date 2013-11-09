@@ -103,9 +103,9 @@ var
   i: integer;
 begin
   for i := 0 to Pred(Count) do
-  begin
+    begin
     Frames[i].Free;
-  end;
+    end;
   FFrames.Clear;
 end;
 
@@ -163,7 +163,7 @@ var
   bFileVersion: byte;
 begin
   if FileExistsUTF8(Filename) then
-  begin
+    begin
     iFrameCount := 0;
     FileMode := 0;
     iOldPointCount := 0;
@@ -172,24 +172,24 @@ begin
     Self.Filename := Filename;
     Clear;
     if FileSize(f) > 5 then
-    begin
+      begin
       BlockRead(f, s1, 4);
       BlockRead(f, b, 1);
       bFileVersion := b;
       if s1 = 'LC1Y' then
-      begin
-        while not EOF(f) do
         begin
+        while not EOF(f) do
+          begin
           Inc(iFrameCount);
           fFrame := Add;
           // frame name
           BlockRead(f, w, 2); // size of name
           s := '';
           for i := 1 to w do
-          begin
+            begin
             BlockRead(f, c, 1);
             s := s + c;
-          end;
+            end;
           fFrame.FrameName := s;
           // frame delay
           BlockRead(f, fFrame.Delay, 2); // delay 4 frame
@@ -202,26 +202,26 @@ begin
             BlockRead(f, fFrame.EffectParam, 2);
           // rotcenter
           if bFileVersion > 4 then
-          begin
+            begin
             BlockRead(f, fFrame.RotCenter.x, 1);
             BlockRead(f, fFrame.RotCenter.y, 1);
-          end
+            end
           else
-          begin
+            begin
             fFrame.RotCenter.x := 128;
             fFrame.RotCenter.y := 128;
-          end;
+            end;
           // rotcenter
           if bFileVersion > 5 then
-          begin
+            begin
             BlockRead(f, fFrame.AuxCenter.x, 1);
             BlockRead(f, fFrame.AuxCenter.y, 1);
-          end
+            end
           else
-          begin
+            begin
             fFrame.AuxCenter.x := 128;
             fFrame.AuxCenter.y := 128;
-          end;
+            end;
           // bits for stuff
           if bFileVersion > 1 then
             BlockRead(f, fFrame.Bits, 2)
@@ -232,45 +232,45 @@ begin
           BlockRead(f, w, 2); // size of name
           s := '';
           for i := 1 to w do
-          begin
+            begin
             BlockRead(f, c, 1);
             s := s + c;
-          end;
+            end;
           fFrame.ImgName := s;
           if FileExistsUTF8(fFrame.ImgName) { *Converted from FileExists* } then
-          begin
+            begin
             if fFrame.bitmap = nil then
               fFrame.bitmap := TBitmap.Create;
             fFrame.bitmap.LoadFromFile(fFrame.ImgName);
-          end;
+            end;
           // img size
           BlockRead(f, tr, sizeof(TRect));
           fFrame.ImgRect := tr;
           // helplines
           if bFileVersion > 2 then
-          begin
+            begin
             BlockRead(f, w, 2);
             SetLength(fFrame.HelpLines.x, w);
             if w > 0 then
               for i := 0 to Pred(w) do
-              begin
+                begin
                 BlockRead(f, bb, 1);
                 fFrame.HelpLines.x[i] := bb;
-              end;
+                end;
             BlockRead(f, w, 2);
             SetLength(fFrame.HelpLines.y, w);
             if w > 0 then
               for i := 0 to Pred(w) do
-              begin
+                begin
                 BlockRead(f, bb, 1);
                 fFrame.HelpLines.y[i] := bb;
-              end;
+                end;
             BlockRead(f, w, 2);
             SetLength(fFrame.HelpLines.d[0], w);
             SetLength(fFrame.HelpLines.d[1], w);
             if w > 0 then
               for i := 0 to Pred(w) do
-              begin
+                begin
                 BlockRead(f, bb, 1);
                 fFrame.HelpLines.d[0, i].x := bb;
                 BlockRead(f, bb, 1);
@@ -279,12 +279,12 @@ begin
                 fFrame.HelpLines.d[1, i].x := bb;
                 BlockRead(f, bb, 1);
                 fFrame.HelpLines.d[1, i].y := bb;
-              end;
-          end;
+                end;
+            end;
           // points
           BlockRead(f, w, 2); // num points
           for i := 0 to Pred(w) do
-          begin
+            begin
             if bFileVersion > 1 then
               BlockRead(f, s2, 11)
             else
@@ -298,36 +298,36 @@ begin
             //myp.p := Ord(s2[8])*256+Ord(s2[9]);
             pPoint.p := 0;
             if bFileVersion > 1 then
-            begin
+              begin
               pPoint.bits := Ord(s2[10]) * 256 + Ord(s2[11]);
-            end
+              end
             else
               pPoint.bits := 0;
             fFrame.Points.add(pPoint);
-          end;
+            end;
           SetLength(fFrame.links, w, iOldPointCount);
           iOldPointCount := w;
           BlockRead(f, mx, 2);
           BlockRead(f, my, 2);
           if (mx > 0) and (my > 0) then
-          begin
-            for cy := 0 to Pred(my) do
             begin
+            for cy := 0 to Pred(my) do
+              begin
               cx := 0;
               while cx < mx do
-              begin
+                begin
                 if ((cx mod 16) = 0) then
                   BlockRead(f, rword, 2);
                 fFrame.links[cx, cy] := (rword and (1 shl (cx mod 16)) > 0);
                 Inc(cx);
+                end;
               end;
             end;
-          end;
-        end; // while not eof
-      end; // if lc1y
-    end; // if fs>5
+          end; // while not eof
+        end; // if lc1y
+      end; // if fs>5
     CloseFile(f);
-  end; // if fileexists fn
+    end; // if fileexists fn
 end;
 
 { TLaserFrame }
@@ -392,21 +392,21 @@ begin
   self.Morph := sf.Morph;
   SetLength(self.links, Length(sf.links));
   for i := 0 to Pred(Length(sf.links)) do
-  begin
+    begin
     SetLength(self.links[i], Length(sf.links[i]));
     for j := 0 to Pred(Length(sf.links[i])) do
-    begin
+      begin
       self.links[i, j] := sf.links[i, j];
+      end;
     end;
-  end;
   self.Points.Clear;
   for i := 0 to Pred(sf.Points.Count) do
-  begin
+    begin
     newp := TLaserPoint.Create;
     myp := sf.Points[i];
     newp.Assign(myp);
     self.Points.add(newp);
-  end;
+    end;
 end;
 
 { TLaserPoint }

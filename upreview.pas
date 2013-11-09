@@ -75,7 +75,7 @@ var
   i, j: integer;
 begin
   if Assigned(DataStream) then
-  begin
+    begin
     DataStream.Seek(40, soFromBeginning);
     Caption := 'Preview playing...';
     imgPreview.Canvas.Brush.Color := clBlack;
@@ -86,44 +86,44 @@ begin
     i := 0;
     j := 0;
     while DataStream.Position < DataStream.Size do
-    begin
+      begin
       DataStream.Read(lData, 4);
       bDataX := ((lData and $0000FF00) shr 8) - 128;
       bDataY := 128 - ((lData and $FF000000) shr 24);
       if (lData and 1) = 1 then
-      begin
+        begin
         imgPreview.Canvas.Pen.Color := FormMain.MyColors[1, myc_norm];
-      end
+        end
       else
-      begin
+        begin
         imgPreview.Canvas.pen.color := FormMain.MyColors[0, myc_norm];
-      end;
+        end;
       if (lData and 2) = 0 then
-      begin
+        begin
         imgPreview.Canvas.LineTo(bDataX, bDataY);
-      end
+        end
       else
-      begin
+        begin
         imgPreview.Canvas.MoveTo(bDataX, bDataY);
-      end;
+        end;
       //imgPreview.canvas.pixels[bx,by] := clRed;
       Inc(i);
       if (i mod CDisplayDuration) = 0 then
-      begin
+        begin
         Inc(j);
         if (j mod 10) = 0 then
-        begin
+          begin
           //imgPreview.canvas.FillRect(canvas.cliprect);
           imgPreview.canvas.FillRect(Rect(0, 0, 256, 256));
           tbPreviewPos.Position := DataStream.Position;
           j := 0;
-        end;
+          end;
         imgPreview.Refresh;
         i := 0;
+        end;
       end;
-    end;
     Caption := 'Preview stopped...';
-  end; // if ms<>nil
+    end; // if ms<>nil
 end;
 
 procedure TFormPreview.FormActivate(Sender: TObject);

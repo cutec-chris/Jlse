@@ -640,31 +640,31 @@ end;
 function TRegistryHelper.GetValueDefault(const ValueName: string;
   Default: boolean): boolean;
 begin
-  try
+    try
     Result := Self.ReadBool(ValueName);
-  except
+    except
     Result := Default;
-  end;
+    end;
 end;
 
 function TRegistryHelper.GetValueDefault(const ValueName: string;
   Default: string): string;
 begin
-  try
+    try
     Result := Self.ReadString(ValueName);
-  except
+    except
     Result := Default;
-  end;
+    end;
 end;
 
 function TRegistryHelper.GetValueDefault(const ValueName: string;
   Default: cardinal): cardinal;
 begin
-  try
+    try
     Result := Self.ReadInteger(ValueName);
-  except
+    except
     Result := Default;
-  end;
+    end;
 end;
 
 procedure TRegistryHelper.SetValue(const ValueName: string; Data: boolean);
@@ -721,14 +721,14 @@ var
   i: longint;
 begin
   if Length(a) > 0 then
-  begin
-    for i := 0 to Pred(Length(a)) do
     begin
+    for i := 0 to Pred(Length(a)) do
+      begin
       WritePoints(ms, TPoint(a[i]).x + 128, TPoint(a[i]).y + 128, color, b[i]);
       Inc(ws);
-    end;
+      end;
     lp := a[Pred(Length(a))];
-  end;
+    end;
 end;
 
 procedure TFormMain.FrameToArray(f: TLaserFrame; var mya: atp;
@@ -743,7 +743,7 @@ var
   mywinkel: real;
 begin
   for i := 0 to Pred(f.Points.Count) do
-  begin
+    begin
     p := f.Points[i];
     if (i < (Pred(f.Points.Count))) then
       np := f.Points[i + 1]
@@ -772,7 +772,7 @@ begin
     else
       t := ty;
     if ((p.bits and 1) = 1) then
-    begin // vorher nach naechster schleife
+      begin // vorher nach naechster schleife
       wp1.x := integer(p.x) - integer(pp.x);
       wp1.y := integer(p.y) - integer(pp.y);
       wp2.x := integer(np.x) - integer(p.x);
@@ -784,24 +784,24 @@ begin
       SetLength(mya, framed);
       SetLength(myb, framed);
       for j := 0 to Pred(tsub) do
-      begin
+        begin
         TPoint(mya[framed - tsub + j]).x := p.x; // vorher np
         TPoint(mya[framed - tsub + j]).y := p.y; // vorher np
         myb[framed - tsub + j] := (p.bits and 2) = 2;
+        end;
       end;
-    end;
     Inc(framed, t);
     SetLength(mya, framed);
     SetLength(myb, framed);
     for j := 0 to Pred(t) do
-    begin
+      begin
       ax := p.x + Round(dx * j / t);
       ay := p.y + Round(dy * j / t);
       TPoint(mya[framed - t + j]).x := ax;
       TPoint(mya[framed - t + j]).y := ay;
       myb[framed - t + j] := (p.bits and 2) = 2;
-    end;
-  end; // end framework
+      end;
+    end; // end framework
 end;
 
 procedure TFormMain.AddUsedFile(fn: string);
@@ -811,7 +811,7 @@ begin
   if (Pos(fn, miLastfile0.Caption) = 0) and (Pos(fn, miLastfile1.Caption) = 0) and
     (Pos(fn, miLastfile2.Caption) = 0) and (Pos(fn, miLastfile3.Caption) = 0) and
     (Pos(fn, miLastfile4.Caption) = 0) then
-  begin
+    begin
     miLastfile4.Caption := miLastfile3.Caption;
     s := miLastfile4.Caption;
     s[2] := '4';
@@ -834,7 +834,7 @@ begin
     miLastfile1.Visible := miLastfile0.Visible;
     miLastfile0.Caption := '&0 ' + fn;
     miLastfile1.Visible := True;
-  end;
+    end;
 end;
 
 function TFormMain.CurrentFrame: integer;
@@ -855,60 +855,64 @@ begin
   ps[0].x := 0;
   ps[1].x := 256;
   while i < 255 do
-  begin
+    begin
     ps[0].y := i;
     ps[1].y := i;
     for j := 0 to 1 do
-    begin
+      begin
       if miFlipY.Checked then
-        psz[j].x := (256 * ZoomFactor) - (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position
+        psz[j].x := (256 * ZoomFactor) - (ps[j].x * ZoomFactor) -
+          FormSketchpad.sbX.Position
       else
         psz[j].x := (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position;
       if miFlipX.Checked then
-        psz[j].y := (256 * ZoomFactor) - (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position
+        psz[j].y := (256 * ZoomFactor) - (ps[j].y * ZoomFactor) -
+          FormSketchpad.sbY.Position
       else
         psz[j].y := (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position;
-    end;
+      end;
     with cv do
-    begin
+      begin
       pen.color := clGrid;
       pen.Width := 1;
       pen.style := psDot;
       MoveTo(psz[0].x, psz[0].y);
       LineTo(psz[1].x, psz[1].y);
       pen.style := psSolid;
-    end;
+      end;
     Inc(i, GridWidth);
-  end;
+    end;
   i := GridWidth;
   ps[0].y := 0;
   ps[1].y := 256;
   while i < 255 do
-  begin
+    begin
     ps[0].x := i;
     ps[1].x := i;
     for j := 0 to 1 do
-    begin
+      begin
       if miFlipY.Checked then
-        psz[j].x := (256 * ZoomFactor) - (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position
+        psz[j].x := (256 * ZoomFactor) - (ps[j].x * ZoomFactor) -
+          FormSketchpad.sbX.Position
       else
         psz[j].x := (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position;
       if miFlipX.Checked then
-        psz[j].y := (256 * ZoomFactor) - (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position
+        psz[j].y := (256 * ZoomFactor) - (ps[j].y * ZoomFactor) -
+          FormSketchpad.sbY.Position
       else
         psz[j].y := (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position;
-    end;
+      end;
     with cv do
-    begin
+      begin
       pen.color := clGrid;
       pen.Width := 1;
       pen.style := psDot;
       MoveTo(psz[0].x, psz[0].y);
       LineTo(psz[1].x, psz[1].y);
       pen.style := psSolid;
-    end;
+      end;
     Inc(i, GridWidth);
-  end;
+    end;
 end;
 
 procedure TFormMain.DrawRulers;
@@ -924,7 +928,7 @@ begin
   lw := FormSketchpad.iLeftRuler.Width;
   lh := FormSketchpad.iLeftRuler.Height;
   with FormSketchpad.iTopRuler.canvas do
-  begin
+    begin
     Brush.Color := clBtnFace;
     FillRect(Rect(0, 0, tw, th));
     Brush.Color := clWhite;
@@ -943,9 +947,9 @@ begin
     LineTo(0, 0);
     LineTo(tw - 2, 0);
     Font.Color := clBlack;
-  end;
+    end;
   with FormSketchpad.iLeftRuler.Canvas do
-  begin
+    begin
     Brush.Color := clBtnFace;
     FillRect(Rect(0, 0, lw, lh));
     Brush.Color := clWhite;
@@ -961,21 +965,21 @@ begin
     MoveTo(0, 0);
     LineTo(0, lh - 1);
     Font.Color := clBlack;
-  end;
+    end;
   gw := GridWidth;
   while (gw * ZoomFactor) < FormSketchpad.iTopRuler.Canvas.TextWidth('-250') do
     gw := gw * 2;
   i := gw;
   while i < 255 do
-  begin
-    with FormSketchpad.iTopRuler.canvas do
     begin
+    with FormSketchpad.iTopRuler.canvas do
+      begin
       x := (i * ZoomFactor - FormSketchpad.sbX.Position) + lw;
       if x > lw + 7 then
-      begin
+        begin
         MoveTo(x, 3);
         LineTo(x, th - 4);
-      end;
+        end;
       if miFlipY.Checked then
         s := IntToStr(256 - i)
       else
@@ -983,9 +987,9 @@ begin
       txw := TextWidth(s);
       if ((x - (txw div 2)) > (lw - 6)) and ((x + (txw div 2)) + 6 < tw) then
         TextOut(x - (txw div 2), 3, s);
-    end;
+      end;
     with FormSketchpad.iLeftRuler.canvas do
-    begin
+      begin
       y := (i * ZoomFactor - FormSketchpad.sbY.Position) + 1;
       MoveTo(4, y);
       LineTo(lw - 4, y);
@@ -997,9 +1001,9 @@ begin
       txh := TextHeight(s);
       if ((y - (txh div 2)) > 0) and ((y + (txh div 2)) + 6 < lh) then
         TextOut((lw div 2) - (txw div 2), y - (txh div 2), s);
-    end;
+      end;
     Inc(i, gw);
-  end;
+    end;
 end;
 
 procedure TFormMain.DrawHelpLines(f: TLaserFrame; cv: TCanvas; clLines: TColor);
@@ -1011,52 +1015,53 @@ var
   lw, th: word;
 begin
   if f <> nil then
-  begin
+    begin
     th := FormSketchpad.iTopRuler.Height;
     lw := FormSketchpad.iLeftRuler.Width;
     with cv do
-    begin
+      begin
       Pen.Width := 1;
       Pen.Style := psDot;
       Pen.Color := clLines;
-    end;
+      end;
     if Length(f.HelpLines.x) > 0 then
       for i := 0 to Pred(Length(f.HelpLines.x)) do
-      begin
+        begin
         b := f.HelpLines.x[i];
         x := (b * ZoomFactor - FormSketchpad.sbX.Position);
         with cv do
-        begin
+          begin
           MoveTo(x, 0);
           LineTo(x, 256 * ZoomFactor);
-        end;
+          end;
         with FormSketchpad.iTopRuler.Canvas do
-        begin
+          begin
           Brush.Color := clLines;
           Pen.Color := clBlack;
-          Polygon([Point(x - 5 + lw, th div 2), Point(x + 5 + lw, th div 2), Point(x + lw, th)]);
+          Polygon([Point(x - 5 + lw, th div 2), Point(x + 5 + lw, th div 2),
+            Point(x + lw, th)]);
+          end;
         end;
-      end;
     if Length(f.HelpLines.y) > 0 then
       for i := 0 to Pred(Length(f.HelpLines.y)) do
-      begin
+        begin
         b := f.HelpLines.y[i];
         y := (b * ZoomFactor - FormSketchpad.sbY.Position);
         with cv do
-        begin
+          begin
           MoveTo(0, y);
           LineTo(256 * ZoomFactor, y);
-        end;
+          end;
         with FormSketchpad.iLeftRuler.Canvas do
-        begin
+          begin
           Brush.Color := clLines;
           Pen.Color := clBlack;
           Polygon([Point(lw div 2, y + 5), Point(lw div 2, y - 5), Point(lw, y)]);
+          end;
         end;
-      end;
     if Length(f.HelpLines.d[0]) > 0 then
       for i := 0 to Pred(Length(f.HelpLines.d[0])) do
-      begin
+        begin
         p1 := f.HelpLines.d[0, i];
         p2 := f.HelpLines.d[1, i];
         wp1.x := (p1.x * ZoomFactor - FormSketchpad.sbX.Position);
@@ -1064,12 +1069,12 @@ begin
         wp2.x := (p2.x * ZoomFactor - FormSketchpad.sbX.Position);
         wp2.y := (p2.y * ZoomFactor - FormSketchpad.sbY.Position);
         with cv do
-        begin
+          begin
           MoveTo(wp1.x, wp1.y);
           LineTo(wp2.x, wp2.y);
+          end;
         end;
-      end;
-  end;
+    end;
 end;
 
 procedure TFormMain.DrawThumb(f: TLaserFrame; cv: TCanvas;
@@ -1083,7 +1088,7 @@ begin
   iPointCount := f.Points.Count;
   SetLength(ps, iPointCount);
   for i := 0 to Pred(iPointCount) do
-  begin
+    begin
     myp := f.Points[i];
     if miFlipY.Checked then
       ps[i].x := (255) - myp.x
@@ -1095,19 +1100,19 @@ begin
       ps[i].y := myp.y;
     ps[i].x := ps[i].x div divider + offx;
     ps[i].y := ps[i].y div divider + offy;
-  end;
+    end;
   with cv do
-  begin
+    begin
     Pen.Color := clNorm;
     Pen.Width := 1;
     Font.Color := clNorm;
     Polyline(ps);
     if Length(ps) > 0 then
-    begin
+      begin
       MoveTo(ps[Pred(Length(ps))].x, ps[Pred(Length(ps))].y);
       LineTo(ps[0].x, ps[0].y);
-    end;
-  end; // with
+      end;
+    end; // with
 end;
 
 procedure TFormMain.DrawFrame(f: TLaserFrame; cv: TCanvas;
@@ -1125,7 +1130,7 @@ begin
   iPointCount := f.Points.Count;
   circlefactor := 2; //ZoomFactor;
   with cv do
-  begin
+    begin
     x := (f.RotCenter.x * ZoomFactor - FormSketchpad.sbX.Position);
     y := (f.RotCenter.y * ZoomFactor - FormSketchpad.sbY.Position);
     Pen.Width := 2;
@@ -1148,10 +1153,10 @@ begin
     LineTo((f.AuxCenter.x * ZoomFactor - FormSketchpad.sbX.Position),
       (f.AuxCenter.y * ZoomFactor - FormSketchpad.sbY.Position));
     Pen.Color := clLines; //clAqua; //###
-  end;
+    end;
   SetLength(ps, iPointCount);
   for i := 0 to Pred(iPointCount) do
-  begin
+    begin
     myp := f.Points[i];
     if miFlipY.Checked then
       ps[i].x := (256 * ZoomFactor) - (myp.x * ZoomFactor) - FormSketchpad.sbX.Position
@@ -1161,19 +1166,19 @@ begin
       ps[i].y := (256 * ZoomFactor) - (myp.y * ZoomFactor) - FormSketchpad.sbY.Position
     else
       ps[i].y := (myp.y * ZoomFactor) - FormSketchpad.sbY.Position;
-  end;
+    end;
   if Length(ps) > 0 then
     with cv do
-    begin
+      begin
       // echtes signal: keine scharfen ecken!
       if Length(ps) > 1 then
-      begin
+        begin
         Pen.Width := 2;
         Pen.Style := psDashDotDot;
         Pen.Color := clReal;
         if drawreal then
           for i := 1 to Length(ps) - 2 do
-          begin
+            begin
             p1.x := (ps[i].x + ps[i - 1].x) div 2;
             p1.y := (ps[i].y + ps[i - 1].y) div 2;
             p2.x := (ps[i + 1].x + ps[i].x) div 2;
@@ -1181,75 +1186,76 @@ begin
             if ((TLaserPoint(f.Points[i]).bits and 1) = 0) then
               PolyBezier([p1, ps[i], ps[i], p2]);
             if Length(ps) > 2 then
-            begin
-              if ((TLaserPoint(f.Points[0]).bits and 1) = 0) then
               begin
+              if ((TLaserPoint(f.Points[0]).bits and 1) = 0) then
+                begin
                 p1.x := (ps[0].x + ps[Length(ps) - 1].x) div 2;
                 p1.y := (ps[0].y + ps[Length(ps) - 1].y) div 2;
                 p2.x := (ps[1].x + ps[0].x) div 2;
                 p2.y := (ps[1].y + ps[0].y) div 2;
                 PolyBezier([p1, ps[0], ps[0], p2]);
-              end;
+                end;
               if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 1) = 0) then
-              begin
+                begin
                 p1.x := (ps[Length(ps) - 1].x + ps[Length(ps) - 2].x) div 2;
                 p1.y := (ps[Length(ps) - 1].y + ps[Length(ps) - 2].y) div 2;
                 p2.x := (ps[0].x + ps[Length(ps) - 1].x) div 2;
                 p2.y := (ps[0].y + ps[Length(ps) - 1].y) div 2;
                 PolyBezier([p1, ps[Length(ps) - 1], ps[Length(ps) - 1], p2]);
+                end;
               end;
             end;
-          end;
         Pen.Color := clNorm;
         Font.Color := clNorm;
         for i := 0 to Length(ps) - 2 do
-        begin
-          if ((TLaserPoint(f.Points[i]).bits and 2) = 0) then
           begin
+          if ((TLaserPoint(f.Points[i]).bits and 2) = 0) then
+            begin
             Pen.Width := 2;
             Pen.Style := psSolid;
-          end
+            end
           else
-          begin
+            begin
             Pen.Width := 1;
             Pen.Style := psDot;
-          end;
+            end;
           MoveTo(ps[i].x, ps[i].y);
           LineTo(ps[i + 1].x, ps[i + 1].y);
+          end;
         end;
-      end;
       if (miCloseLoop.Checked) and (Length(ps) > 2) then
-      begin
-        if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 2) = 0) then
         begin
+        if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 2) = 0) then
+          begin
           Pen.Width := 2;
           Pen.Style := psSolid;
-        end
+          end
         else
-        begin
+          begin
           Pen.Width := 1;
           Pen.Style := psDot;
-        end;
+          end;
         MoveTo(ps[Length(ps) - 1].x, ps[Length(ps) - 1].y);
         LineTo(ps[0].x, ps[0].y);
-      end;
+        end;
       if miShowPoints.Checked then
-      begin
-        for i := 0 to iPointCount - 1 do
         begin
+        for i := 0 to iPointCount - 1 do
+          begin
           myp := f.Points[i];
           Pen.Width := 2;
           Pen.Style := psSolid;
-          if (myp.p = 1) or ((i = SelectedPoint) and (not FormSketchpad.multiselect)) then
-          begin
+          if (myp.p = 1) or ((i = SelectedPoint) and
+            (not FormSketchpad.multiselect)) then
+            begin
             Pen.Color := clSel;
             Font.Color := clSel;
-          end
+            end
           else
-          begin
+            begin
             Pen.Color := clNorm;
             Font.Color := clNorm;
-          end;
+            end;
           cl := MyColors[(f.Bits and 1), myc_link];
           if myp.overlay and drawover then
             Brush.Color := cl;
@@ -1268,12 +1274,12 @@ begin
             TextOut(ps[i].x + (CircleSize * CircleFactor) + 2,
               ps[i].y - (CircleSize * CircleFactor),
               myp.Caption);
+          end;
         end;
       end;
-    end;
   //###
   if not EquilateralFinished then
-  begin
+    begin
     cl := clFuchsia;
     if miFlipY.Checked then
       p1.x := (256 * ZoomFactor) - (EquilateralCenter.x * ZoomFactor) -
@@ -1286,7 +1292,7 @@ begin
     else
       p1.y := (EquilateralCenter.y * ZoomFactor) - FormSketchpad.sbY.Position;
     with cv do
-    begin
+      begin
       Pen.Color := cl;
       Pen.Style := psDot;
       Pen.Width := 1;
@@ -1294,8 +1300,8 @@ begin
         p1.y - (CircleSize * CircleFactor),
         p1.x + (CircleSize * CircleFactor),
         p1.y + (CircleSize * CircleFactor));
+      end;
     end;
-  end;
 end;
 
 procedure TFormMain.DrawLinks(fThis, fOld: TLaserFrame; cv: TCanvas; clLink: TColor);
@@ -1308,7 +1314,7 @@ var
 begin
   circlefactor := 2; //ZoomFactor;
   for i := 0 to Pred(fOld.Points.Count) do
-  begin
+    begin
     pOld := fOld.Points[i];
     if miFlipY.Checked then
       pfrom.x := 256 * ZoomFactor - pOld.x * ZoomFactor - FormSketchpad.sbX.Position
@@ -1319,9 +1325,9 @@ begin
     else
       pfrom.y := pOld.y * ZoomFactor - FormSketchpad.sbY.Position;
     for j := 0 to Pred(fThis.Points.Count) do
-    begin
-      if fThis.Links[j, i] then
       begin
+      if fThis.Links[j, i] then
+        begin
         pThis := fThis.Points[j];
         if miFlipY.Checked then
           pto.x := 256 * ZoomFactor - pThis.x * ZoomFactor - FormSketchpad.sbX.Position
@@ -1332,7 +1338,7 @@ begin
         else
           pto.y := pThis.y * ZoomFactor - FormSketchpad.sbY.Position;
         with cv do
-        begin
+          begin
           pen.color := clLink;
           pen.Width := 1;
           if j <> SelectedPoint then
@@ -1347,10 +1353,10 @@ begin
           MoveTo(pfrom.x, pfrom.y);
           LineTo(pto.x, pto.y);
           pen.style := psSolid;
-        end; // with cv
-      end; // if links=true
-    end; // for j
-  end; // for i
+          end; // with cv
+        end; // if links=true
+      end; // for j
+    end; // for i
 end;
 
 procedure TFormMain.Redraw;
@@ -1360,22 +1366,22 @@ var
   c, c2, c3: TColor;
 begin
   if (FFile <> nil) and (FFile.Count > 0) and (not DontDraw) then
-  begin
+    begin
     Drawing := True;
     myf := FFile.Frames[currentframe];
     if miShowRuler.Checked then
-    begin
+      begin
       FormSketchpad.iTopRuler.Height := TopRulerHeight;
       FormSketchpad.iLeftRuler.Width := LeftRulerWidth;
       DrawRulers;
-    end
+      end
     else
-    begin
+      begin
       FormSketchpad.iTopRuler.Height := 0;
       FormSketchpad.iLeftRuler.Width := 0;
-    end;
+      end;
     with FormSketchpad.pad.canvas do
-    begin
+      begin
       if FormSketchpad.pad.Width < 256 * ZoomFactor then
         FormSketchpad.sbX.Max := 256 * ZoomFactor - FormSketchpad.pad.Width
       else
@@ -1392,77 +1398,76 @@ begin
       Brush.Color := MyOtherColors[myoc_bg];
       FillRect(Rect(0, 0, 256 * ZoomFactor, 256 * ZoomFactor));
       if (myf.Bitmap <> nil) and (not miNoImg.Checked) then
-      begin
-        if not myf.Bitmap.Empty then
         begin
+        if not myf.Bitmap.Empty then
+          begin
           if miFullImg.Checked then
             mycopyrect := Rect(0, 0, myf.Bitmap.Width, myf.Bitmap.Height)
           else if miPartImg.Checked then
-          begin
+            begin
             mycopyrect := myf.ImgRect;
-          end
+            end
           else
-          begin
+            begin
             mycopyrect := Rect(0, 0, 256, 256);
-          end;
+            end;
           FormSketchpad.pad.Canvas.CopyRect(
-            Rect(0 - FormSketchpad.sbX.Position,
-            0 - FormSketchpad.sbY.Position,
-            256 * ZoomFactor -
-            FormSketchpad.sbX.Position, 256 *
-            ZoomFactor - FormSketchpad.sbY.Position),
+            Rect(0 - FormSketchpad.sbX.Position, 0 -
+            FormSketchpad.sbY.Position, 256 * ZoomFactor -
+            FormSketchpad.sbX.Position, 256 * ZoomFactor -
+            FormSketchpad.sbY.Position),
             myf.Bitmap.Canvas, mycopyrect);
+          end;
         end;
-      end;
       if miUseGrid.Checked then
         DrawGrid(FormSketchpad.pad.canvas, clDkGray);
       if miSnapHelp.Checked then
         DrawHelpLines(myf, FormSketchpad.pad.canvas, MyOtherColors[myoc_help]);
       if (currentframe > 0) and (miShowBackframe.Checked) then
-      begin
-        if (FFile.Frames[Pred(currentframe)].Bits and 1) = 0 then
         begin
+        if (FFile.Frames[Pred(currentframe)].Bits and 1) = 0 then
+          begin
           c := MyColors[0, myc_back];
           c2 := MyColors[0, myc_real];
           //c3 := MyColors[0,myc_link];
-        end
+          end
         else
-        begin
+          begin
           c := MyColors[1, myc_back];
           c2 := MyColors[1, myc_real];
           //c3 := MyColors[1,myc_link];
-        end;
+          end;
         DrawFrame(FFile.frames[Pred(currentframe)],
           FormSketchpad.pad.canvas, False, False, c, c, c2, MyOtherColors[myoc_help]);
         //if miShowLinks.Checked and (CurrentFrame>0) then DrawLinks(myf,FFile.frames[currentframe-1],FormSketchpad.pad.canvas,c3);
         //### nach den nächsten frame setzen
-      end;
+        end;
       if ((myf.Bits and 1) = 0) then
-      begin
+        begin
         c := MyColors[0, myc_norm];
         c2 := MyColors[0, myc_sel];
         c3 := MyColors[0, myc_real];
-      end
+        end
       else
-      begin
+        begin
         c := MyColors[1, myc_norm];
         c2 := MyColors[1, myc_sel];
         c3 := MyColors[1, myc_real];
-      end;
+        end;
       DrawFrame(myf, FormSketchpad.pad.canvas, miShowReal.Checked,
         True, c, c2, c3, MyOtherColors[myoc_help]);
       //### test von oben
       if (currentframe > 0) and (miShowBackframe.Checked) and (miShowLinks.Checked) then
-      begin
+        begin
         if ((FFile.frames[Pred(currentframe)].Bits and 1) = 0) then
           c3 := MyColors[0, myc_link]
         else
           c3 := MyColors[1, myc_link];
         DrawLinks(myf, FFile.frames[Pred(currentframe)], FormSketchpad.pad.canvas, c3);
+        end;
       end;
-    end;
     Drawing := False;
-  end;
+    end;
   TimeLineRedraw;
 end;
 
@@ -1474,10 +1479,10 @@ var
 begin
   myf := FFile.Frames[currentframe];
   for i := 0 to Pred(myf.Points.Count) do
-  begin
+    begin
     myp := myf.Points[i];
     myp.Caption := IntToStr(i);
-  end;
+    end;
   Redraw;
 end;
 
@@ -1511,12 +1516,12 @@ begin
   reg := TRegistry.Create;
    {$endif}
   reg.RootKey := HKEY_CURRENT_USER;
-  try
+    try
     if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff', True) then
-    begin
-      try
+      begin
+        try
         with reg do
-        begin
+          begin
           LicenseAgree := GetValueDefault('LicenseAgree', False);
           odLC1.InitialDir :=
             GetValueDefault('OpenDir', ExtractFilePath(ParamStr(0)));
@@ -1552,7 +1557,7 @@ begin
             0: sbNoImg.Down := True;
             else
               sbFullImg.Down := True;
-          end;
+            end;
           i := GetValueDefault('Zoom', 2);
           case i of
             1: miZoom1.Checked := True;
@@ -1564,11 +1569,11 @@ begin
             7: miZoom7.Checked := True;
             8: miZoom8.Checked := True;
             else
-            begin
+              begin
               miZoom2.Checked := True;
               i := 2;
+              end;
             end;
-          end;
           ZoomFactor := i;
           i := GetValueDefault('Grid', 16);
           case i of
@@ -1579,12 +1584,12 @@ begin
             64: miGrid64.Checked := True;
             128: miGrid128.Checked := True;
             else
-            begin
+              begin
               miGridCustom.Visible := True;
               miGridCustom.Checked := True;
               miGridCustom.Caption := '&' + IntToStr(i);
+              end;
             end;
-          end;
           GridWidth := i;
           i := GetValueDefault('Circles', 3);
           case i of
@@ -1597,11 +1602,11 @@ begin
             7: miCircles7.Checked := True;
             8: miCircles8.Checked := True;
             else
-            begin
+              begin
               miCircles3.Checked := True;
               i := 3;
+              end;
             end;
-          end;
           CircleSize := i;
           FormMain.Left := GetValueDefault('WinLeft', 0);
           FormMain.Top := GetValueDefault('WinTop', 0);
@@ -1609,55 +1614,55 @@ begin
           FormMain.Height := GetValueDefault('WinHeight', 579);
           s := GetValueDefault('LastFile0', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
-          begin
+            begin
             miLastFile0.Caption := '&0 ' + s;
             miLastFile0.Visible := True;
-          end
+            end
           else
             miLastFile0.Visible := False;
           s := GetValueDefault('LastFile1', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
-          begin
+            begin
             miLastFile1.Caption := '&1 ' + s;
             miLastFile1.Visible := True;
-          end
+            end
           else
             miLastFile1.Visible := False;
           s := GetValueDefault('LastFile2', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
-          begin
+            begin
             miLastFile2.Caption := '&2 ' + s;
             miLastFile2.Visible := True;
-          end
+            end
           else
             miLastFile2.Visible := False;
           s := GetValueDefault('LastFile3', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
-          begin
+            begin
             miLastFile3.Caption := '&3 ' + s;
             miLastFile3.Visible := True;
-          end
+            end
           else
             miLastFile3.Visible := False;
           s := GetValueDefault('LastFile4', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
-          begin
+            begin
             miLastFile4.Caption := '&4 ' + s;
             miLastFile4.Visible := True;
-          end
+            end
           else
             miLastFile4.Visible := False;
           // benutzerdefinierte farben
-        end;
-      finally
+          end;
+        finally
         reg.CloseKey;
+        end;
       end;
-    end;
     if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff\Colors', True) then
-    begin
-      try
+      begin
+        try
         with reg do
-        begin
+          begin
           MyColors[0, 0] := GetValueDefault('Norm0', clRed);
           MyColors[1, 0] := GetValueDefault('Norm1', clBlue);
           MyColors[0, 1] := GetValueDefault('Real0', $004080FF);
@@ -1685,14 +1690,14 @@ begin
           MyTimes[2] := GetValueDefault('Time40Degree', 66);
           MyTimes[3] := GetValueDefault('TimeEdges', 30);
           //RegLoadToolbarPositionsEx(Self,HKEY_CURRENT_USER,'\SOFTWARE\PepiMK Software\Heathcliff\Panels');
-        end;
-      finally
+          end;
+        finally
         reg.CloseKey;
+        end;
       end;
-    end;
-  finally
+    finally
     FreeAndNil(reg);
-  end;
+    end;
   //Screen.Cursors[crMovePoint] := LoadCursor(hInstance,'MOVEPOINT');
   //Screen.Cursors[crAddPoint] := LoadCursor(hInstance,'ADDPOINT');
   //Screen.Cursors[crDelPoint] := LoadCursor(hInstance,'DELPOINT');
@@ -1718,7 +1723,7 @@ begin
   until not Drawing;
 
   if realload then
-  begin
+    begin
     //panelPoint.Caption := 'Point: -';
     //panelPointLink.Caption := 'Link: -';
     //panelPointX.Caption := 'X: -';
@@ -1728,12 +1733,12 @@ begin
     FormSketchpad.Parent := Self;
     FormSketchpad.Align := alClient;
     lbThumbs.Items.Clear;
-  end;
+    end;
 
   yNew.LoadFromFile(fn);
 
   if realload then
-  begin
+    begin
       {li := lvFrames.Items.Add;
       if Length(myf.framename)>0 then li.caption := myf.framename
       else li.caption := 'noname';
@@ -1741,46 +1746,46 @@ begin
       li.subitems.add(IntToStr(myf.morph));}
     for i := 0 to Pred(yNew.Count) do
       lbThumbs.Items.Add(TLaserFrame(yNew.Frames[i]).FrameName);
-  end;
+    end;
   if yNew.Count > 0 then
-  begin
+    begin
     fFrame := yNew.frames[0];
     if realload then
-    begin
+      begin
       FormSketchpad.sbFrames.Max := Pred(yNew.Count);
       miBackImg.Caption := 'Background image: ' + fFrame.ImgName;
       if FileExistsUTF8(fFrame.ImgName) { *Converted from FileExists* } then
-      begin
+        begin
         miFullImg.Enabled := True;
         miPartImg.Enabled := True;
         miChoosePart.Enabled := True;
         aFullImg.Enabled := True;
+        end;
       end;
-    end;
-  end
+    end
   else
-  begin
+    begin
     fFrame := yNew.Add;
-  end;
+    end;
   y := nil;
   y := yNew;
   if realload then
-  begin
+    begin
     if lbThumbs.Items.Count > 0 then
       lbThumbs.ItemIndex := 0;
     FormSketchpad.sbFramesChange(nil);
-  end;
+    end;
   Dontdraw := False;
   if FileExistsUTF8(fn + '.wav') { *Converted from FileExists* } then
-  begin
+    begin
     tbPlay.Enabled := True;
     tbShowPreview.Enabled := True;
-  end
+    end
   else
-  begin
+    begin
     tbPlay.Enabled := False;
     tbShowPreview.Enabled := False;
-  end;
+    end;
 end;
 
 procedure TFormMain.SaveToFile(fn: string; var y: TLaserFrames);
@@ -1806,16 +1811,16 @@ begin
   bData := 6; // Dateiversion
   BlockWrite(fLC1File, bData, 1);
   for iFrame := 0 to Pred(wFrameCount) do
-  begin
+    begin
     fFrame := y.frames[iFrame];
     // frame name
     wSize := Length(fFrame.FrameName);
     BlockWrite(fLC1File, wSize, 2);
     for j := 0 to Pred(Length(fFrame.FrameName)) do
-    begin
+      begin
       bData := Ord(fFrame.FrameName[j + 1]);
       BlockWrite(fLC1File, bData, 1);
-    end;
+      end;
     // frame delay
     BlockWrite(fLC1File, fFrame.Delay, 2);
     // frame morph time
@@ -1835,44 +1840,44 @@ begin
     wSize := Length(fFrame.ImgName);
     BlockWrite(fLC1File, wSize, 2);
     for j := 0 to Pred(Length(fFrame.ImgName)) do
-    begin
+      begin
       bData := Ord(fFrame.ImgName[j + 1]);
       BlockWrite(fLC1File, bData, 1);
-    end;
+      end;
     // image size
     BlockWrite(fLC1File, fFrame.ImgRect, sizeof(TRect));
     // helplines
     wSize := Length(fFrame.HelpLines.x);
     BlockWrite(fLC1File, wSize, 2);
     for j := 0 to Pred(Length(fFrame.HelpLines.x)) do
-    begin
+      begin
       BlockWrite(fLC1File, fFrame.HelpLines.x[j], 1);
-    end;
+      end;
     wSize := Length(fFrame.HelpLines.y);
     BlockWrite(fLC1File, wSize, 2);
     for j := 0 to Pred(Length(fFrame.HelpLines.y)) do
-    begin
+      begin
       BlockWrite(fLC1File, fFrame.HelpLines.y[j], 1);
-    end;
+      end;
     wSize := Length(fFrame.HelpLines.d[0]);
     BlockWrite(fLC1File, wSize, 2);
     for j := 0 to Pred(Length(fFrame.HelpLines.d[0])) do
-    begin
+      begin
       BlockWrite(fLC1File, fFrame.HelpLines.d[0, j].x, 1);
       BlockWrite(fLC1File, fFrame.HelpLines.d[0, j].y, 1);
       BlockWrite(fLC1File, fFrame.HelpLines.d[1, j].x, 1);
       BlockWrite(fLC1File, fFrame.HelpLines.d[1, j].y, 1);
-    end;
+      end;
     // points
     wSize := fFrame.Points.Count;
     BlockWrite(fLC1File, wSize, 2);
     for j := 0 to Pred(fFrame.Points.Count) do
-    begin
+      begin
       pPoint := fFrame.Points[j];
       for l := 1 to 5 do
-      begin
+        begin
         aPoint[l] := Ord(pPoint.Caption[l]);
-      end;
+        end;
       aPoint[6] := byte(pPoint.x);
       aPoint[7] := byte(pPoint.y);
       aPoint[8] := byte(Hi(pPoint.p));
@@ -1880,46 +1885,46 @@ begin
       aPoint[10] := byte(Hi(pPoint.bits));
       aPoint[11] := byte(Lo(pPoint.bits));
       BlockWrite(fLC1File, aPoint, 11);
-    end;
+      end;
     // link-matrix
     mThis := fFrame.Points.Count;
     if iFrame > 0 then
-    begin
+      begin
       mOld := y.frames[Pred(iFrame)].Points.Count;
-    end
+      end
     else
-    begin
+      begin
       mOld := 0;
-    end;
+      end;
     SetLength(fFrame.links, mThis, mOld);
     BlockWrite(fLC1File, mThis, 2);
     BlockWrite(fLC1File, mOld, 2);
     if (mThis > 0) and (mOld > 0) then
-    begin
-      for cOld := 0 to Pred(mOld) do
       begin
+      for cOld := 0 to Pred(mOld) do
+        begin
         cThis := 0;
         wWord := 0;
         while cThis < mThis do
-        begin
+          begin
           if fFrame.links[cThis, cOld] then
-          begin
+            begin
             l := (1 shl (cThis mod 16));
-          end
+            end
           else
-          begin
+            begin
             l := 0;
-          end;
+            end;
           wWord := wWord or l;
           if ((cThis mod 16) = 15) or ((cThis + 1) >= mThis) then
-          begin
+            begin
             BlockWrite(fLC1File, wWord, 2);
-          end;
+            end;
           Inc(cThis);
-        end; // while
-      end; // for
-    end; // if matrix > 0
-  end;
+          end; // while
+        end; // for
+      end; // if matrix > 0
+    end;
   CloseFile(fLC1File);
   FormSketchpad.Caption := fn;
   MessageDlg('File was saved.', mtConfirmation, [mbOK], 0);
@@ -1956,11 +1961,11 @@ begin
     7: miCircles7.Checked := True;
     8: miCircles8.Checked := True;
     else
-    begin
+      begin
       miCircles3.Checked := True;
       CircleSize := 3;
+      end;
     end;
-  end;
   miCirclesize.Caption := 'Circlesize: ' + IntToStr(CircleSize) + '...';
   Redraw;
 end;
@@ -1984,11 +1989,11 @@ begin
     7: miZoom7.Checked := True;
     8: miZoom8.Checked := True;
     else
-    begin
+      begin
       miZoom2.Checked := True;
       ZoomFactor := 2;
+      end;
     end;
-  end;
   miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
   Redraw;
 end;
@@ -2040,12 +2045,12 @@ begin
     64: miGrid4.Checked := True;
     128: miGrid4.Checked := True;
     else
-    begin
+      begin
       miGridCustom.Visible := True;
       miGridCustom.Checked := True;
       miGridCustom.Caption := '&' + IntToStr(GridWidth);
+      end;
     end;
-  end;
   miGrid.Caption := 'Grid: ' + IntToStr(GridWidth) + '...';
   Redraw;
 end;
@@ -2056,10 +2061,10 @@ var
 begin
   reg := TRegistry.Create;
   reg.RootKey := HKEY_CURRENT_USER;
-  try
+    try
     if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff', True) then
       with reg do
-      begin
+        begin
         SetValue('OpenDir', odLC1.InitialDir);
         SetValue('SaveDir', sdLC1.InitialDir);
         SetValue('ShowPoints', sbShowPoints.Down);
@@ -2089,16 +2094,21 @@ begin
         SetValue('WinTop', FormMain.Top);
         SetValue('WinWidth', FormMain.Width);
         SetValue('WinHeight', FormMain.Height);
-        SetValue('Lastfile0', Copy(miLastfile0.Caption, 4, Length(miLastfile0.Caption) - 3));
-        SetValue('Lastfile1', Copy(miLastfile1.Caption, 4, Length(miLastfile1.Caption) - 3));
-        SetValue('Lastfile2', Copy(miLastfile2.Caption, 4, Length(miLastfile2.Caption) - 3));
-        SetValue('Lastfile3', Copy(miLastfile3.Caption, 4, Length(miLastfile3.Caption) - 3));
-        SetValue('Lastfile4', Copy(miLastfile4.Caption, 4, Length(miLastfile4.Caption) - 3));
+        SetValue('Lastfile0', Copy(miLastfile0.Caption, 4,
+          Length(miLastfile0.Caption) - 3));
+        SetValue('Lastfile1', Copy(miLastfile1.Caption, 4,
+          Length(miLastfile1.Caption) - 3));
+        SetValue('Lastfile2', Copy(miLastfile2.Caption, 4,
+          Length(miLastfile2.Caption) - 3));
+        SetValue('Lastfile3', Copy(miLastfile3.Caption, 4,
+          Length(miLastfile3.Caption) - 3));
+        SetValue('Lastfile4', Copy(miLastfile4.Caption, 4,
+          Length(miLastfile4.Caption) - 3));
         CloseKey;
-      end;
+        end;
     if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff\Colors', True) then
       with reg do
-      begin
+        begin
         SetValue('Norm0', MyColors[0, 0]);
         SetValue('Norm1', MyColors[1, 0]);
         SetValue('Real0', MyColors[0, 1]);
@@ -2124,11 +2134,11 @@ begin
         SetValue('Time40Degree', MyTimes[2]);
         SetValue('TimeEdges', MyTimes[3]);
         CloseKey;
-      end;
+        end;
     //RegSaveToolbarPositionsEx(Self, HKEY_CURRENT_USER, '\SOFTWARE\PepiMK Software\Heathcliff\Panels');
-  finally
+    finally
     FreeAndNil(reg);
-  end;
+    end;
 end;
 
 procedure TFormMain.miOpt2xZoomClick(Sender: TObject);
@@ -2161,42 +2171,47 @@ var
 begin
   sel := y div 33;
   if sel < FFile.Count then
-  begin
-    if sel <= FormSketchpad.sbFrames.Max then
     begin
+    if sel <= FormSketchpad.sbFrames.Max then
+      begin
       FormSketchpad.sbFrames.Position := sel;
       FormSketchpad.sbFramesChange(nil);
+      end;
     end;
-  end;
 end;
 
 procedure TFormMain.miLastfile0Click(Sender: TObject);
 begin
-  LoadFromFile(Copy(miLastfile0.Caption, 4, Length(miLastfile0.Caption) - 3), FFile, True);
+  LoadFromFile(Copy(miLastfile0.Caption, 4, Length(miLastfile0.Caption) - 3),
+    FFile, True);
   Redraw;
 end;
 
 procedure TFormMain.miLastfile1Click(Sender: TObject);
 begin
-  LoadFromFile(Copy(miLastfile1.Caption, 4, Length(miLastfile1.Caption) - 3), FFile, True);
+  LoadFromFile(Copy(miLastfile1.Caption, 4, Length(miLastfile1.Caption) - 3),
+    FFile, True);
   Redraw;
 end;
 
 procedure TFormMain.miLastfile2Click(Sender: TObject);
 begin
-  LoadFromFile(Copy(miLastfile2.Caption, 4, Length(miLastfile2.Caption) - 3), FFile, True);
+  LoadFromFile(Copy(miLastfile2.Caption, 4, Length(miLastfile2.Caption) - 3),
+    FFile, True);
   Redraw;
 end;
 
 procedure TFormMain.miLastfile3Click(Sender: TObject);
 begin
-  LoadFromFile(Copy(miLastfile3.Caption, 4, Length(miLastfile3.Caption) - 3), FFile, True);
+  LoadFromFile(Copy(miLastfile3.Caption, 4, Length(miLastfile3.Caption) - 3),
+    FFile, True);
   Redraw;
 end;
 
 procedure TFormMain.milastfile4Click(Sender: TObject);
 begin
-  LoadFromFile(Copy(miLastfile4.Caption, 4, Length(miLastfile4.Caption) - 3), FFile, True);
+  LoadFromFile(Copy(miLastfile4.Caption, 4, Length(miLastfile4.Caption) - 3),
+    FFile, True);
   Redraw;
 end;
 
@@ -2210,16 +2225,16 @@ begin
   if FFile <> nil then
     if index < FFile.Count then
       with (Control as TListBox).Canvas do
-      begin
+        begin
         Brush.Color := MyOtherColors[myoc_bg];
         FillRect(Rect);
         Pen.Color := clGreen;
         Pen.Width := 1;
         if (odSelected in State) then
-        begin
+          begin
           Pen.Style := psDot;
           Rectangle(Rect.Left, Rect.Top, Rect.Right, Rect.Bottom);
-        end;
+          end;
         Pen.Style := psSolid;
         //MoveTo(Rect.Left,Rect.Bottom-1); LineTo(Rect.Right,Rect.Bottom-1);
         if ((FFile.frames[index].Bits and 1) = 0) then
@@ -2231,11 +2246,11 @@ begin
         // sperrsymbol
         //..
         if (FFile.frames[index].Bits and 2) = 2 then
-        begin
+          begin
           Font.Color := clRed;
           s := 'Locked';
           TextOut(Rect.Right - 2 - TextWidth(s), Rect.Top + 2, s);
-        end;
+          end;
         // und texte
         Font.Color := MyTextColors[mytc_thumb];
         Pen.Color := clGreen;
@@ -2258,49 +2273,49 @@ begin
           effect_drain: s := 'Drain';
           else
             s := '?';
-        end;
+          end;
         TextOut(Rect.Right - 6 - TextWidth(s), Rect.Top + 48, s);
         //TextOut(Rect.Left+66,Rect.Top+62,'Color:');
         //if ((Tframe(FFile.frames[index]).bits and 1)=0) then s := MyColorNames[0]
         //else s := MyColorNames[1];
         //if Pos('&',s)>0 then Delete(s,Pos('&',s),1);
         //TextOut(Rect.Right-6-TextWidth(s),Rect.Top+62,s);
-        if FFile.frames[index].Effect in
-          [effect_rotate, effect_drain, effect_xflip, effect_yflip, effect_dflip, effect_plode] then
-        begin
+        if FFile.frames[index].Effect in [effect_rotate,
+          effect_drain, effect_xflip, effect_yflip, effect_dflip, effect_plode] then
+          begin
           case FFile.frames[index].Effect of
             effect_rotate, effect_drain:
-            begin
+              begin
               s := 'Rotation:';
               s2 := IntToStr(FFile.frames[index].EffectParam) + '°';
-            end;
+              end;
             effect_xflip, effect_yflip, effect_dflip, effect_plode:
-            begin
+              begin
               s := 'Rotation:';
               if FFile.frames[index].EffectParam = 1 then
                 s2 := 'Trig'
               else
                 s2 := 'Lin';
-            end;
+              end;
             else
-            begin
+              begin
               s := 'Param:';
               s2 := IntToStr(FFile.frames[index].EffectParam) + '°';
+              end;
             end;
-          end;
           TextOut(Rect.Left + 66, Rect.Top + 62, s);
           TextOut(Rect.Right - 6 - TextWidth(s2), Rect.Top + 62, s2);
+          end;
         end;
-      end;
 end;
 
 procedure TFormMain.lbThumbsClick(Sender: TObject);
 begin
   if (lbThumbs.ItemIndex > -1) and (lbThumbs.ItemIndex < FFile.Count) then
-  begin
+    begin
     FormSketchpad.sbFrames.Position := lbThumbs.ItemIndex;
     FormSketchpad.sbFramesChange(nil);
-  end;
+    end;
 end;
 
 procedure TFormMain.miGrid4Click(Sender: TObject);
@@ -2359,11 +2374,11 @@ begin
   s := Copy(miGridCustom.Caption, 2, Pred(Length(miGridCustom.Caption)));
   Val(s, i, ec);
   if ec = 0 then
-  begin
+    begin
     GridWidth := i;
     miGrid.Caption := 'Grid: ' + s;
     miGridCustom.Checked := True;
-  end;
+    end;
   Redraw;
 end;
 
@@ -2571,14 +2586,14 @@ var
   was: integer;
 begin
   if (Button = mbLeft) then
-  begin
+    begin
     was := lbThumbs.ItemAtPos(Point(x, y), False);
     if (was > -1) and (was < FFile.Count) then
-    begin
+      begin
       if (FFile.frames[was].Bits and 2) = 0 then
         lbThumbs.BeginDrag(False, 5);
+      end;
     end;
-  end;
 end;
 
 procedure TFormMain.lbThumbsDragOver(Sender, Source: TObject;
@@ -2590,9 +2605,9 @@ begin
   if (wo > -1) and (wo <> lbThumbs.ItemIndex) and
     (not ((lbThumbs.ItemIndex = Pred(lbThumbs.Items.Count)) and
     (wo = lbThumbs.Items.Count))) then
-  begin
+    begin
     Accept := (Source is TListBox);
-  end
+    end
   else
     Accept := False;
 end;
@@ -2604,11 +2619,11 @@ var
   doit: boolean;
 begin
   if (Sender is TListBox) and (Source is TListBox) then
-  begin
+    begin
     iTargetFrame := lbThumbs.ItemAtPos(Point(x, y), False);
     iSelectedFrame := lbThumbs.ItemIndex;
     if (iTargetFrame > -1) and (iSelectedFrame > -1) then
-    begin
+      begin
       //FormSketchpad.Caption := 'Dragging '+IntToStr(was)+' B4: '+IntToStr(wo);
       myf := FFile.frames[iSelectedFrame];
       if myf.Effect = 1 then
@@ -2618,48 +2633,48 @@ begin
       else
         doit := True;
       if doit then
-      begin
-        if (iSelectedFrame < (Pred(FFile.Count))) then
         begin
+        if (iSelectedFrame < (Pred(FFile.Count))) then
+          begin
           mynf := FFile.frames[iSelectedFrame + 1];
           if iSelectedFrame > 0 then
-          begin
+            begin
             mypf := FFile.frames[Pred(iSelectedFrame)];
             SetLength(mynf.links, mynf.Points.Count, mypf.Points.Count);
-          end
+            end
           else
-          begin
+            begin
             SetLength(mynf.links, mynf.Points.Count, 0);
+            end;
           end;
-        end;
         FFile.Delete(iSelectedFrame);
         if iTargetFrame > FFile.Count then
-        begin
+          begin
           neupos := FFile.Add(myf);
-        end
+          end
         else
-        begin
+          begin
           FFile.Insert(iTargetFrame, myf);
           neupos := iTargetFrame;
-        end;
+          end;
         if neupos < (Pred(FFile.Count)) then
-        begin
+          begin
           mynf := FFile.frames[neupos + 1];
           SetLength(mynf.links, mynf.Points.Count, myf.Points.Count);
-        end;
+          end;
         if neupos > 0 then
-        begin
+          begin
           mypf := FFile.frames[Pred(neupos)];
           SetLength(myf.links, myf.Points.Count, mypf.Points.Count);
-        end
+          end
         else
-        begin
+          begin
           SetLength(myf.links, myf.Points.Count, 0);
-        end;
+          end;
         lbThumbs.ItemIndex := neupos;
+        end;
       end;
     end;
-  end;
   lbThumbs.Refresh;
 end;
 
@@ -2699,16 +2714,16 @@ procedure TFormMain.miFramecolorsClick(Sender: TObject);
   procedure FillCanvas(c: TImage; cl: TColor);
   begin
     with c.canvas do
-    begin
+      begin
       Brush.Color := cl;
       FillRect(ClipRect);
       c.Tag := cl;
-    end;
+      end;
   end;
 
 begin
   with FormColors do
-  begin
+    begin
     FillCanvas(imgNorm0, MyColors[0, myc_norm]);
     FillCanvas(imgNorm1, MyColors[1, myc_norm]);
     FillCanvas(imgReal0, MyColors[0, myc_real]);
@@ -2729,13 +2744,13 @@ begin
     FillCanvas(imgTimelineAreas, MyTimelineColors[mytlc_areas]);
     FillCanvas(imgTimelineText, MyTimelineColors[mytlc_text]);
     FillCanvas(imgTimelineBack, MyTimelineColors[mytlc_back]);
-  end;
+    end;
   if FormColors.ShowModal = mrOk then
-  begin
+    begin
     SetColorsFromDialog;
     Redraw;
     lbThumbs.Refresh;
-  end;
+    end;
 end;
 
 procedure TFormMain.miAboutClick(Sender: TObject);
@@ -2756,7 +2771,7 @@ begin
     doit := (MessageDlg('Do you really want to discard any changes made to this file?',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes);
   if doit then
-  begin
+    begin
     FFile.Clear;
     myf := TLaserFrame.Create;
     FormSketchpad.sbFrames.Position := 0;
@@ -2770,7 +2785,7 @@ begin
     FFile.Add(myf);
     lbThumbs.Items.Clear;
     lbThumbs.Items.Add('');
-  end;
+    end;
   Redraw;
 end;
 
@@ -2787,13 +2802,13 @@ begin
   odLC1.Filename := '';
   if doit then
     if odLC1.Execute then
-    begin
+      begin
       odLC1.InitialDir := ExtractFilePath(odLC1.Filename);
       LoadFromFile(odLC1.Filename, FFile, True);
       AddUsedFile(odLC1.Filename);
       FileChanged := False;
       Redraw;
-    end;
+      end;
 end;
 
 procedure TFormMain.aSaveFileExecute(Sender: TObject);
@@ -2820,28 +2835,28 @@ begin
   FileChanged := True;
   myf := FFile.frames[currentframe];
   if FormSketchpad.MultiSelect then
-  begin
-    for i := 0 to Pred(myf.Points.Count) do
     begin
+    for i := 0 to Pred(myf.Points.Count) do
+      begin
       myp := myf.Points[i];
       if ((myp.p and 1) > 0) then
         if ((myp.bits and 1) = 0) then
           Inc(myp.bits)
         else
           Dec(myp.bits);
-    end;
-  end
+      end;
+    end
   else
-  begin
-    if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
     begin
+    if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
+      begin
       myp := myf.Points[SelectedPoint];
       if ((myp.bits and 1) = 0) then
         Inc(myp.bits)
       else
         Dec(myp.bits);
+      end;
     end;
-  end;
   Redraw;
 end;
 
@@ -2854,13 +2869,13 @@ procedure TFormMain.aSaveAsFileExecute(Sender: TObject);
 begin
   sdLC1.Filename := FFile.Filename;
   if sdLC1.Execute then
-  begin
+    begin
     sdLC1.InitialDir := ExtractFilePath(sdLC1.Filename);
     SaveToFile(sdLC1.filename, FFile);
     AddUsedFile(sdLC1.Filename);
     FFile.Filename := sdLC1.filename;
     FileChanged := False;
-  end;
+    end;
 end;
 
 procedure TFormMain.InsertFrame(f: TLaserFrame; pos: integer);
@@ -2870,7 +2885,8 @@ begin
   myf := f;
   mynf := FormMain.FFile.frames[pos];
   if pos > 0 then
-    SetLength(myf.links, myf.Points.Count, TLaserFrame(FFile.frames[Pred(pos)]).Points.Count)
+    SetLength(myf.links, myf.Points.Count,
+      TLaserFrame(FFile.frames[Pred(pos)]).Points.Count)
   else
     SetLength(myf.links, myf.Points.Count, 0);
   SetLength(mynf.links, mynf.Points.Count, myf.Points.Count);
@@ -2889,22 +2905,22 @@ begin
   filechanged := True;
   if FFile <> nil then
     if FFile.Count > 0 then
-    begin
-      if FFile.Count > 1 then
       begin
-        if (pos < Pred(FFile.Count)) then
+      if FFile.Count > 1 then
         begin
+        if (pos < Pred(FFile.Count)) then
+          begin
           mynf := FFile.frames[pos + 1];
           if (pos = 0) then
-          begin
+            begin
             SetLength(mynf.links, mynf.Points.Count, 0);
-          end
+            end
           else
-          begin
+            begin
             mypf := FFile.frames[Pred(pos)];
             SetLength(mynf.links, mynf.Points.Count, mypf.Points.Count);
+            end;
           end;
-        end;
         f := FFile.frames[pos];
         FFile.Delete(pos);
         lbThumbs.Items.Delete(pos);
@@ -2913,10 +2929,10 @@ begin
         FormSketchpad.panelFrameSwitcher.Caption := IntToStr(pos);
         FormSketchpad.sbFrames.Max := Pred(FFile.Count);
         FormSketchpad.sbFramesChange(nil);
-      end
+        end
       else
         MessageDlg('You can''t delete the one and only frame!', mtError, [mbOK], 0);
-    end;
+      end;
 end;
 
 procedure TFormMain.aDeleteFrameExecute(Sender: TObject);
@@ -2944,7 +2960,7 @@ begin
     effect_dflip: miEffectDFlip.Checked := True;
     effect_rotate: miEffectRotate.Checked := True;
     effect_drain: miEffectDrain.Checked := True;
-  end;
+    end;
   lbThumbs.Refresh;
   Redraw;
 end;
@@ -2954,10 +2970,10 @@ begin
   FormImport.lb.Items.Clear;
   if FormImport.ShowModal = mrOk then
     if FormImport.lb.ItemIndex > -1 then
-    begin
+      begin
       InsertFrame(FormImport.FFile.frames[FormImport.lb.ItemIndex], CurrentFrame);
       FreeAndNil(FormImport.FFile);
-    end;
+      end;
 end;
 
 procedure TFormMain.aImportShowExecute(Sender: TObject);
@@ -2968,15 +2984,15 @@ var
 begin
   odLC1.Title := 'Import Yoghurt file...';
   if odLC1.Execute then
-  begin
-    if FileExistsUTF8(odLC1.Filename) { *Converted from FileExists* } then
     begin
+    if FileExistsUTF8(odLC1.Filename) { *Converted from FileExists* } then
+      begin
       LoadFromFile(odLC1.Filename, y2, False);
       if y2 <> nil then
-      begin
+        begin
         if y2.Count > 0 then
           for i := Pred(y2.Count) downto 0 do
-          begin
+            begin
             myf := y2.frames[i];
             if CurrentFrame > 0 then
               SetLength(myf.links, myf.Points.Count, TLaserFrame(
@@ -2988,11 +3004,11 @@ begin
             SetLength(mynf.links, mynf.Points.Count, myf.Points.Count);
             lbThumbs.Items.Insert(CurrentFrame, myf.FrameName);
             FormSketchpad.sbFrames.Max := FormSketchpad.sbFrames.Max + 1;
-          end;
+            end;
         FreeAndNil(y2);
+        end;
       end;
     end;
-  end;
   lbThumbs.Refresh;
   Redraw;
 end;
@@ -3000,11 +3016,11 @@ end;
 procedure TFormMain.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin
   if FileChanged then
-  begin
+    begin
     CanClose := (MessageDlg(
       'Do you really want to discard any changes made to this file?',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes);
-  end
+    end
   else
     CanClose := True;
 end;
@@ -3027,28 +3043,28 @@ begin
   FileChanged := True;
   myf := FFile.frames[currentframe];
   if FormSketchpad.MultiSelect then
-  begin
-    for i := 0 to Pred(myf.Points.Count) do
     begin
+    for i := 0 to Pred(myf.Points.Count) do
+      begin
       myp := myf.Points[i];
       if ((myp.p and 1) > 0) then
         if ((myp.bits and 2) = 0) then
           Inc(myp.bits, 2)
         else
           Dec(myp.bits, 2);
-    end;
-  end
+      end;
+    end
   else
-  begin
-    if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
     begin
+    if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
+      begin
       myp := myf.Points[SelectedPoint];
       if ((myp.bits and 2) = 0) then
         Inc(myp.bits, 2)
       else
         Dec(myp.bits, 2);
+      end;
     end;
-  end;
   Redraw;
 end;
 
@@ -3067,11 +3083,11 @@ end;
 procedure TFormMain.aRenameFrameExecute(Sender: TObject);
 begin
   if (CurrentFrame > -1) and (CurrentFrame < FFile.Count) then
-  begin
+    begin
     lbThumbs.Items[CurrentFrame] :=
       InputBox('Enter new framename', 'new name 4 frame', lbThumbs.Items[CurrentFrame]);
     TLaserFrame(FFile.frames[CurrentFrame]).FrameName := lbThumbs.Items[CurrentFrame];
-  end;
+    end;
   lbThumbs.Refresh;
 end;
 
@@ -3079,15 +3095,15 @@ procedure TFormMain.aRulerExecute(Sender: TObject);
 begin
   Redraw;
   if sbRuler.Down then
-  begin
+    begin
     Width := Width + LeftRulerWidth;
     Height := Height + TopRulerHeight;
-  end
+    end
   else
-  begin
+    begin
     Width := Width - LeftRulerWidth;
     Height := Height - TopRulerHeight;
-  end;
+    end;
 end;
 
 procedure TFormMain.aFrameDelayExecute(Sender: TObject);
@@ -3097,13 +3113,13 @@ var
   i, ec: integer;
 begin
   if (CurrentFrame > -1) and (CurrentFrame < FFile.Count) then
-  begin
+    begin
     myf := TLaserFrame(FFile.frames[CurrentFrame]);
     s := InputBox('Enter new framedelay in ms', 'new delay', IntToStr(myf.Delay));
     Val(s, i, ec);
     if ec = 0 then
       myf.Delay := i;
-  end;
+    end;
   lbThumbs.Refresh;
 end;
 
@@ -3114,13 +3130,13 @@ var
   i, ec: integer;
 begin
   if (CurrentFrame > -1) and (CurrentFrame < FFile.Count) then
-  begin
+    begin
     myf := TLaserFrame(FFile.frames[CurrentFrame]);
     s := InputBox('Enter new morphtime in ms', 'new morphtime', IntToStr(myf.Morph));
     Val(s, i, ec);
     if ec = 0 then
       myf.Morph := i;
-  end;
+    end;
   lbThumbs.Refresh;
 end;
 
@@ -3194,29 +3210,29 @@ begin
   if FFile <> nil then
     if FFile.Count > 1 then
       if CurrentFrame > 0 then
-      begin
+        begin
         fCurrent := FFile.frames[CurrentFrame];
         fPrevious := FFile.frames[Pred(CurrentFrame)];
         for iCurrent := 0 to Pred(fCurrent.Points.Count) do
-        begin
+          begin
           myp := fCurrent.Points[iCurrent];
           for iPrevious := 0 to Pred(fPrevious.Points.Count) do
-          begin
+            begin
             mypp := fPrevious.Points[iPrevious];
             dx := Abs(myp.x - mypp.x);
             dy := Abs(myp.y - mypp.y);
             if (dx < (2 * Circlesize)) and (dy < (2 * CircleSize)) then
-            begin
+              begin
               Inc(f);
               fCurrent.links[iCurrent, iPrevious] := True;
               myp.overlay := True;
-            end;
-          end; // for j mypf
-        end; // for i myf
+              end;
+            end; // for j mypf
+          end; // for i myf
         if f > 0 then
           MessageDlg(IntToStr(f) + ' overlapping points found!',
             mtInformation, [mbOK], 0);
-      end; // wenn alles ok
+        end; // wenn alles ok
   Redraw;
 end;
 
@@ -3246,7 +3262,7 @@ begin
   ax := 127;
   ay := 127;
   for i := 0 to Pred(myf.Points.Count) do
-  begin
+    begin
     myp := myf.Points[i];
     if (i < (Pred(myf.Points.Count))) then
       mynp := myf.Points[i + 1]
@@ -3275,7 +3291,7 @@ begin
     //FormDebug.img.width := framedauer;
     j := 0;
     while (j < t) do
-    begin
+      begin
       oldax := ax;
       olday := ay;
       ax := myp.x + Round(dx * j / t);
@@ -3290,8 +3306,8 @@ begin
          end;}
       //Inc(j,FormDebug.WaveSteps);
       Inc(j);
+      end;
     end;
-  end;
 {   if framedauer>0 then
       FormDebug.Caption := 'waveform preview -- duration: '+IntToStr(framedauer)+' samples -- rate: '+IntToStr(Round(44100/framedauer))+' Hz -- zoom: '+IntToStr(FormDebug.WaveScale)+'/'+IntToStr(FormDebug.WaveSteps)
    else
@@ -3303,11 +3319,11 @@ procedure TFormMain.aGeoExecute(Sender: TObject);
 begin
   case tbGeo.ImageIndex of
     8:
-    begin
+      begin
       workstate := sEquilateral;
       FormSketchpad.pad.Cursor := crMovePoint;
+      end;
     end;
-  end;
 end;
 
 procedure TFormMain.aCreateWavefileExecute(Sender: TObject);
@@ -3357,13 +3373,13 @@ var
     SetLength(a, t);
     SetLength(b, t);
     for j := 0 to Pred(t) do
-    begin
+      begin
       ax := fromp.x + Round(dx * j / t);
       ay := fromp.y + Round(dy * j / t);
       TPoint(a[j]).x := ax;
       TPoint(a[j]).y := ay;
       b[j] := blank;
-    end;
+      end;
     WritePointArray(TStream(ms), a, b, color, writtensamples, lastpoint);
   end;
 
@@ -3376,7 +3392,7 @@ var
   begin
     // ### effect: x-flip,y-flip,plode
     if (Frame1.Effect in [effect_plode, effect_xflip, effect_yflip]) then
-    begin
+      begin
       topoint.x := Frame1.RotCenter.x;
       topoint.y := Frame1.RotCenter.y;
       bx := -1;
@@ -3385,50 +3401,52 @@ var
       Stetigkeit(lastpoint, topoint, ((Frame1.Bits and 1) = 1), True);
       FormStatus.pgMorph.Max := iMorphSamples;
       for j := 0 to Pred(iMorphSamples div 2) do
-      begin
-        for i := 0 to Pred(Length(wavedata)) do
         begin
+        for i := 0 to Pred(Length(wavedata)) do
+          begin
           calc := (j + ((i + 1) / Length(wavedata))) / (iMorphSamples div 2);
           if Frame1.EffectParam = 0 then
-          begin
+            begin
             if not forw then
               calc := 1 - calc;
-          end
+            end
           else
-          begin
+            begin
             if forw then
               calc := sin(calc * Pi / 2)
             else
               calc := cos(calc * Pi / 2);
-          end;
+            end;
           if Frame1.Effect in [effect_yflip, effect_plode] then
-            bx := Round((TPoint(wavedata[i]).x - Frame1.RotCenter.x) * calc + Frame1.RotCenter.x)
+            bx := Round((TPoint(wavedata[i]).x - Frame1.RotCenter.x) *
+              calc + Frame1.RotCenter.x)
           else
             bx := TPoint(wavedata[i]).x;
           if Frame1.Effect in [effect_xflip, effect_plode] then
-            by := Round((TPoint(wavedata[i]).y - Frame1.RotCenter.y) * calc + Frame1.RotCenter.y)
+            by := Round((TPoint(wavedata[i]).y - Frame1.RotCenter.y) *
+              calc + Frame1.RotCenter.y)
           else
             by := TPoint(wavedata[i]).y;
           subcolor := ((Frame2.Bits and 1) = 1);
           WritePoints(TStream(ms), bx + 128, by + 128, subcolor, False); //##
           Inc(writtensamples);
-        end;
+          end;
         if forw then
           FormStatus.pgMorph.Position := j
         else
           FormStatus.pgMorph.Position := (FormStatus.pgMorph.Max + j);
         FormStatus.pgTotal.Position := iTimeDone + (Frame1.Morph * j div iMorphSamples);
         FormStatus.Repaint;
-      end;
-    end
+        end;
+      end
     else if (Frame1.Effect in [effect_dflip]) then
-    begin
+      begin
       a := Frame1.RotCenter;
       b.x := Frame1.RotCenter.x - Frame1.AuxCenter.x;
       b.y := Frame1.RotCenter.y - Frame1.AuxCenter.y;
       // topoint errechnen
       if Length(wavedata) > 0 then
-      begin
+        begin
         calc := 0;
         if forw then
           calc := 1 - calc;
@@ -3451,14 +3469,14 @@ var
         bx := c.x;
         by := c.y;
         topoint := c;
-      end;
+        end;
       // ### stetig: lastpoint -> topoint
       Stetigkeit(lastpoint, topoint, ((Frame1.Bits and 1) = 1), True);
       FormStatus.pgMorph.Max := iMorphSamples;
       for j := 0 to Pred(iMorphSamples div 2) do
-      begin
-        for i := 0 to Pred(Length(wavedata)) do
         begin
+        for i := 0 to Pred(Length(wavedata)) do
+          begin
           calc := (j + ((i + 1) / Length(wavedata))) / (iMorphSamples div 2);
           if forw then
             calc := 1 - calc;
@@ -3483,29 +3501,29 @@ var
           subcolor := ((Frame2.Bits and 1) = 1);
           WritePoints(TStream(ms), bx + 128, by + 128, subcolor, False); //##
           Inc(writtensamples);
-        end;
+          end;
         if forw then
           FormStatus.pgMorph.Position := j
         else
           FormStatus.pgMorph.Position := (FormStatus.pgMorph.Max + j);
         FormStatus.pgTotal.Position := iTimeDone + (Frame1.Morph * j div iMorphSamples);
         FormStatus.Repaint;
-      end;
-    end
+        end;
+      end
     else if (Frame1.Effect in [effect_rotate, effect_drain]) then
-    begin
+      begin
       // ### effect: rotate
       bx := -1;
       by := -1;
       if Length(wavedata) > 0 then
-      begin
-        if Frame1.Effect = effect_drain then
         begin
+        if Frame1.Effect = effect_drain then
+          begin
           topoint.x := Frame1.RotCenter.x;
           topoint.y := Frame1.RotCenter.y;
-        end
+          end
         else
-        begin
+          begin
           winkel := Frame1.EffectParam * Pi / 180;
           topoint.x := (TPoint(wavedata[0]).x - Frame1.RotCenter.x);
           topoint.y := (TPoint(wavedata[0]).y - Frame1.RotCenter.y);
@@ -3521,14 +3539,14 @@ var
             topoint.y := 0;
           if topoint.y > 255 then
             topoint.y := 255;
-        end;
+          end;
         Stetigkeit(lastpoint, topoint, ((Frame1.Bits and 1) = 1), True);
-      end;
+        end;
       FormStatus.pgMorph.Max := iMorphSamples;
       for j := 0 to Pred(iMorphSamples div 2) do
-      begin
-        for i := 0 to Pred(Length(wavedata)) do
         begin
+        for i := 0 to Pred(Length(wavedata)) do
+          begin
           calc := 1 - ((j + ((i + 1) / Length(wavedata))) / (iMorphSamples div 2));
           subcalc := (j + ((i + 1) / Length(wavedata))) / (iMorphSamples div 2);
           if not forw then
@@ -3545,10 +3563,10 @@ var
           bx := Round(radius * Cos(pw)) + Frame1.RotCenter.x;
           by := Round(radius * Sin(pw)) + Frame1.RotCenter.y;
           if Frame1.Effect = effect_drain then
-          begin
+            begin
             bx := Round((bx - Frame1.RotCenter.x) * subcalc) + Frame1.RotCenter.x;
             by := Round((by - Frame1.RotCenter.y) * subcalc) + Frame1.RotCenter.y;
-          end;
+            end;
           //if bx<0 then bx := 0; if bx>255 then bx := 255;
           //if by<0 then by := 0; if by>255 then by := 255;
           if bx < 1 then
@@ -3563,23 +3581,23 @@ var
           subcolor := ((Frame2.Bits and 1) = 1);
           WritePoints(TStream(ms), bx + 128, by + 128, subcolor, False);
           Inc(writtensamples);
-        end;
+          end;
         if Frame1.Effect = effect_drain then
           FormStatus.pgMorph.Position := j
         else
-        begin
+          begin
           if forw then
             FormStatus.pgMorph.Position := j
           else
             FormStatus.pgMorph.Position := (FormStatus.pgMorph.Max + j);
-        end;
+          end;
         FormStatus.pgTotal.Position := iTimeDone + (Frame1.Morph * j div iMorphSamples);
         FormStatus.Repaint;
+        end;
       end;
-    end;
     // ### special effect: morph last frame into this!!! ################
     if (Frame1.Effect = effect_morph) and (framecounter > 0) and forw then
-    begin
+      begin
       mypf := FFile.frames[Pred(framecounter)];
       // ### stetig: lastpoint -> topoint
       topoint.x := TLaserPoint(mypf.Points[0]).x;
@@ -3590,18 +3608,18 @@ var
       FormStatus.pgMorph.Max := iMorphSamples;
       dummyp := nil;
       while (iMorphDuration < iMorphSamples) do
-      begin
+        begin
         frameDummy := TLaserFrame.Create;
-        try
+          try
           for i := 0 to Pred(mypf.Points.Count) do
-          begin
+            begin
             calc := iMorphDuration / iMorphSamples;
             if calc > 1 then
               calc := 1;
             for j := 0 to Pred(myf.Points.Count) do
-            begin
-              if Frame1.links[j, i] then
               begin
+              if Frame1.links[j, i] then
+                begin
                 myp := Frame1.Points[j];
                 mypp := mypf.Points[i];
                 dummyp := TLaserPoint.Create;
@@ -3609,26 +3627,26 @@ var
                 dummyp.y := mypp.y + (Round((myp.y - mypp.y) * calc));
                 dummyp.bits := mypp.bits;
                 frameDummy.Points.add(dummyp);
+                end;
               end;
             end;
-          end;
           FrameToArray(frameDummy, morphdata, morphblank, iMorphDuration);
-        finally
+          finally
           FreeAndNil(frameDummy);
-        end;
+          end;
         if iMorphDuration < iMorphSamples then
           FormStatus.pgMorph.Position := iMorphDuration;
         FormStatus.pgTotal.Position := iTimeDone + Round(Frame1.Morph * calc);
         FormStatus.Repaint;
-      end;
+        end;
       if dummyp <> nil then
-      begin
+        begin
         lastpoint.x := dummyp.x;
         lastpoint.y := dummyp.y;
-      end;
+        end;
       WritePointArray(TStream(ms), morphdata, morphblank,
         ((mypf.Bits and 1) = 1), writtensamples, lastpoint);
-    end;
+      end;
     Inc(iTimeDone, Frame1.Morph div 2);
     if bx > -1 then
       lastpoint.x := bx;
@@ -3657,17 +3675,17 @@ begin
     DeleteFileUTF8(s); { *Converted from DeleteFile* }
   fs := TFileStream.Create(s, fmCreate);
   ms := TMemoryStream.Create;
-  try
+    try
     iFrameSamples := 1;
     CreateWaveHeader(TStream(fs), iFrameSamples, Length(wavedata));
     // run frame
     iFullTime := 0;
     iTimeDone := 0;
     for framecounter := 0 to Pred(FFile.Count) do
-    begin
+      begin
       Inc(iFullTime, TLaserFrame(FFile.frames[framecounter]).Delay);
       Inc(iFullTime, TLaserFrame(FFile.frames[framecounter]).Morph);
-    end;
+      end;
     FormStatus.pgTotal.Max := iFullTime;
     FormStatus.pgTotal.Position := 0;
     myf := FFile.frames[0];
@@ -3677,12 +3695,13 @@ begin
     lastpoint := topoint;
     //lastpoint.x := 128; lastpoint.y := 128;
     for framecounter := 0 to Pred(FFile.Count) do
-    begin
+      begin
       myf := FFile.frames[framecounter];
       if myf.Points.Count > 0 then
-      begin
+        begin
         FormStatus.labelFrame.Caption :=
-          myf.FrameName + '   (' + IntToStr(framecounter + 1) + '/' + IntToStr(FFile.Count) + ')';
+          myf.FrameName + '   (' + IntToStr(framecounter + 1) + '/' +
+          IntToStr(FFile.Count) + ')';
         FormStatus.Repaint;
         iFrameDuration := 0;
         SetLength(wavedata, 0);
@@ -3703,34 +3722,34 @@ begin
         //### stetig: lastpoint -> topoint
         Stetigkeit(lastpoint, topoint, ((myf.Bits and 1) = 1), True);
         for j := 0 to Pred(iFrameSamples) do
-        begin
+          begin
           WritePointArray(TStream(ms), wavedata, waveblank,
             ((myf.Bits and 1) = 1), writtensamples, lastpoint);
           FormStatus.pgFrame.Position := j;
           FormStatus.pgTotal.Position :=
             iTimeDone + (myf.Delay * j div iFrameSamples);
           FormStatus.Repaint;
-        end;
+          end;
         lastpoint.x := wavedata[Pred(Length(wavedata))].x;
         lastpoint.y := wavedata[Pred(Length(wavedata))].y;
         Inc(iTimeDone, myf.Delay);
         // ### write effects-part of next frame ##############################
         if framecounter < Pred(FFile.Count) then
-        begin
+          begin
           mynf := FFile.frames[framecounter + 1];
           iMorphSamples := Round(44100 * mynf.Morph / (1000 * iFrameDuration));
           case mynf.Effect of
             effect_xflip, effect_yflip, effect_plode, effect_drain:
-            begin
+              begin
               topoint.x := mynf.RotCenter.x;
               topoint.y := mynf.RotCenter.y;
-            end;
+              end;
             else
-            begin
+              begin
               topoint.x := TPoint(wavedata[0]).x;
               topoint.y := TPoint(wavedata[0]).y;
+              end;
             end;
-          end;
           bx := -1;
           by := -1;
           //### stetig: lastpoint -> topoint
@@ -3739,7 +3758,7 @@ begin
           ms.Seek(0, soFromBeginning);
           fs.CopyFrom(ms, 0);
           ms.Clear;
-        end;
+          end;
         // end writing
         FormStatus.pgTotal.Position := iTimeDone;
         FormStatus.Repaint;
@@ -3749,18 +3768,18 @@ begin
         oldblank := waveblank;
         wavedata := tempdata;
         waveblank := tempblank;
-      end; // if points>0
-    end; // for frames
+        end; // if points>0
+      end; // for frames
     topoint.x := 128;
     topoint.y := 128;
     Stetigkeit(lastpoint, topoint, ((myf.Bits and 1) = 1), True);
     fs.CopyFrom(ms, 0);
     // groessen korrigieren:
     CreateWaveHeader(TStream(fs), writtensamples, 1);
-  finally
+    finally
     FreeAndNil(fs);
     FreeAndNil(ms);
-  end;
+    end;
   FormStatus.Hide;
   tbPlay.Enabled := True;
   tbShowPreview.Enabled := True;
@@ -3776,25 +3795,25 @@ begin
   if FFile <> nil then
     if FFile.Count > 1 then
       if fi > 0 then
-      begin
+        begin
         fCurrent := FFile.frames[fi];
         fPrevious := FFile.frames[Pred(fi)];
         for iPrevious := 0 to Pred(fPrevious.Points.Count) do
-        begin
+          begin
           f := 0;
           for iCurrent := 0 to Pred(fCurrent.Points.Count) do
-          begin
+            begin
             if fCurrent.links[iCurrent, iPrevious] then
               Inc(f);
-          end;
+            end;
           if f = 0 then
-          begin
+            begin
             s := s + 'Frame ' + IntToStr(fi) + ' has no link from point ' +
               IntToStr(iPrevious) + '!'#13#10;
             //Inc(ff);
+            end;
           end;
         end;
-      end;
   Result := (f = 0);
 end;
 
@@ -3818,10 +3837,10 @@ begin
   s := '';
   if FFile <> nil then
     if FFile.Count > 1 then
-    begin
+      begin
       for i := 1 to Pred(FFile.Count) do
         CheckFrameLinks(i, s);
-    end;
+      end;
   if s = '' then
     MessageDlg('Everything''s fine!', mtInformation, [mbOK], 0)
   else
@@ -3904,9 +3923,9 @@ var
 begin
   myf := FFile.frames[Currentframe];
   if odBitmap.Execute then
-  begin
-    if FileExistsUTF8(odBitmap.Filename) { *Converted from FileExists* } then
     begin
+    if FileExistsUTF8(odBitmap.Filename) { *Converted from FileExists* } then
+      begin
       aPic := TPicture.Create;
       aPic.LoadFromFile(odBitmap.FileName);
       if myf.Bitmap = nil then
@@ -3921,8 +3940,8 @@ begin
       miPartImg.Enabled := True;
       miChoosePart.Enabled := True;
       sbFullImg.Enabled := True;
+      end;
     end;
-  end;
 end;
 
 procedure TFormMain.aLockExecute(Sender: TObject);
@@ -3948,14 +3967,14 @@ begin
   if myf.Bitmap <> nil then
     if not myf.Bitmap.Empty then
       with FormPickImage do
-      begin
+        begin
         Img.Picture := TPicture(myf.Bitmap);
         DataImage := myf.Bitmap;
         DataRect := TLaserFrame(FFile.frames[currentframe]).ImgRect;
         ShowModal;
         TLaserFrame(FFile.frames[currentframe]).ImgRect := DataRect;
         miPartImg.Checked := True;
-      end;
+        end;
 end;
 
 procedure TFormMain.aChooseImgPartExecute(Sender: TObject);
@@ -3966,14 +3985,14 @@ begin
   if myf.Bitmap <> nil then
     if not myf.Bitmap.Empty then
       with FormPickImage do
-      begin
+        begin
         Img.Picture := TPicture(myf.Bitmap);
         DataImage := myf.Bitmap;
         DataRect := TLaserFrame(FFile.frames[currentframe]).ImgRect;
         ShowModal;
         TLaserFrame(FFile.frames[currentframe]).ImgRect := DataRect;
         miPartImg.Checked := True;
-      end;
+        end;
 end;
 
 procedure TFormMain.miHelpLinesClick(Sender: TObject);
@@ -3988,9 +4007,9 @@ end;
 procedure TFormMain.tbPlayClick(Sender: TObject);
 begin
   if FFile <> nil then
-  begin
-    if FileExistsUTF8(FFile.Filename + '.WAV') { *Converted from FileExists* } then
     begin
+    if FileExistsUTF8(FFile.Filename + '.WAV') { *Converted from FileExists* } then
+      begin
          {mpPreview.Filename := FFile.Filename+'.WAV';
          mpPreview.Notify := false;
          mpPreview.Open;
@@ -3999,10 +4018,10 @@ begin
          }
       tbPlay.Enabled := False;
       tbStop.Enabled := True;
-    end
+      end
     else
       MessageDlg('You need to compile this show first.', mtError, [mbOK], 0);
-  end;
+    end;
 end;
 
 procedure TFormMain.tbStopClick(Sender: TObject);
@@ -4067,12 +4086,12 @@ var
 begin
   ok := True;
   if tbLive.Down then
-  begin
+    begin
     myf := FFile.frames[CurrentFrame];
     SetLength(mya, 0);
     SetLength(myb, 0);
     if myf.Points.Count > 2 then
-    begin
+      begin
       //PlaySound(nil, 0, SND_MEMORY  or SND_ASYNC or SND_LOOP);
       msLivePreview.Clear;
       framedauer := 0;
@@ -4081,15 +4100,15 @@ begin
       CreateWaveHeader(TStream(msLivePreview), framedauer, 1);
       WritePointArray(TStream(msLivePreview), mya, myb, False, written, p);
       //ok := PlaySound(msLivePreview.Memory, 0, SND_MEMORY  or SND_ASYNC or SND_LOOP)
-    end
+      end
     else;// PlaySound(nil, 0, SND_MEMORY  or SND_ASYNC or SND_LOOP);
-  end
+    end
   else;// PlaySound(nil, 0, SND_MEMORY  or SND_ASYNC or SND_LOOP);
   if not ok then
-  begin
+    begin
     tbLive.Down := False;
     MessageDlg('Sorry, sound can''t be played.', mtError, [mbOK], 0);
-  end;
+    end;
 end;
 
 procedure TFormMain.tbLiveClick(Sender: TObject);
@@ -4106,10 +4125,10 @@ var
 begin
   myf := FFile.frames[CurrentFrame];
   for i := 0 to Pred(myf.Points.Count) do
-  begin
+    begin
     myp := myf.Points[i];
     myp.x := 255 - myp.x;
-  end;
+    end;
   Redraw;
 end;
 
@@ -4121,10 +4140,10 @@ var
 begin
   myf := FFile.frames[CurrentFrame];
   for i := 0 to Pred(myf.Points.Count) do
-  begin
+    begin
     myp := myf.Points[i];
     myp.y := 255 - myp.y;
-  end;
+    end;
   Redraw;
 end;
 
@@ -4135,25 +4154,25 @@ var
   i, ec: integer;
 begin
   if (CurrentFrame > -1) and (CurrentFrame < FFile.Count) then
-  begin
+    begin
     myf := TLaserFrame(FFile.frames[CurrentFrame]);
     s := InputBox('Enter new effect parameter', 'new effect parameter',
       IntToStr(myf.EffectParam));
     Val(s, i, ec);
     if ec = 0 then
-    begin
+      begin
       if i < 0 then
         i := 0;
       myf.EffectParam := i;
-    end;
+      end;
     case myf.Effect of
       effect_rotate, effect_dflip:
-      begin
+        begin
         while myf.EffectParam > 359 do
           Dec(myf.EffectParam, 360);
+        end;
       end;
     end;
-  end;
   lbThumbs.Refresh;
 end;
 
@@ -4175,7 +4194,7 @@ var
   i, ec: integer;
 begin
   if (CurrentFrame > -1) and (CurrentFrame < FFile.Count) then
-  begin
+    begin
     myf := TLaserFrame(FFile.frames[CurrentFrame]);
     if myf.Effect in [effect_xflip, effect_yflip, effect_dflip, effect_plode] then
       s2 := 'Enter 0 for linear, 1 for trigonometric effect progression'
@@ -4184,25 +4203,25 @@ begin
     s := InputBox(s2, 'new effect parameter', IntToStr(myf.EffectParam));
     Val(s, i, ec);
     if ec = 0 then
-    begin
+      begin
       //if i<0 then i := 0;
       myf.EffectParam := i;
-    end;
+      end;
     case myf.Effect of
       effect_rotate, effect_dflip:
-      begin
+        begin
         while myf.EffectParam > 359 do
           Dec(myf.EffectParam, 360);
         while myf.EffectParam < -359 do
           Inc(myf.EffectParam, 360);
-      end;
+        end;
       effect_xflip, effect_yflip, effect_plode:
-      begin
+        begin
         if (not (myf.EffectParam in [0, 1])) then
           myf.EffectParam := 0;
+        end;
       end;
     end;
-  end;
   lbThumbs.Refresh;
 end;
 
@@ -4218,19 +4237,19 @@ begin
   myf := FFile.frames[CurrentFrame];
   case Undo.Op of
     sAdd:
-    begin
+      begin
       myf.Points.Delete(Undo.Pos);
-    end;
+      end;
     sMove:
-    begin
+      begin
       TLaserPoint(myf.Points[Undo.Pos]).x := Undo.x;
       TLaserPoint(myf.Points[Undo.Pos]).y := Undo.y;
-    end;
+      end;
     sDel:
-    begin
+      begin
       myf.Points.insert(Undo.Pos, Undo.Point);
+      end;
     end;
-  end;
   Redraw;
   lbThumbs.Refresh;
 end;
@@ -4238,9 +4257,9 @@ end;
 procedure TFormMain.aShowPreviewExecute(Sender: TObject);
 begin
   if FileExistsUTF8(FFile.Filename + '.WAV') { *Converted from FileExists* } then
-  begin
-    with FormPreview do
     begin
+    with FormPreview do
+      begin
       Caption := 'Preview loading...';
       DataStream := TMemoryStream.Create;
       DataStream.LoadFromFile(FFile.Filename + '.WAV');
@@ -4250,13 +4269,13 @@ begin
       tbPreviewPos.Position := 40;
       ShowModal;
       Caption := 'Preview ended...';
-    end;
-  end
+      end;
+    end
   else
-  begin
+    begin
     MessageDlg('Hey, you need to compile first!', mtInformation, [mbOK], 0);
     tbShowPreview.Enabled := False;
-  end;
+    end;
 end;
 
 procedure TFormMain.aZoomExecute(Sender: TObject);
@@ -4273,7 +4292,7 @@ var
   bx, by: integer;
 begin
   for i := 0 to Pred(f.Points.Count) do
-  begin
+    begin
     myp := f.Points[i];
     bx := (integer(myp.x) - f.AuxCenter.X);
     by := (integer(myp.y) - f.AuxCenter.Y);
@@ -4292,7 +4311,7 @@ begin
     if by > 255 then
       by := 255;
     myp.y := by;
-  end;
+    end;
 end;
 
 procedure TFormMain.miRotateFrameClick(Sender: TObject);
@@ -4303,16 +4322,16 @@ var
   winkel: real;
 begin
   if (CurrentFrame > -1) and (CurrentFrame < FFile.Count) then
-  begin
+    begin
     myf := TLaserFrame(FFile.frames[CurrentFrame]);
     s := InputBox('Enter rotation in degrees', 'rotate frame', '0');
     Val(s, w, ec);
     winkel := -w / 180 * Pi;
     if ec = 0 then
-    begin
+      begin
       RotateFrame(myf, winkel);
+      end;
     end;
-  end;
   Redraw;
   lbThumbs.Refresh;
 end;
@@ -4324,7 +4343,7 @@ var
   wx, wy, ecx, ecy: integer;
 begin
   if (CurrentFrame > -1) and (CurrentFrame < FFile.Count) then
-  begin
+    begin
     myf := TLaserFrame(FFile.frames[CurrentFrame]);
     sx := InputBox('Enter new effect center point (x)', 'effect center',
       IntToStr(myf.RotCenter.x));
@@ -4341,14 +4360,14 @@ begin
     if wy > 255 then
       ecy := 1;
     if (ecx = 0) and (ecy = 0) then
-    begin
+      begin
       myf.RotCenter.x := wx;
       myf.RotCenter.y := wy;
-    end;
-    sx := InputBox('Enter new auxiliary center point (x)',
-      'auxiliary center', IntToStr(myf.AuxCenter.x));
-    sy := InputBox('Enter new auxiliary center point (y)',
-      'auxiliary center', IntToStr(myf.AuxCenter.y));
+      end;
+    sx := InputBox('Enter new auxiliary center point (x)', 'auxiliary center',
+      IntToStr(myf.AuxCenter.x));
+    sy := InputBox('Enter new auxiliary center point (y)', 'auxiliary center',
+      IntToStr(myf.AuxCenter.y));
     Val(sx, wx, ecx);
     if wx < 0 then
       ecx := 1;
@@ -4360,11 +4379,11 @@ begin
     if wy > 255 then
       ecy := 1;
     if (ecx = 0) and (ecy = 0) then
-    begin
+      begin
       myf.AuxCenter.x := wx;
       myf.AuxCenter.y := wy;
+      end;
     end;
-  end;
   ReDraw;
   lbThumbs.Refresh;
 end;
@@ -4384,37 +4403,37 @@ var
   newf: TLaserFrame;
 begin
   if ClipBoardFrame <> nil then
-  begin
+    begin
     newf := TLaserFrame.Create;
     newf.Assign(ClipBoardFrame);
     InsertFrame(newf, CurrentFrame);
-  end;
+    end;
 end;
 
 procedure TFormMain.aPointToolsExecute(Sender: TObject);
 begin
   case tbPointTools.ImageIndex of
     6:
-    begin
+      begin
       workstate := sMoveRotateFrame;
       FormSketchpad.pad.Cursor := crMoveRotFrame;
-    end;
+      end;
     5:
-    begin
+      begin
       workstate := sAnim;
       FormSketchpad.pad.Cursor := crAnimFrame;
-    end;
+      end;
     4:
-    begin
+      begin
       workstate := sPointType;
       FormSketchpad.pad.Cursor := crPointType;
-    end;
+      end;
     7:
-    begin
+      begin
       workstate := sAuxPoints;
       FormSketchpad.pad.Cursor := crSetPoints;
+      end;
     end;
-  end;
 end;
 
 procedure TFormMain.aCutFrameToClipboardExecute(Sender: TObject);
@@ -4477,12 +4496,12 @@ begin
   fCurrentFrame := FFile.frames[CurrentFrame];
   if fCurrentFrame <> nil then
     if fCurrentFrame.Points.Count > 0 then
-    begin
+      begin
       FileChanged := True;
       point1 := fCurrentFrame.AuxCenter;
       point2 := fCurrentFrame.AuxCenter;
       for iPoint := 0 to Pred(fCurrentFrame.Points.Count) do
-      begin
+        begin
         spCurrentPoint := fCurrentFrame.Points[iPoint];
         if spCurrentPoint.x < point1.x then
           point1.x := spCurrentPoint.x;
@@ -4492,11 +4511,11 @@ begin
           point1.y := spCurrentPoint.y;
         if spCurrentPoint.y > point2.y then
           point2.y := spCurrentPoint.y;
-      end;
+        end;
       dp.x := fCurrentFrame.RotCenter.x - ((point2.x + point1.x) div 2);
       dp.y := fCurrentFrame.RotCenter.y - ((point2.y + point1.y) div 2);
       for iPoint := 0 to Pred(fCurrentFrame.Points.Count) do
-      begin
+        begin
         spCurrentPoint := fCurrentFrame.Points[iPoint];
         erg.x := spCurrentPoint.x + dp.x;
         if erg.x > 255 then
@@ -4510,10 +4529,10 @@ begin
         if erg.y < 0 then
           erg.y := 0;
         spCurrentPoint.y := erg.y;
-      end;
+        end;
       FormMain.Redraw;
       lbThumbs.Refresh;
-    end;
+      end;
 end;
 
 procedure TFormMain.miFrameFlipDClick(Sender: TObject);
@@ -4529,7 +4548,7 @@ begin
   b.x := myf.RotCenter.x - myf.AuxCenter.x;
   b.y := myf.RotCenter.y - myf.AuxCenter.y;
   for i := 0 to Pred(myf.Points.Count) do
-  begin
+    begin
     myp := myf.Points[i];
     c.x := myp.x;
     c.y := myp.y;
@@ -4550,7 +4569,7 @@ begin
       c.y := 0;
     myp.x := c.x;
     myp.y := c.y;
-  end;
+    end;
   Redraw;
   lbThumbs.Refresh;
 end;
@@ -4561,10 +4580,10 @@ var
   myf: TLaserFrame;
 begin
   if (Index > -1) and (Index < FFile.Count) then
-  begin
+    begin
     myf := FFile.frames[Index];
     Height := (myf.Delay + myf.Morph) div 10;
-  end
+    end
   else
     Height := 20;
 end;
@@ -4582,15 +4601,15 @@ begin
   myf := FFile.frames[CurrentFrame];
   if myf <> nil then
     if myf.Points.Count > 0 then
-    begin
+      begin
       s := InputBox('Enter scale factor (1=100%)', 'scale frame', '1');
       Val(s, r, ec);
       if ec = 0 then
-      begin
+        begin
         FileChanged := True;
         ap := myf.AuxCenter;
         for i := 0 to Pred(myf.Points.Count) do
-        begin
+          begin
           myp := myf.Points[i];
           p.x := myp.x;
           p.y := myp.y;
@@ -4606,11 +4625,11 @@ begin
             p.y := 0;
           myp.x := p.x;
           myp.y := p.y;
-        end;
+          end;
         FormMain.Redraw;
         lbThumbs.Refresh;
+        end;
       end;
-    end;
 end;
 
 procedure TFormMain.miLicenseClick(Sender: TObject);
@@ -4631,13 +4650,13 @@ var
 begin
   if (FFile <> nil) then
     if (FFile.Count > 0) and (currentframe < FFile.Count) then
-    begin
+      begin
       fCurrent := FFile.Frames[currentframe];
       // abfragen
       sides := EquilateralSides;
       s := IntToStr(sides);
       if InputQuery('Equilateral', 'Please enter number of sides:', s) then
-      begin
+        begin
         fCurrent.Points.Clear;
         Val(s, sides, ec);
         if ec = 0 then
@@ -4650,7 +4669,7 @@ begin
         radius := Sqrt(Sqr(center.x - start.x) + Sqr(center.y - start.y));
         beta := 2 * Pi / sides; // Schritt zwischen Winkeln
         for i := 0 to Pred(sides) do
-        begin
+          begin
           x := center.x + Round(radius * cos(beta * i + alpha));
           if x < 0 then
             x := 0;
@@ -4665,17 +4684,18 @@ begin
           newp.X := x;
           newp.Y := y;
           fCurrent.Points.Add(newp);
+          end;
         end;
-      end;
       RenumberList;
       if CurrentFrame > 0 then
-      begin
+        begin
         fPrevious := FFile.frames[Pred(CurrentFrame)];
         SetLength(fCurrent.links, fCurrent.Points.Count, fPrevious.Points.Count);
+        end;
       end;
-    end;
   FormMain.Redraw;
 end;
+
 procedure TFormMain.TimeLineRedraw;
 var
   iFrame: integer;
@@ -4691,12 +4711,12 @@ var
 begin
   if FFile <> nil then
     if FFile.Count > 0 then
-    begin
-      with iTimeline.Canvas do
       begin
+      with iTimeline.Canvas do
+        begin
         Brush.Color := MyTimelineColors[mytlc_back];
         FillRect(ClipRect);
-      end;
+        end;
       iPosition0 := 0;
       h := iTimeline.Height;
       divider := tbTimeLineZoomIn.Tag;
@@ -4707,16 +4727,16 @@ begin
       nulloffs := 14;
       hiddentime := 0;
       for iFrame := 0 to Pred(iFirst) do
-      begin
+        begin
         Inc(hiddentime, TLaserFrame(FFile.frames[0]).Morph);
         Inc(hiddentime, TLaserFrame(FFile.frames[0]).Delay);
-      end;
+        end;
       Inc(iMaxTime, Hiddentime);
       for iFrame := iFirst to Pred(FFile.Count) do
-      begin
+        begin
         frameCurrent := FFile.frames[iFrame];
         with iTimeline.Canvas do
-        begin
+          begin
           Pen.Style := psSolid;
           Pen.Width := 2;
           Pen.Color := MyColors[(frameCurrent.Bits and 1), myc_norm];
@@ -4754,14 +4774,14 @@ begin
             s := Copy(s, 1, Pred(Length(s)));
           TextOut(iPosition1 + 2, nulloffs + 16, s);
           iPosition0 := iPosition3;
+          end;
         end;
-      end;
       iFrame := hiddentime;
       while iFrame < iMaxTime do
-      begin
+        begin
         Inc(iFrame, 500);
         with iTimeline.Canvas do
-        begin
+          begin
           Brush.Color := MyTimelineColors[mytlc_back];
           Brush.Style := bsSolid;
           Font.Color := MyTimelineColors[mytlc_text];
@@ -4777,9 +4797,9 @@ begin
           MoveTo((iFrame - hiddentime) div divider, nulloffs);
           //MoveTo((i-hiddentime) div divider,0);
           LineTo((iFrame - hiddentime) div divider, h);
+          end;
         end;
       end;
-    end;
 end;
 
 procedure TFormMain.tbTimeLineZoomInClick(Sender: TObject);

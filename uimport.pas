@@ -72,16 +72,16 @@ begin
   if Assigned(FFile) then
     if index < FFile.Count then
       with (Control as TListBox).Canvas do
-      begin
+        begin
         Brush.Color := clBlack;
         FillRect(Rect);
         Pen.Color := clGreen;
         Pen.Width := 1;
         if (odSelected in State) then
-        begin
+          begin
           Pen.Style := psDot;
           Rectangle(Rect.Left, Rect.Top, Rect.Right, Rect.Bottom);
-        end;
+          end;
         Pen.Style := psSolid;
         //MoveTo(Rect.Left,Rect.Bottom-1); LineTo(Rect.Right,Rect.Bottom-1);
         if ((TLaserFrame(FFile.frames[index]).Bits and 1) = 0) then
@@ -95,7 +95,8 @@ begin
         TextOut(Rect.Left + 66, Rect.Top + 20, 'Delay: ');
         TextOut(Rect.Left + 66, Rect.Top + 34, 'Morph: ');
         TextOut(Rect.Left + 66, Rect.Top + 48, 'Effect: ');
-        TextOut(Rect.Left + 106, Rect.Top + 2, TLaserFrame(FFile.frames[index]).framename);
+        TextOut(Rect.Left + 106, Rect.Top + 2,
+          TLaserFrame(FFile.frames[index]).framename);
         TextOut(Rect.Left + 106, Rect.Top + 20, IntToStr(
           TLaserFrame(FFile.frames[index]).Delay));
         TextOut(Rect.Left + 106, Rect.Top + 34, IntToStr(
@@ -108,9 +109,9 @@ begin
           4: sEffectName := 'Y-Flip';
           else
             sEffectName := '?';
-        end;
+          end;
         TextOut(Rect.Left + 106, Rect.Top + 48, sEffectName);
-      end;
+        end;
 end;
 
 procedure TFormImport.cbFiletypeChange(Sender: TObject);
@@ -126,10 +127,10 @@ end;
 procedure TFormImport.slvFilesClick(Sender: TObject);
 begin
   if Assigned(slvFiles.Selected) then
-  begin
+    begin
     //TODO:editFilename.Text := slvFiles.SelectedFolder.PathName + slvFiles.Selected.Caption;
     bnImport.Enabled := False;
-  end;
+    end;
 end;
 
 procedure TFormImport.editFilenameChange(Sender: TObject);
@@ -137,15 +138,15 @@ var
   i: integer;
 begin
   if FileExistsUTF8(editFilename.Text) { *Converted from FileExists* } then
-  begin
+    begin
     lb.items.Clear;
     FormMain.LoadFromFile(editFilename.Text, FFile, False);
     if Assigned(FFile) then
       for i := 0 to Pred(FFile.Count) do
-      begin
+        begin
         lb.items.add(TLaserFrame(FFile.Frames[i]).FrameName);
-      end;
-  end;
+        end;
+    end;
 end;
 
 procedure TFormImport.FormCreate(Sender: TObject);
