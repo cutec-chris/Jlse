@@ -579,13 +579,8 @@ function arg(x, y: integer): real;
 implementation
 
 uses
-  upick,
-  uPad,
-  uStatus,
-  uImport,
-  ucolors,
-  uPreview,
-  uDelays;
+  upick, uPad, uStatus, uImport, ucolors, uPreview, uDelays,
+  uILDAFrames;
 
 {$R *.lfm}
 

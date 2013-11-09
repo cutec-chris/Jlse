@@ -245,6 +245,7 @@ begin
     Frames[i].Free;
     end;
   FFrames.Clear;
+  FFrameCount:=0;
 end;
 
 function TLaserFrames.LoadHeaderFromStream(aStream: TStream): Boolean;
