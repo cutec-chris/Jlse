@@ -52,4 +52,7 @@ begin
   Points.Add(Result);
 end;
 
+initialization
+  FileFormats.Add('*.ild','ILDA Format',TILDAFrames,[fcLoad]);
+
 end.

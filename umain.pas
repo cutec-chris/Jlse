@@ -1491,7 +1491,12 @@ var
   i: integer;
   s: string;
   reg: TRegistry;
+  desc: String;
 begin
+  FileFormats.BuildFilterStrings(desc,[fcLoad]);
+  odLC1.Filter := desc;
+  FileFormats.BuildFilterStrings(desc,[fcSave]);
+  sdLC1.Filter := desc;
   FFile := TLaserFrames.Create;
   msLivePreview := TMemoryStream.Create;
   Undo.Op := sNone;
@@ -1716,18 +1721,16 @@ var
   i: integer;
   yNew: TLaserFrames;
   fFrame: TLaserFrame;
+  aClass: TLaserFramesClass;
 begin
   Dontdraw := True;
-  yNew := TLaserFrames.Create;
+  aClass := FileFormats.FindFromFileName(fn,[fcLoad]);
+  yNew := aClass.Create;
   repeat
   until not Drawing;
 
   if realload then
     begin
-    //panelPoint.Caption := 'Point: -';
-    //panelPointLink.Caption := 'Link: -';
-    //panelPointX.Caption := 'X: -';
-    //panelPointY.Caption := 'Y: -';
     FormSketchpad.panelFrameSwitcher.Caption := '0';
     FormSketchpad.Caption := fn;
     FormSketchpad.Parent := Self;
@@ -2803,11 +2806,11 @@ begin
   if doit then
     if odLC1.Execute then
       begin
-      odLC1.InitialDir := ExtractFilePath(odLC1.Filename);
-      LoadFromFile(odLC1.Filename, FFile, True);
-      AddUsedFile(odLC1.Filename);
-      FileChanged := False;
-      Redraw;
+        odLC1.InitialDir := ExtractFilePath(odLC1.Filename);
+        LoadFromFile(odLC1.Filename, FFile, True);
+        AddUsedFile(odLC1.Filename);
+        FileChanged := False;
+        Redraw;
       end;
 end;
 

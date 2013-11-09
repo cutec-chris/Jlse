@@ -969,10 +969,6 @@ msgstr ""
 msgid "Open background image..."
 msgstr ""
 
-#: tformmain.odlc1.title
-msgid "Open Yoghurt file..."
-msgstr ""
-
 #: tformmain.panel1.caption
 msgid "Panel1"
 msgstr ""
@@ -1104,5 +1100,13 @@ msgstr ""
 
 #: tformsketchpad.panelframeswitcher.caption
 msgid "0"
+msgstr ""
+
+#: ulaserframes.strallformats
+msgid "All supported Formats"
+msgstr ""
+
+#: ulaserframes.strunknownextension
+msgid "Unknown File Extension"
 msgstr ""
 

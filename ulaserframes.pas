@@ -93,6 +93,8 @@ type
     property Frames[FrameIndex: integer]: TLaserFrame read GetFrames;
   end;
 
+  TLaserFramesClass = class of TLaserFrames;
+
   { TLaserPoint }
 
   TLaserPoint = class(TObject)
@@ -110,7 +112,117 @@ type
     procedure SaveToStream(aStream : TStream);virtual;
   end;
 
+  TFileCapTyp = (fcLoad,fcSave);
+  TFileCapTyps = set of TFileCapTyp;
+
+  TFileFormat = class
+  public
+    FileClass       : TLaserFramesClass;
+    Extension       : String;
+    Description     : String;
+    Types           : TFileCapTyps;
+  end;
+
+  { TFileFormatsList }
+
+  TFileFormatsList = class (tlist)
+  public
+    destructor Destroy; override;
+    procedure Add(const Ext, Desc: String; AClass: TLaserFramesClass;Typs : TFileCapTyps);
+    function FindExt(ext : string;Typs : TFileCapTyps) : TLaserFramesClass;
+    function FindFromFileName(const fileName : String;Typs : TFileCapTyps) : TLaserFramesClass;
+    procedure BuildFilterStrings(var descriptions: String;Typs : TFileCapTyps);
+  end;
+
+var
+  FileFormats : TFileFormatsList;
+
 implementation
+resourcestring
+  strUnknownExtension                = 'Unknown File Extension';
+  strAllFormats                      = 'All supported Formats';
+{ TFileFormatsList }
+
+destructor TFileFormatsList.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TFileFormatsList.Add(const Ext, Desc: String;
+  AClass: TLaserFramesClass; Typs: TFileCapTyps);
+var
+   newRec : TFileFormat;
+begin
+   newRec:=TFileFormat.Create;
+   with newRec do
+     begin
+       Extension:=LowerCase(Ext);
+       FileClass:=AClass;
+       Description:=Desc;
+       Types := Typs;
+     end;
+   inherited Add(newRec);
+end;
+
+function TFileFormatsList.FindExt(ext: string; Typs: TFileCapTyps
+  ): TLaserFramesClass;
+var
+   i : Integer;
+begin
+   ext:=LowerCase(ext);
+   for i:=Count-1 downto 0 do
+     with TFileFormat(Items[I]) do
+       begin
+         if ((fcLoad in Typs) and (fcLoad in TFileFormat(Items[I]).Types)) or ((fcSave in Typs) and (fcSave in TFileFormat(Items[I]).Types)) then
+           if Extension=ext then
+             begin
+               Result:=TFileFormat(Items[I]).FileClass;
+               Exit;
+             end;
+       end;
+   Result:=nil;
+end;
+
+function TFileFormatsList.FindFromFileName(const fileName: String;
+  Typs: TFileCapTyps): TLaserFramesClass;
+var
+   ext : String;
+begin
+   ext:=ExtractFileExt(Filename);
+   System.Delete(ext, 1, 1);
+   Result:=FindExt(ext,Typs);
+   if not Assigned(Result) then
+      raise Exception.CreateFmt(strUnknownExtension, [ext]);
+end;
+
+procedure TFileFormatsList.BuildFilterStrings(var descriptions: String;
+  Typs: TFileCapTyps);
+var
+   k, i : Integer;
+   p : TFileFormat;
+   filters : string;
+begin
+   descriptions:='';
+   filters := '';
+   k:=0;
+   for i:=0 to Count-1 do
+     begin
+       p:=TFileFormat(Items[i]);
+       if ((fcLoad in Typs) and (fcLoad in p.Types) or ((fcSave in Typs) and (fcSave in p.Types))) then
+         with p do
+           begin
+             if k<>0 then
+               begin
+                 descriptions:=descriptions+'|';
+                 filters := filters+';';
+               end;
+            descriptions:=descriptions+Description+' (*.'+Extension+')|'+'*.'+Extension;
+            filters := filters+'*.'+Extension;
+            Inc(k);
+         end;
+      end;
+   descriptions := strAllFormats+'|'+filters+'|'+descriptions;
+end;
 
 function TLaserFrames.Add: TLaserFrame;
 begin
@@ -508,4 +620,11 @@ begin
 
 end;
 
+initialization
+  FileFormats := TFileFormatsList.Create;
+  FileFormats.Add('LC1','Youghurt Format',TLaserFrames,[fcSave,fcLoad]);
+  //FileFormats.Add('lc1-frame','Youghurt Frame',TLC1Frames,[fcSave,fcLoad]);
+
+finalization
+  FileFormats.Free;
 end.

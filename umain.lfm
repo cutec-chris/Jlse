@@ -578,17 +578,8 @@ object FormMain: TFormMain
     Filter = 'Yoghurt file|*.LC1|Single yoghurt frame|*.LC1-frame'
     InitialDir = 'e:\myapps\heathcliff'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
-    left = 429
-    top = 140
-  end
-  object odLC1: TOpenDialog
-    Title = 'Open Yoghurt file...'
-    DefaultExt = '.LC1'
-    Filter = 'Yoghurt file|*.LC1|Single yoghurt frame|*.LC1-frame'
-    InitialDir = 'e:\myapps\heathcliff'
-    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
-    left = 368
-    top = 144
+    left = 104
+    top = 208
   end
   object menuMain: TMainMenu
     Images = ilWork
@@ -5770,5 +5761,11 @@ object FormMain: TFormMain
     Title = 'Open background image...'
     left = 400
     top = 142
+  end
+  object odLC1: TOpenDialog
+    Filter = 'Youghurt File (*.lc1)|*.LC1'
+    Options = [ofExtensionDifferent, ofEnableSizing, ofViewDetail]
+    left = 104
+    top = 152
   end
 end
