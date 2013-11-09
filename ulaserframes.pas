@@ -34,6 +34,11 @@ type
     d: array[0..1] of array of TPoint;
   end;
 
+  TLaserFrames = class;
+  TLaserPoint = class;
+
+  { TLaserFrame }
+
   TLaserFrame = class(TPersistent)
   protected
     procedure Assign(sf: TLaserFrame); reintroduce;
@@ -50,28 +55,45 @@ type
     Bitmap: TBitmap;
     ImgRect: TRect;
     Points: TList;
+    Parent : TLaserFrames;
+    function Add: TLaserPoint;
     constructor Create;
     destructor Destroy; reintroduce;
+    function LoadFromStream(aStream : TStream) : Boolean;virtual;
+    procedure SaveToStream(aStream : TStream);virtual;
   end;
+
+  { TLaserFrames }
 
   TLaserFrames = class(TObject)
   private
     FFrames: TList;
+    FFrameCount: integer;
+    FOldPointCount: integer;
+    FFileVersion: byte;
     function GetCount: integer;
     function GetFrames(FrameIndex: integer): TLaserFrame;
   public
     Filename: string;
     constructor Create;
     destructor Destroy; reintroduce;
+    property FileVersion : byte read FFileVersion;
+    property OldPointCount : Integer read FOldPointCount write FOldPointCount;
     function Add: TLaserFrame; overload;
     function Add(Frame: TLaserFrame): integer; overload;
     procedure Insert(Position: integer; Frame: TLaserFrame);
     procedure Delete(FrameIndex: integer);
     procedure Clear;
+    function LoadHeaderFromStream(aStream : TStream) : Boolean;
+    procedure SaveHeaderToStream(aStream : TStream);
+    procedure LoadFromStream(aStream : TStream);
+    procedure SaveToStream(aStream : TStream);
     procedure LoadFromFile(Filename: string);
     property Count: integer read GetCount;
     property Frames[FrameIndex: integer]: TLaserFrame read GetFrames;
   end;
+
+  { TLaserPoint }
 
   TLaserPoint = class(TObject)
   public
@@ -80,9 +102,12 @@ type
     p: smallint;
     bits: word;
     overlay: boolean;
+    Parent : TLaserFrame;
     constructor Create;
     destructor Destroy; reintroduce;
     procedure Assign(sp: TLaserPoint);
+    procedure LoadFromStream(aStream : TStream);virtual;
+    procedure SaveToStream(aStream : TStream);virtual;
   end;
 
 implementation
@@ -90,6 +115,7 @@ implementation
 function TLaserFrames.Add: TLaserFrame;
 begin
   Result := TLaserFrame.Create;
+  Result.Parent:=Self;
   FFrames.Add(Result);
 end;
 
@@ -107,6 +133,51 @@ begin
     Frames[i].Free;
     end;
   FFrames.Clear;
+end;
+
+function TLaserFrames.LoadHeaderFromStream(aStream: TStream): Boolean;
+var
+  s1: array[1..4] of char;
+  b : byte;
+begin
+  Result := True;
+  FFrameCount := 0;
+  FOldPointCount := 0;
+  Clear;
+  if aStream.Size > 5 then
+    begin
+      aStream.Read(s1,4);
+      aStream.Read(b,1);
+      FFileVersion := b;
+      if not (s1 = 'LC1Y') then Result := False;
+    end
+  else Result := False;
+end;
+
+procedure TLaserFrames.SaveHeaderToStream(aStream: TStream);
+begin
+
+end;
+
+procedure TLaserFrames.LoadFromStream(aStream: TStream);
+var
+  i: integer;
+  fFrame: TLaserFrame;
+begin
+  if LoadHeaderfromStream(aStream) then
+    begin
+      while aStream.Position<aStream.Size do
+        begin
+          Inc(FFrameCount);
+          fFrame := Add;
+          fFrame.LoadFromStream(aStream);
+        end; // while not eof
+    end;
+end;
+
+procedure TLaserFrames.SaveToStream(aStream: TStream);
+begin
+
 end;
 
 constructor TLaserFrames.Create;
@@ -145,189 +216,15 @@ end;
 
 procedure TLaserFrames.LoadFromFile(Filename: string);
 var
-  f: file;
-  i: integer;
-  fFrame: TLaserFrame;
-  pPoint: TLaserPoint;
-  s1: array[1..4] of char;
-  s2: array[1..11] of char;
-  w: word;
-  s: string;
-  c: char;
-  tr: TRect;
-  b, bb: byte;
-  iFrameCount: integer;
-  iOldPointCount: integer;
-  mx, my, cx, cy: word;
-  rword: word;
-  bFileVersion: byte;
+  aStream: TFileStream;
 begin
   if FileExistsUTF8(Filename) then
     begin
-    iFrameCount := 0;
-    FileMode := 0;
-    iOldPointCount := 0;
-    AssignFile(f, Filename);
-    Reset(f, 1);
-    Self.Filename := Filename;
-    Clear;
-    if FileSize(f) > 5 then
-      begin
-      BlockRead(f, s1, 4);
-      BlockRead(f, b, 1);
-      bFileVersion := b;
-      if s1 = 'LC1Y' then
-        begin
-        while not EOF(f) do
-          begin
-          Inc(iFrameCount);
-          fFrame := Add;
-          // frame name
-          BlockRead(f, w, 2); // size of name
-          s := '';
-          for i := 1 to w do
-            begin
-            BlockRead(f, c, 1);
-            s := s + c;
-            end;
-          fFrame.FrameName := s;
-          // frame delay
-          BlockRead(f, fFrame.Delay, 2); // delay 4 frame
-          // frame morph time
-          BlockRead(f, fFrame.Morph, 2); // morph-time 4 frame
-          // effect type
-          BlockRead(f, fFrame.Effect, 2);
-          // effect param
-          if bFileVersion > 3 then
-            BlockRead(f, fFrame.EffectParam, 2);
-          // rotcenter
-          if bFileVersion > 4 then
-            begin
-            BlockRead(f, fFrame.RotCenter.x, 1);
-            BlockRead(f, fFrame.RotCenter.y, 1);
-            end
-          else
-            begin
-            fFrame.RotCenter.x := 128;
-            fFrame.RotCenter.y := 128;
-            end;
-          // rotcenter
-          if bFileVersion > 5 then
-            begin
-            BlockRead(f, fFrame.AuxCenter.x, 1);
-            BlockRead(f, fFrame.AuxCenter.y, 1);
-            end
-          else
-            begin
-            fFrame.AuxCenter.x := 128;
-            fFrame.AuxCenter.y := 128;
-            end;
-          // bits for stuff
-          if bFileVersion > 1 then
-            BlockRead(f, fFrame.Bits, 2)
-          else
-            fFrame.Bits := 0;
-          // framelist
-          // img name
-          BlockRead(f, w, 2); // size of name
-          s := '';
-          for i := 1 to w do
-            begin
-            BlockRead(f, c, 1);
-            s := s + c;
-            end;
-          fFrame.ImgName := s;
-          if FileExistsUTF8(fFrame.ImgName) { *Converted from FileExists* } then
-            begin
-            if fFrame.bitmap = nil then
-              fFrame.bitmap := TBitmap.Create;
-            fFrame.bitmap.LoadFromFile(fFrame.ImgName);
-            end;
-          // img size
-          BlockRead(f, tr, sizeof(TRect));
-          fFrame.ImgRect := tr;
-          // helplines
-          if bFileVersion > 2 then
-            begin
-            BlockRead(f, w, 2);
-            SetLength(fFrame.HelpLines.x, w);
-            if w > 0 then
-              for i := 0 to Pred(w) do
-                begin
-                BlockRead(f, bb, 1);
-                fFrame.HelpLines.x[i] := bb;
-                end;
-            BlockRead(f, w, 2);
-            SetLength(fFrame.HelpLines.y, w);
-            if w > 0 then
-              for i := 0 to Pred(w) do
-                begin
-                BlockRead(f, bb, 1);
-                fFrame.HelpLines.y[i] := bb;
-                end;
-            BlockRead(f, w, 2);
-            SetLength(fFrame.HelpLines.d[0], w);
-            SetLength(fFrame.HelpLines.d[1], w);
-            if w > 0 then
-              for i := 0 to Pred(w) do
-                begin
-                BlockRead(f, bb, 1);
-                fFrame.HelpLines.d[0, i].x := bb;
-                BlockRead(f, bb, 1);
-                fFrame.HelpLines.d[0, i].y := bb;
-                BlockRead(f, bb, 1);
-                fFrame.HelpLines.d[1, i].x := bb;
-                BlockRead(f, bb, 1);
-                fFrame.HelpLines.d[1, i].y := bb;
-                end;
-            end;
-          // points
-          BlockRead(f, w, 2); // num points
-          for i := 0 to Pred(w) do
-            begin
-            if bFileVersion > 1 then
-              BlockRead(f, s2, 11)
-            else
-              BlockRead(f, s2, 9);
-            pPoint := TLaserPoint.Create;
-            pPoint.Caption := s2[1] + s2[2] + s2[3] + s2[4] + s2[5];
-            if Pos(#0, pPoint.Caption) > 0 then
-              pPoint.Caption := Copy(pPoint.Caption, 1, Pos(#0, pPoint.Caption) - 1);
-            pPoint.x := Ord(s2[6]);
-            pPoint.y := Ord(s2[7]);
-            //myp.p := Ord(s2[8])*256+Ord(s2[9]);
-            pPoint.p := 0;
-            if bFileVersion > 1 then
-              begin
-              pPoint.bits := Ord(s2[10]) * 256 + Ord(s2[11]);
-              end
-            else
-              pPoint.bits := 0;
-            fFrame.Points.add(pPoint);
-            end;
-          SetLength(fFrame.links, w, iOldPointCount);
-          iOldPointCount := w;
-          BlockRead(f, mx, 2);
-          BlockRead(f, my, 2);
-          if (mx > 0) and (my > 0) then
-            begin
-            for cy := 0 to Pred(my) do
-              begin
-              cx := 0;
-              while cx < mx do
-                begin
-                if ((cx mod 16) = 0) then
-                  BlockRead(f, rword, 2);
-                fFrame.links[cx, cy] := (rword and (1 shl (cx mod 16)) > 0);
-                Inc(cx);
-                end;
-              end;
-            end;
-          end; // while not eof
-        end; // if lc1y
-      end; // if fs>5
-    CloseFile(f);
-    end; // if fileexists fn
+      aStream := TfileStream.Create(Filename,fmShareDenyNone);
+      Self.Filename := Filename;
+      LoadFromStream(aStream);
+      aStream.Free;
+    end;
 end;
 
 { TLaserFrame }
@@ -360,6 +257,150 @@ begin
   FreeAndNil(Points);
   Links := nil;
   inherited Destroy;
+end;
+
+function TLaserFrame.LoadFromStream(aStream: TStream): Boolean;
+var
+  pPoint: TLaserPoint;
+  w: word;
+  s: string;
+  c: char;
+  tr: TRect;
+  b, bb: byte;
+  mx, my, cx, cy: word;
+  rword: word;
+  i: Integer;
+begin
+  Result := True;
+  // frame name
+  aStream.Read(w,2);
+  s := '';
+  for i := 1 to w do
+    begin
+      aStream.Read(c, 1);
+      s := s + c;
+    end;
+  FrameName := s;
+  // frame delay
+  aStream.Read(Delay, 2); // delay 4 frame
+  // frame morph time
+  aStream.Read( Morph, 2); // morph-time 4 frame
+  // effect type
+  aStream.Read( Effect, 2);
+  // effect param
+  if Parent.FileVersion > 3 then
+    aStream.Read( EffectParam, 2);
+  // rotcenter
+  if Parent.FileVersion > 4 then
+    begin
+      aStream.Read( RotCenter.x, 1);
+      aStream.Read( RotCenter.y, 1);
+    end
+  else
+    begin
+      RotCenter.x := 128;
+      RotCenter.y := 128;
+    end;
+  // rotcenter
+  if Parent.FileVersion > 5 then
+    begin
+      aStream.Read( AuxCenter.x, 1);
+      aStream.Read( AuxCenter.y, 1);
+    end
+  else
+    begin
+      AuxCenter.x := 128;
+      AuxCenter.y := 128;
+    end;
+  // bits for stuff
+  if Parent.FileVersion > 1 then
+    aStream.Read( Bits, 2)
+  else
+    Bits := 0;
+  // framelist
+  // img name
+  aStream.Read( w, 2); // size of name
+  s := '';
+  for i := 1 to w do
+    begin
+      aStream.Read( c, 1);
+      s := s + c;
+    end;
+  ImgName := s;
+  if FileExistsUTF8(ImgName) then
+    begin
+      if bitmap = nil then
+        bitmap := TBitmap.Create;
+      bitmap.LoadFromFile(ImgName);
+    end;
+    // img size
+    aStream.Read( tr, sizeof(TRect));
+    ImgRect := tr;
+    // helplines
+    if Parent.FileVersion > 2 then
+      begin
+        aStream.Read( w, 2);
+        SetLength(HelpLines.x, w);
+        if w > 0 then
+          for i := 0 to Pred(w) do
+            begin
+              aStream.Read( bb, 1);
+              HelpLines.x[i] := bb;
+            end;
+          aStream.Read( w, 2);
+          SetLength(HelpLines.y, w);
+          if w > 0 then
+            for i := 0 to Pred(w) do
+              begin
+                aStream.Read( bb, 1);
+                HelpLines.y[i] := bb;
+              end;
+          aStream.Read( w, 2);
+          SetLength(HelpLines.d[0], w);
+          SetLength(HelpLines.d[1], w);
+          if w > 0 then
+            for i := 0 to Pred(w) do
+              begin
+                aStream.Read( bb, 1);
+                HelpLines.d[0, i].x := bb;
+                aStream.Read( bb, 1);
+                HelpLines.d[0, i].y := bb;
+                aStream.Read( bb, 1);
+                HelpLines.d[1, i].x := bb;
+                aStream.Read( bb, 1);
+                HelpLines.d[1, i].y := bb;
+              end;
+      end;
+    // points
+    aStream.Read( w, 2); // num points
+    for i := 0 to Pred(w) do
+      begin
+        pPoint := Add;
+        pPoint.LoadFromStream(aStream);
+      end;
+    SetLength(links, w, Parent.OldPointCount);
+    Parent.OldPointCount := w;
+    aStream.Read( mx, 2);
+    aStream.Read( my, 2);
+    if (mx > 0) and (my > 0) then
+      begin
+        for cy := 0 to Pred(my) do
+          begin
+            cx := 0;
+            while cx < mx do
+              begin
+                if ((cx mod 16) = 0) then
+                  aStream.Read( rword, 2);
+                links[cx, cy] := (rword and (1 shl (cx mod 16)) > 0);
+                Inc(cx);
+              end;
+          end;
+      end;
+end;
+
+procedure TLaserFrame.SaveToStream(aStream: TStream);
+begin
+
 end;
 
 procedure TLaserFrame.Assign(sf: TLaserFrame);
@@ -409,6 +450,13 @@ begin
     end;
 end;
 
+function TLaserFrame.Add: TLaserPoint;
+begin
+  Result := TLaserPoint.Create;
+  Points.add(Result);
+  Result.Parent:=Self;
+end;
+
 { TLaserPoint }
 
 constructor TLaserPoint.Create;
@@ -431,6 +479,33 @@ begin
   p := sp.p;
   bits := sp.bits;
   overlay := sp.overlay;
+end;
+
+procedure TLaserPoint.LoadFromStream(aStream: TStream);
+var
+  s2: array[1..11] of char;
+begin
+  if Parent.Parent.FileVersion > 1 then
+    aStream.Read( s2, 11)
+  else
+    aStream.Read( s2, 9);
+  Caption := s2[1] + s2[2] + s2[3] + s2[4] + s2[5];
+  if Pos(#0, Caption) > 0 then
+    Caption := Copy(Caption, 1, Pos(#0, Caption) - 1);
+  x := Ord(s2[6]);
+  y := Ord(s2[7]);
+  p := 0;
+  if Parent.Parent.FileVersion > 1 then
+    begin
+      bits := Ord(s2[10]) * 256 + Ord(s2[11]);
+    end
+  else
+    bits := 0;
+end;
+
+procedure TLaserPoint.SaveToStream(aStream: TStream);
+begin
+
 end;
 
 end.
