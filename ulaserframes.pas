@@ -56,7 +56,7 @@ type
     ImgRect: TRect;
     Points: TList;
     Parent : TLaserFrames;
-    function Add: TLaserPoint;
+    function Add: TLaserPoint;virtual;
     constructor Create;
     destructor Destroy; reintroduce;
     function LoadFromStream(aStream : TStream) : Boolean;virtual;
@@ -79,15 +79,15 @@ type
     destructor Destroy; reintroduce;
     property FileVersion : byte read FFileVersion;
     property OldPointCount : Integer read FOldPointCount write FOldPointCount;
-    function Add: TLaserFrame; overload;
+    function Add: TLaserFrame; overload;virtual;
     function Add(Frame: TLaserFrame): integer; overload;
     procedure Insert(Position: integer; Frame: TLaserFrame);
     procedure Delete(FrameIndex: integer);
     procedure Clear;
-    function LoadHeaderFromStream(aStream : TStream) : Boolean;
-    procedure SaveHeaderToStream(aStream : TStream);
-    procedure LoadFromStream(aStream : TStream);
-    procedure SaveToStream(aStream : TStream);
+    function LoadHeaderFromStream(aStream : TStream) : Boolean;virtual;
+    procedure SaveHeaderToStream(aStream : TStream);virtual;
+    procedure LoadFromStream(aStream : TStream);virtual;
+    procedure SaveToStream(aStream : TStream);virtual;
     procedure LoadFromFile(Filename: string);
     property Count: integer read GetCount;
     property Frames[FrameIndex: integer]: TLaserFrame read GetFrames;
@@ -106,7 +106,7 @@ type
     constructor Create;
     destructor Destroy; reintroduce;
     procedure Assign(sp: TLaserPoint);
-    procedure LoadFromStream(aStream : TStream);virtual;
+    function LoadFromStream(aStream : TStream) : Boolean;virtual;
     procedure SaveToStream(aStream : TStream);virtual;
   end;
 
@@ -481,7 +481,7 @@ begin
   overlay := sp.overlay;
 end;
 
-procedure TLaserPoint.LoadFromStream(aStream: TStream);
+function TLaserPoint.LoadFromStream(aStream: TStream): Boolean;
 var
   s2: array[1..11] of char;
 begin
