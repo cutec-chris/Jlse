@@ -1082,17 +1082,17 @@ begin
   SetLength(ps, iPointCount);
   for i := 0 to Pred(iPointCount) do
     begin
-    myp := f.Points[i];
-    if miFlipY.Checked then
-      ps[i].x := (f.FrameWidth-1) - myp.x
-    else
-      ps[i].x := myp.x;
-    if miFlipX.Checked then
-      ps[i].y := (f.FrameWidth-1) - myp.y
-    else
-      ps[i].y := myp.y;
-    ps[i].x := ps[i].x div divider + offx;
-    ps[i].y := ps[i].y div divider + offy;
+      myp := f.Points[i];
+      if miFlipX.Checked then
+        ps[i].x := (f.FrameWidth-1) - myp.x
+      else
+        ps[i].x := myp.x;
+      if miFlipY.Checked then
+        ps[i].y := (f.FrameWidth-1) - myp.y
+      else
+        ps[i].y := myp.y;
+      ps[i].x := ps[i].x div divider + offx;
+      ps[i].y := ps[i].y div divider + offy;
     end;
   with cv do
     begin
@@ -1102,8 +1102,8 @@ begin
     Polyline(ps);
     if Length(ps) > 0 then
       begin
-      MoveTo(ps[Pred(Length(ps))].x, ps[Pred(Length(ps))].y);
-      LineTo(ps[0].x, ps[0].y);
+        MoveTo(ps[Pred(Length(ps))].x, ps[Pred(Length(ps))].y);
+        LineTo(ps[0].x, ps[0].y);
       end;
     end; // with
 end;
@@ -1124,41 +1124,41 @@ begin
   circlefactor := 2; //ZoomFactor;
   with cv do
     begin
-    x := (f.RotCenter.x * ZoomFactor - FormSketchpad.sbX.Position);
-    y := (f.RotCenter.y * ZoomFactor - FormSketchpad.sbY.Position);
-    Pen.Width := 2;
-    Pen.Color := MyOtherColors[myoc_rotcenter];
-    Pen.Style := psSolid;
-    MoveTo(x - 5, y - 5);
-    LineTo(x + 6, y + 6);
-    MoveTo(x - 5, y + 6);
-    LineTo(x + 6, y - 5);
-    Pen.Width := 1;
-    x := (f.AuxCenter.x * ZoomFactor - FormSketchpad.sbX.Position);
-    y := (f.AuxCenter.y * ZoomFactor - FormSketchpad.sbY.Position);
-    MoveTo(x - 5, y - 5);
-    LineTo(x + 6, y + 6);
-    MoveTo(x - 5, y + 6);
-    LineTo(x + 6, y - 5);
-    Pen.Style := psDot;
-    MoveTo((f.RotCenter.x * ZoomFactor - FormSketchpad.sbX.Position),
-      (f.RotCenter.y * ZoomFactor - FormSketchpad.sbY.Position));
-    LineTo((f.AuxCenter.x * ZoomFactor - FormSketchpad.sbX.Position),
-      (f.AuxCenter.y * ZoomFactor - FormSketchpad.sbY.Position));
-    Pen.Color := clLines; //clAqua; //###
+      x := (f.RotCenter.x * ZoomFactor - FormSketchpad.sbX.Position);
+      y := (f.RotCenter.y * ZoomFactor - FormSketchpad.sbY.Position);
+      Pen.Width := 2;
+      Pen.Color := MyOtherColors[myoc_rotcenter];
+      Pen.Style := psSolid;
+      MoveTo(x - 5, y - 5);
+      LineTo(x + 6, y + 6);
+      MoveTo(x - 5, y + 6);
+      LineTo(x + 6, y - 5);
+      Pen.Width := 1;
+      x := (f.AuxCenter.x * ZoomFactor - FormSketchpad.sbX.Position);
+      y := (f.AuxCenter.y * ZoomFactor - FormSketchpad.sbY.Position);
+      MoveTo(x - 5, y - 5);
+      LineTo(x + 6, y + 6);
+      MoveTo(x - 5, y + 6);
+      LineTo(x + 6, y - 5);
+      Pen.Style := psDot;
+      MoveTo((f.RotCenter.x * ZoomFactor - FormSketchpad.sbX.Position),
+        (f.RotCenter.y * ZoomFactor - FormSketchpad.sbY.Position));
+      LineTo((f.AuxCenter.x * ZoomFactor - FormSketchpad.sbX.Position),
+        (f.AuxCenter.y * ZoomFactor - FormSketchpad.sbY.Position));
+      Pen.Color := clLines; //clAqua; //###
     end;
   SetLength(ps, iPointCount);
   for i := 0 to Pred(iPointCount) do
     begin
-    myp := f.Points[i];
-    if miFlipY.Checked then
-      ps[i].x := (f.FrameWidth * ZoomFactor) - (myp.x * ZoomFactor) - FormSketchpad.sbX.Position
-    else
-      ps[i].x := (myp.x * ZoomFactor) - FormSketchpad.sbX.Position;
-    if miFlipX.Checked then
-      ps[i].y := (f.FrameWidth * ZoomFactor) - (myp.y * ZoomFactor) - FormSketchpad.sbY.Position
-    else
-      ps[i].y := (myp.y * ZoomFactor) - FormSketchpad.sbY.Position;
+      myp := f.Points[i];
+      if miFlipY.Checked then
+        ps[i].x := (f.FrameWidth * ZoomFactor) - (myp.x * ZoomFactor) - FormSketchpad.sbX.Position
+      else
+        ps[i].x := (myp.x * ZoomFactor) - FormSketchpad.sbX.Position;
+      if miFlipX.Checked then
+        ps[i].y := (f.FrameWidth * ZoomFactor) - (myp.y * ZoomFactor) - FormSketchpad.sbY.Position
+      else
+        ps[i].y := (myp.y * ZoomFactor) - FormSketchpad.sbY.Position;
     end;
   if Length(ps) > 0 then
     with cv do
@@ -1166,134 +1166,133 @@ begin
       // echtes signal: keine scharfen ecken!
       if Length(ps) > 1 then
         begin
-        Pen.Width := 2;
-        Pen.Style := psDashDotDot;
-        Pen.Color := clReal;
-        if drawreal then
-          for i := 1 to Length(ps) - 2 do
-            begin
-            p1.x := (ps[i].x + ps[i - 1].x) div 2;
-            p1.y := (ps[i].y + ps[i - 1].y) div 2;
-            p2.x := (ps[i + 1].x + ps[i].x) div 2;
-            p2.y := (ps[i + 1].y + ps[i].y) div 2;
-            if ((TLaserPoint(f.Points[i]).bits and 1) = 0) then
-              PolyBezier([p1, ps[i], ps[i], p2]);
-            if Length(ps) > 2 then
+          Pen.Width := 2;
+          Pen.Style := psDashDotDot;
+          Pen.Color := clReal;
+          if drawreal then
+            for i := 1 to Length(ps) - 2 do
               begin
-              if ((TLaserPoint(f.Points[0]).bits and 1) = 0) then
-                begin
-                p1.x := (ps[0].x + ps[Length(ps) - 1].x) div 2;
-                p1.y := (ps[0].y + ps[Length(ps) - 1].y) div 2;
-                p2.x := (ps[1].x + ps[0].x) div 2;
-                p2.y := (ps[1].y + ps[0].y) div 2;
-                PolyBezier([p1, ps[0], ps[0], p2]);
-                end;
-              if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 1) = 0) then
-                begin
-                p1.x := (ps[Length(ps) - 1].x + ps[Length(ps) - 2].x) div 2;
-                p1.y := (ps[Length(ps) - 1].y + ps[Length(ps) - 2].y) div 2;
-                p2.x := (ps[0].x + ps[Length(ps) - 1].x) div 2;
-                p2.y := (ps[0].y + ps[Length(ps) - 1].y) div 2;
-                PolyBezier([p1, ps[Length(ps) - 1], ps[Length(ps) - 1], p2]);
-                end;
+                p1.x := (ps[i].x + ps[i - 1].x) div 2;
+                p1.y := (ps[i].y + ps[i - 1].y) div 2;
+                p2.x := (ps[i + 1].x + ps[i].x) div 2;
+                p2.y := (ps[i + 1].y + ps[i].y) div 2;
+                if ((TLaserPoint(f.Points[i]).bits and 1) = 0) then
+                  PolyBezier([p1, ps[i], ps[i], p2]);
+                if Length(ps) > 2 then
+                  begin
+                  if ((TLaserPoint(f.Points[0]).bits and 1) = 0) then
+                    begin
+                      p1.x := (ps[0].x + ps[Length(ps) - 1].x) div 2;
+                      p1.y := (ps[0].y + ps[Length(ps) - 1].y) div 2;
+                      p2.x := (ps[1].x + ps[0].x) div 2;
+                      p2.y := (ps[1].y + ps[0].y) div 2;
+                      PolyBezier([p1, ps[0], ps[0], p2]);
+                    end;
+                  if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 1) = 0) then
+                    begin
+                      p1.x := (ps[Length(ps) - 1].x + ps[Length(ps) - 2].x) div 2;
+                      p1.y := (ps[Length(ps) - 1].y + ps[Length(ps) - 2].y) div 2;
+                      p2.x := (ps[0].x + ps[Length(ps) - 1].x) div 2;
+                      p2.y := (ps[0].y + ps[Length(ps) - 1].y) div 2;
+                      PolyBezier([p1, ps[Length(ps) - 1], ps[Length(ps) - 1], p2]);
+                    end;
+                  end;
               end;
-            end;
-        Pen.Color := clNorm;
-        Font.Color := clNorm;
-        for i := 0 to Length(ps) - 2 do
-          begin
-          if ((TLaserPoint(f.Points[i]).bits and 2) = 0) then
-            begin
-            Pen.Width := 2;
-            Pen.Style := psSolid;
-            end
-          else
-            begin
-            Pen.Width := 1;
-            Pen.Style := psDot;
-            end;
-          MoveTo(ps[i].x, ps[i].y);
-          LineTo(ps[i + 1].x, ps[i + 1].y);
-          end;
+            Pen.Color := clNorm;
+            Font.Color := clNorm;
+            for i := 0 to Length(ps) - 2 do
+              begin
+              if ((TLaserPoint(f.Points[i]).bits and 2) = 0) then
+                begin
+                  Pen.Width := 2;
+                  Pen.Style := psSolid;
+                end
+              else
+                begin
+                  Pen.Width := 1;
+                  Pen.Style := psDot;
+                end;
+                MoveTo(ps[i].x, ps[i].y);
+                LineTo(ps[i + 1].x, ps[i + 1].y);
+              end;
         end;
       if (miCloseLoop.Checked) and (Length(ps) > 2) then
         begin
-        if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 2) = 0) then
-          begin
-          Pen.Width := 2;
-          Pen.Style := psSolid;
-          end
-        else
-          begin
-          Pen.Width := 1;
-          Pen.Style := psDot;
-          end;
-        MoveTo(ps[Length(ps) - 1].x, ps[Length(ps) - 1].y);
-        LineTo(ps[0].x, ps[0].y);
-        end;
-      if miShowPoints.Checked then
-        begin
-        for i := 0 to iPointCount - 1 do
-          begin
-          myp := f.Points[i];
-          Pen.Width := 2;
-          Pen.Style := psSolid;
-          if (myp.p = 1) or ((i = SelectedPoint) and
-            (not FormSketchpad.multiselect)) then
+          if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 2) = 0) then
             begin
-            Pen.Color := clSel;
-            Font.Color := clSel;
+              Pen.Width := 2;
+              Pen.Style := psSolid;
             end
           else
             begin
-            Pen.Color := clNorm;
-            Font.Color := clNorm;
+              Pen.Width := 1;
+              Pen.Style := psDot;
             end;
-          cl := MyColors[(f.Bits and 1), myc_link];
-          if myp.overlay and drawover then
-            Brush.Color := cl;
-          if ((myp.bits and 1) = 0) then
-            Ellipse(ps[i].x - (CircleSize * CircleFactor),
-              ps[i].y - (CircleSize * CircleFactor),
-              ps[i].x + (CircleSize * CircleFactor),
-              ps[i].y + (CircleSize * CircleFactor))
-          else
-            Rectangle(ps[i].x - (CircleSize * CircleFactor),
-              ps[i].y - (CircleSize * CircleFactor),
-              ps[i].x + (CircleSize * CircleFactor),
-              ps[i].y + (CircleSize * CircleFactor));
-          Brush.Color := clBlack;
-          if miShowNoOfPoints.Checked then
-            TextOut(ps[i].x + (CircleSize * CircleFactor) + 2,
-              ps[i].y - (CircleSize * CircleFactor),
-              myp.Caption);
-          end;
+          MoveTo(ps[Length(ps) - 1].x, ps[Length(ps) - 1].y);
+          LineTo(ps[0].x, ps[0].y);
+        end;
+      if miShowPoints.Checked then
+        begin
+          for i := 0 to iPointCount - 1 do
+            begin
+              myp := f.Points[i];
+              Pen.Width := 2;
+              Pen.Style := psSolid;
+              if (myp.p = 1) or ((i = SelectedPoint) and (not FormSketchpad.multiselect)) then
+                begin
+                  Pen.Color := clSel;
+                  Font.Color := clSel;
+                end
+              else
+                begin
+                  Pen.Color := clNorm;
+                  Font.Color := clNorm;
+                end;
+              cl := MyColors[(f.Bits and 1), myc_link];
+              if myp.overlay and drawover then
+                Brush.Color := cl;
+              if ((myp.bits and 1) = 0) then
+                Ellipse(ps[i].x - (CircleSize * CircleFactor),
+                  ps[i].y - (CircleSize * CircleFactor),
+                  ps[i].x + (CircleSize * CircleFactor),
+                  ps[i].y + (CircleSize * CircleFactor))
+              else
+                Rectangle(ps[i].x - (CircleSize * CircleFactor),
+                  ps[i].y - (CircleSize * CircleFactor),
+                  ps[i].x + (CircleSize * CircleFactor),
+                  ps[i].y + (CircleSize * CircleFactor));
+              Brush.Color := clBlack;
+              if miShowNoOfPoints.Checked then
+                TextOut(ps[i].x + (CircleSize * CircleFactor) + 2,
+                  ps[i].y - (CircleSize * CircleFactor),
+                  myp.Caption);
+            end;
         end;
       end;
   //###
   if not EquilateralFinished then
     begin
-    cl := clFuchsia;
-    if miFlipY.Checked then
-      p1.x := (f.FrameWidth * ZoomFactor) - (EquilateralCenter.x * ZoomFactor) -
-        FormSketchpad.sbX.Position
-    else
-      p1.x := (EquilateralCenter.x * ZoomFactor) - FormSketchpad.sbX.Position;
-    if miFlipX.Checked then
-      p1.y := (f.FrameWidth * ZoomFactor) - (EquilateralCenter.y * ZoomFactor) -
-        FormSketchpad.sbY.Position
-    else
-      p1.y := (EquilateralCenter.y * ZoomFactor) - FormSketchpad.sbY.Position;
-    with cv do
-      begin
-      Pen.Color := cl;
-      Pen.Style := psDot;
-      Pen.Width := 1;
-      Ellipse(p1.x - (CircleSize * CircleFactor),
-        p1.y - (CircleSize * CircleFactor),
-        p1.x + (CircleSize * CircleFactor),
-        p1.y + (CircleSize * CircleFactor));
-      end;
+      cl := clFuchsia;
+      if miFlipY.Checked then
+        p1.x := (f.FrameWidth * ZoomFactor) - (EquilateralCenter.x * ZoomFactor) -
+          FormSketchpad.sbX.Position
+      else
+        p1.x := (EquilateralCenter.x * ZoomFactor) - FormSketchpad.sbX.Position;
+      if miFlipX.Checked then
+        p1.y := (f.FrameWidth * ZoomFactor) - (EquilateralCenter.y * ZoomFactor) -
+          FormSketchpad.sbY.Position
+      else
+        p1.y := (EquilateralCenter.y * ZoomFactor) - FormSketchpad.sbY.Position;
+      with cv do
+        begin
+          Pen.Color := cl;
+          Pen.Style := psDot;
+          Pen.Width := 1;
+          Ellipse(p1.x - (CircleSize * CircleFactor),
+            p1.y - (CircleSize * CircleFactor),
+            p1.x + (CircleSize * CircleFactor),
+            p1.y + (CircleSize * CircleFactor));
+        end;
     end;
 end;
 

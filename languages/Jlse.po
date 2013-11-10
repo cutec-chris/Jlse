@@ -432,7 +432,7 @@ msgid "Show background frame"
 msgstr ""
 
 #: tformmain.ashowgrid.caption
-msgid "aShowGrid"
+msgid "Show &grid"
 msgstr ""
 
 #: tformmain.ashowgrid.hint
@@ -441,7 +441,7 @@ msgid "Show (and choose) grid"
 msgstr ""
 
 #: tformmain.ashowlinks.caption
-msgid "aShowLinks"
+msgid "Show &links"
 msgstr ""
 
 #: tformmain.ashowlinks.hint
@@ -476,7 +476,7 @@ msgid "Show a screen preview of the show"
 msgstr ""
 
 #: tformmain.ashowreal.caption
-msgid "aShowreal"
+msgid "Show &round edges"
 msgstr ""
 
 #: tformmain.ashowreal.hint
@@ -805,20 +805,12 @@ msgstr ""
 msgid "Show &backframe"
 msgstr ""
 
-#: tformmain.mishowlinks.caption
-msgid "Show &links"
-msgstr ""
-
 #: tformmain.mishownoofpoints.caption
 msgid "Show &number of points"
 msgstr ""
 
 #: tformmain.mishowpoints.caption
 msgid "&Show points"
-msgstr ""
-
-#: tformmain.mishowreal.caption
-msgid "Show &round edges"
 msgstr ""
 
 #: tformmain.mitimeline.caption
@@ -856,10 +848,6 @@ msgstr ""
 
 #: tformmain.miundo.caption
 msgid "&Undo"
-msgstr ""
-
-#: tformmain.miusegrid.caption
-msgid "Show &grid"
 msgstr ""
 
 #: tformmain.miwindow.caption
