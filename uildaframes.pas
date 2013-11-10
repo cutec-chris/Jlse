@@ -35,6 +35,7 @@ type
 
   TILDAFrames = class(TLaserFrames)
   public
+    constructor Create; override;
     function Add: TLaserFrame; overload; override;
     function LoadHeaderFromStream(aStream: TStream): Boolean;override;
   end;
@@ -53,25 +54,33 @@ function TILDAPoint.LoadFromStream(aStream: TStream): Boolean;
 var
   status,color : byte;
   Blanking: Boolean;
+  si : SmallInt;
 begin
   Result := True;
-  aStream.Read(x,2);
-  x := swap(x);
-  aStream.Read(y,2);
-  x := swap(y);
+  aStream.Read(si,2);
+  x := BEtoN(si);
+  aStream.Read(si,2);
+  y := BEtoN(si);
   if TILDAFrame(Parent).FFrameType = 0 then //3d Point
     begin
-      aStream.Read(z,2);
-      z := swap(z);
+      aStream.Read(si,2);
+      z := BEtoN(si);
       Is3D := True;
     end;
   aStream.Read(status,1);
   aStream.Read(color,1);
-  Blanking := not (Status and $40 = $40);
+  Blanking := (Status and $40 = $40);
   Result := not (Status and $80 = $80); // Last Point
 end;
 
 { TILDAFrames }
+
+constructor TILDAFrames.Create;
+begin
+  inherited Create;
+  FrameWidth:=$FFFF div 2;
+  FrameMiddle:=0;
+end;
 
 function TILDAFrames.Add: TLaserFrame;
 begin
@@ -102,6 +111,7 @@ var
   b : byte;
   w : word;
   aPoint: TILDAPoint;
+  aEntry: Integer;
 begin
   Result := True;
   if aStream.Size > 5 then
@@ -125,20 +135,25 @@ begin
   aStream.Read(s2,8);
   CompanyName := s2;
   aStream.Read(w,2);
+  w := BEtoN(w);
   FNumberOfEntrys := w;
   aStream.Read(w,2);//Frame Number
+  w := BEtoN(w);
   aStream.Read(w,2);//Total Number of Frames
+  w := BEtoN(w);
   aStream.Read(b,1);//ScannerHead
   aStream.Read(b,1);//unused
   if FFrameType=2 then//Color Palette
     LoadColorPalette(aStream)
-  else
+  else if FNumberOfEntrys>0 then
     begin
+      aEntry := 0;
       aPoint := TILDAPoint.Create;
       aPoint.Parent:=Self;
       Points.Add(aPoint);
-      while aPoint.LoadFromStream(aStream) do
+      while (aPoint.LoadFromStream(aStream)) and (aEntry<FNumberOfEntrys) do
         begin
+          inc(aEntry);
           aPoint := TILDAPoint.Create;
           aPoint.Parent:=Self;
           Points.Add(aPoint);

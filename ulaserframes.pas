@@ -57,6 +57,9 @@ type
     Points: TList;
     Parent : TLaserFrames;
     function Add: TLaserPoint;virtual;
+    function FrameWidth : Integer;
+    function FrameMiddle : Integer;
+    function FrameLeft : Integer;
     constructor Create;
     destructor Destroy; reintroduce;
     function LoadFromStream(aStream : TStream) : Boolean;virtual;
@@ -67,17 +70,23 @@ type
 
   TLaserFrames = class(TObject)
   private
+    FFrameMiddle: Integer;
     FFrames: TList;
     FFrameCount: integer;
+    FFrameWidth: Integer;
     FOldPointCount: integer;
     FFileVersion: byte;
     function GetCount: integer;
     function GetFrames(FrameIndex: integer): TLaserFrame;
+    function Getleft: Integer;
   public
     Filename: string;
-    constructor Create;
+    constructor Create;virtual;
     destructor Destroy; reintroduce;
     property FileVersion : byte read FFileVersion;
+    property FrameWidth : Integer read FFrameWidth write FFrameWidth;
+    property FrameMiddle : Integer read FFrameMiddle write FFrameMiddle;
+    property FrameLeft : Integer read Getleft;
     property OldPointCount : Integer read FOldPointCount write FOldPointCount;
     function Add: TLaserFrame; overload;virtual;
     function Add(Frame: TLaserFrame): integer; overload;
@@ -100,12 +109,12 @@ type
   TLaserPoint = class(TObject)
   public
     Caption: string[5];
-    X, Y: word;
+    X, Y: Integer;
     p: smallint;
     bits: word;
     overlay: boolean;
     Parent : TLaserFrame;
-    constructor Create;
+    constructor Create;virtual;
     destructor Destroy; reintroduce;
     procedure Assign(sp: TLaserPoint);
     function LoadFromStream(aStream : TStream) : Boolean;virtual;
@@ -297,6 +306,8 @@ constructor TLaserFrames.Create;
 begin
   FFrames := TList.Create;
   Filename := '';
+  FFrameWidth:=256;
+  FFrameMiddle:=127;
   inherited Create;
 end;
 
@@ -320,6 +331,11 @@ end;
 function TLaserFrames.GetFrames(FrameIndex: integer): TLaserFrame;
 begin
   Result := TLaserFrame(FFrames[FrameIndex]);
+end;
+
+function TLaserFrames.Getleft: Integer;
+begin
+  Result := FrameMiddle-FrameWidth;
 end;
 
 procedure TLaserFrames.Insert(Position: integer; Frame: TLaserFrame);
@@ -568,6 +584,21 @@ begin
   Result := TLaserPoint.Create;
   Points.add(Result);
   Result.Parent:=Self;
+end;
+
+function TLaserFrame.FrameWidth: Integer;
+begin
+  Result := Parent.FrameWidth;
+end;
+
+function TLaserFrame.FrameMiddle: Integer;
+begin
+  Result := Parent.FrameMiddle;
+end;
+
+function TLaserFrame.FrameLeft: Integer;
+begin
+  Result := Parent.FrameLeft;
 end;
 
 { TLaserPoint }

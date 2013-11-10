@@ -459,7 +459,6 @@ type
     procedure miScaleClick(Sender: TObject);
     procedure miSetRotPointClick(Sender: TObject);
     procedure miShowBackframeClick(Sender: TObject);
-    procedure miShowLinksClick(Sender: TObject);
     procedure miShowNoOfPointsClick(Sender: TObject);
     procedure miShowPointsClick(Sender: TObject);
     procedure miShowRealClick(Sender: TObject);
@@ -470,7 +469,6 @@ type
     procedure miToolPanelClick(Sender: TObject);
     procedure miToolSharpenClick(Sender: TObject);
     procedure miUndoClick(Sender: TObject);
-    procedure miUseGridClick(Sender: TObject);
     procedure miZoom1Click(Sender: TObject);
     procedure miZoom2Click(Sender: TObject);
     procedure miZoom3Click(Sender: TObject);
@@ -1086,11 +1084,11 @@ begin
     begin
     myp := f.Points[i];
     if miFlipY.Checked then
-      ps[i].x := (255) - myp.x
+      ps[i].x := (f.FrameWidth-1) - myp.x
     else
       ps[i].x := myp.x;
     if miFlipX.Checked then
-      ps[i].y := (255) - myp.y
+      ps[i].y := (f.FrameWidth-1) - myp.y
     else
       ps[i].y := myp.y;
     ps[i].x := ps[i].x div divider + offx;
@@ -1154,11 +1152,11 @@ begin
     begin
     myp := f.Points[i];
     if miFlipY.Checked then
-      ps[i].x := (256 * ZoomFactor) - (myp.x * ZoomFactor) - FormSketchpad.sbX.Position
+      ps[i].x := (f.FrameWidth * ZoomFactor) - (myp.x * ZoomFactor) - FormSketchpad.sbX.Position
     else
       ps[i].x := (myp.x * ZoomFactor) - FormSketchpad.sbX.Position;
     if miFlipX.Checked then
-      ps[i].y := (256 * ZoomFactor) - (myp.y * ZoomFactor) - FormSketchpad.sbY.Position
+      ps[i].y := (f.FrameWidth * ZoomFactor) - (myp.y * ZoomFactor) - FormSketchpad.sbY.Position
     else
       ps[i].y := (myp.y * ZoomFactor) - FormSketchpad.sbY.Position;
     end;
@@ -1277,12 +1275,12 @@ begin
     begin
     cl := clFuchsia;
     if miFlipY.Checked then
-      p1.x := (256 * ZoomFactor) - (EquilateralCenter.x * ZoomFactor) -
+      p1.x := (f.FrameWidth * ZoomFactor) - (EquilateralCenter.x * ZoomFactor) -
         FormSketchpad.sbX.Position
     else
       p1.x := (EquilateralCenter.x * ZoomFactor) - FormSketchpad.sbX.Position;
     if miFlipX.Checked then
-      p1.y := (256 * ZoomFactor) - (EquilateralCenter.y * ZoomFactor) -
+      p1.y := (f.FrameWidth * ZoomFactor) - (EquilateralCenter.y * ZoomFactor) -
         FormSketchpad.sbY.Position
     else
       p1.y := (EquilateralCenter.y * ZoomFactor) - FormSketchpad.sbY.Position;
@@ -2796,8 +2794,6 @@ begin
   else
     doit := (MessageDlg('Do you really want to discard any changes made to this file?',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes);
-  odLC1.Title := 'Open Yoghurt file...';
-  odLC1.Filename := '';
   if doit then
     if odLC1.Execute then
       begin
@@ -3257,8 +3253,8 @@ begin
       LineTo(FormDebug.img.width,255);
       Pen.Color := clRed;
    end;}
-  ax := 127;
-  ay := 127;
+  ax := myf.FrameMiddle;
+  ay := myf.FrameMiddle;
   for i := 0 to Pred(myf.Points.Count) do
     begin
     myp := myf.Points[i];
@@ -3866,20 +3862,6 @@ begin
   Redraw;
 end;
 
-procedure TFormMain.miShowLinksClick(Sender: TObject);
-begin
-  miShowLinks.Checked := not miShowLinks.Checked;
-  sbShowLinks.Down := miShowLinks.Checked;
-  Redraw;
-end;
-
-procedure TFormMain.miUseGridClick(Sender: TObject);
-begin
-  miUseGrid.Checked := not miUseGrid.Checked;
-  sbShowGrid.Down := miUseGrid.Checked;
-  Redraw;
-end;
-
 procedure TFormMain.miFullImgClick(Sender: TObject);
 begin
   miFullImg.Checked := True;
@@ -4140,7 +4122,7 @@ begin
   for i := 0 to Pred(myf.Points.Count) do
     begin
     myp := myf.Points[i];
-    myp.y := 255 - myp.y;
+    myp.y := (myf.FrameWidth-1) - myp.y;
     end;
   Redraw;
 end;
@@ -4291,24 +4273,24 @@ var
 begin
   for i := 0 to Pred(f.Points.Count) do
     begin
-    myp := f.Points[i];
-    bx := (integer(myp.x) - f.AuxCenter.X);
-    by := (integer(myp.y) - f.AuxCenter.Y);
-    pw := arg(bx, by);
-    radius := Sqrt(Sqr(bx) + Sqr(by));
-    pw := pw + degrees;
-    bx := Round(radius * Cos(pw)) + f.RotCenter.X;
-    if bx < 0 then
-      bx := 0;
-    if bx > 255 then
-      bx := 255;
-    myp.x := bx;
-    by := Round(radius * Sin(pw)) + f.RotCenter.Y;
-    if by < 0 then
-      by := 0;
-    if by > 255 then
-      by := 255;
-    myp.y := by;
+      myp := f.Points[i];
+      bx := (integer(myp.x) - f.AuxCenter.X);
+      by := (integer(myp.y) - f.AuxCenter.Y);
+      pw := arg(bx, by);
+      radius := Sqrt(Sqr(bx) + Sqr(by));
+      pw := pw + degrees;
+      bx := Round(radius * Cos(pw)) + f.RotCenter.X;
+      if bx < 0 then
+        bx := 0;
+      if bx > f.FrameWidth-1 then
+        bx := f.FrameWidth-1;
+      myp.x := bx;
+      by := Round(radius * Sin(pw)) + f.RotCenter.Y;
+      if by < 0 then
+        by := 0;
+      if by > f.FrameWidth-1 then
+        by := f.FrameWidth-1;
+      myp.y := by;
     end;
 end;
 
@@ -4327,7 +4309,7 @@ begin
     winkel := -w / 180 * Pi;
     if ec = 0 then
       begin
-      RotateFrame(myf, winkel);
+        RotateFrame(myf, winkel);
       end;
     end;
   Redraw;
@@ -4350,12 +4332,12 @@ begin
     Val(sx, wx, ecx);
     if wx < 0 then
       ecx := 1;
-    if wx > 255 then
+    if wx > myf.FrameWidth-1 then
       ecx := 1;
     Val(sy, wy, ecy);
     if wy < 0 then
       ecy := 1;
-    if wy > 255 then
+    if wy > myf.FrameWidth-1 then
       ecy := 1;
     if (ecx = 0) and (ecy = 0) then
       begin
@@ -4369,12 +4351,12 @@ begin
     Val(sx, wx, ecx);
     if wx < 0 then
       ecx := 1;
-    if wx > 255 then
+    if wx > myf.FrameWidth-1 then
       ecx := 1;
     Val(sy, wy, ecy);
     if wy < 0 then
       ecy := 1;
-    if wy > 255 then
+    if wy > myf.FrameWidth-1 then
       ecy := 1;
     if (ecx = 0) and (ecy = 0) then
       begin
@@ -4516,14 +4498,14 @@ begin
         begin
         spCurrentPoint := fCurrentFrame.Points[iPoint];
         erg.x := spCurrentPoint.x + dp.x;
-        if erg.x > 255 then
-          erg.x := 255;
+        if erg.x > fCurrentFrame.FrameWidth-1 then
+          erg.x := fCurrentFrame.FrameWidth-1;
         if erg.x < 0 then
           erg.x := 0;
         spCurrentPoint.x := erg.x;
         erg.y := spCurrentPoint.y + dp.y;
-        if erg.y > 255 then
-          erg.y := 255;
+        if erg.y > fCurrentFrame.FrameWidth-1 then
+          erg.y := fCurrentFrame.FrameWidth-1;
         if erg.y < 0 then
           erg.y := 0;
         spCurrentPoint.y := erg.y;
@@ -4557,12 +4539,12 @@ begin
     dp.y := v.y - c.y;
     c.x := c.x + (2 * dp.x);
     c.y := c.y + (2 * dp.y);
-    if c.x > 255 then
-      c.x := 255;
+    if c.x > myf.FrameWidth-1 then
+      c.x := myf.FrameWidth-1;
     if c.x < 0 then
       c.x := 0;
-    if c.y > 255 then
-      c.y := 255;
+    if c.y > myf.FrameWidth-1 then
+      c.y := myf.FrameWidth-1;
     if c.y < 0 then
       c.y := 0;
     myp.x := c.x;
@@ -4612,13 +4594,13 @@ begin
           p.x := myp.x;
           p.y := myp.y;
           p.x := Round((p.x - ap.x) * r) + ap.x;
-          if p.x > 255 then
-            p.x := 255;
+          if p.x > myf.FrameWidth-1 then
+            p.x := myf.FrameWidth-1;
           if p.x < 0 then
             p.x := 0;
           p.y := Round((p.y - ap.y) * r) + ap.y;
-          if p.y > 255 then
-            p.y := 255;
+          if p.y > myf.FrameWidth-1 then
+            p.y := myf.FrameWidth-1;
           if p.y < 0 then
             p.y := 0;
           myp.x := p.x;
@@ -4671,13 +4653,13 @@ begin
           x := center.x + Round(radius * cos(beta * i + alpha));
           if x < 0 then
             x := 0;
-          if x > 255 then
-            x := 255;
+          if x > fCurrent.FrameWidth-1 then
+            x := fCurrent.FrameWidth-1;
           y := center.y + Round(radius * sin(beta * i + alpha));
           if y < 0 then
             y := 0;
-          if y > 255 then
-            y := 255;
+          if y > fCurrent.FrameWidth-1 then
+            y := fCurrent.FrameWidth-1;
           newp := TLaserPoint.Create;
           newp.X := x;
           newp.Y := y;

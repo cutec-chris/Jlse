@@ -969,10 +969,6 @@ msgstr ""
 msgid "Open background image..."
 msgstr ""
 
-#: tformmain.panel1.caption
-msgid "Panel1"
-msgstr ""
-
 #: tformmain.pmichoosepart.caption
 msgid "&Choose part of image..."
 msgstr ""

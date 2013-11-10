@@ -1,8 +1,8 @@
 object FormMain: TFormMain
   Tag = 1
-  Left = 275
+  Left = 290
   Height = 600
-  Top = 170
+  Top = 155
   Width = 1024
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   Caption = 'Jlse'
@@ -21,12 +21,12 @@ object FormMain: TFormMain
   LCLVersion = '1.3'
   object panelLeft: TPanel
     Left = 616
-    Height = 477
-    Top = 40
+    Height = 487
+    Top = 30
     Width = 408
     Align = alRight
     BevelOuter = bvNone
-    ClientHeight = 477
+    ClientHeight = 487
     ClientWidth = 408
     TabOrder = 0
     object dockFiles1: TPanel
@@ -41,7 +41,7 @@ object FormMain: TFormMain
     end
     object lbThumbs: TListBox
       Left = 0
-      Height = 135
+      Height = 145
       Top = 1
       Width = 408
       Align = alClient
@@ -61,7 +61,7 @@ object FormMain: TFormMain
     object Panel2: TPanel
       Left = 0
       Height = 341
-      Top = 136
+      Top = 146
       Width = 408
       Align = alBottom
       BevelOuter = bvNone
@@ -121,12 +121,12 @@ object FormMain: TFormMain
   end
   object dockTools: TPanel
     Left = 0
-    Height = 477
-    Top = 40
+    Height = 487
+    Top = 30
     Width = 32
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 477
+    ClientHeight = 487
     ClientWidth = 32
     TabOrder = 1
     object toolbarPointsFrames: TToolBar
@@ -365,13 +365,12 @@ object FormMain: TFormMain
   end
   object Panel1: TPanel
     Left = 0
-    Height = 40
+    Height = 30
     Top = 0
     Width = 1024
     Align = alTop
     BevelOuter = bvNone
-    Caption = 'Panel1'
-    ClientHeight = 40
+    ClientHeight = 30
     ClientWidth = 1024
     TabOrder = 4
     object toolbarFiles: TToolBar
@@ -1746,26 +1745,20 @@ object FormMain: TFormMain
         OnClick = miShowBackframeClick
       end
       object miShowLinks: TMenuItem
+        Action = aShowLinks
         AutoCheck = True
-        Caption = 'Show &links'
-        HelpContext = 5
         RadioItem = True
-        OnClick = miShowLinksClick
       end
       object miShowReal: TMenuItem
+        Action = aShowreal
         AutoCheck = True
-        Caption = 'Show &round edges'
-        HelpContext = 5
         RadioItem = True
         OnClick = miShowRealClick
       end
       object miUseGrid: TMenuItem
+        Action = aShowGrid
         AutoCheck = True
-        Caption = 'Show &grid'
-        HelpContext = 5
         RadioItem = True
-        ShortCut = 49223
-        OnClick = miUseGridClick
       end
       object miSnapGrid: TMenuItem
         Action = aSnapGrid
@@ -5263,10 +5256,11 @@ object FormMain: TFormMain
     object aShowGrid: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aShowGrid'
+      Caption = 'Show &grid'
       Hint = 'Show (and choose) grid'
       ImageIndex = 7
       OnExecute = DoRedraw
+      ShortCut = 49223
     end
     object aSnapGrid: TAction
       Category = 'Options'
@@ -5334,7 +5328,7 @@ object FormMain: TFormMain
     object aShowLinks: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aShowLinks'
+      Caption = 'Show &links'
       Hint = 'Show links to background frame'
       ImageIndex = 46
       OnExecute = DoRedraw
@@ -5342,7 +5336,7 @@ object FormMain: TFormMain
     object aShowreal: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aShowreal'
+      Caption = 'Show &round edges'
       Hint = 'Show unoptimized edges'
       ImageIndex = 47
       OnExecute = DoRedraw
