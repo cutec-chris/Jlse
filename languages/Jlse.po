@@ -338,6 +338,11 @@ msgctxt "TFORMMAIN.ALOCK.HINT"
 msgid "Lock frame against moving"
 msgstr ""
 
+#: tformmain.amovepointswithoutredraw.caption
+msgctxt "TFORMMAIN.AMOVEPOINTSWITHOUTREDRAW.CAPTION"
+msgid "Move points &without redraw"
+msgstr ""
+
 #: tformmain.anewfile.caption
 msgid "&New"
 msgstr ""
@@ -423,7 +428,7 @@ msgid "Sharpen selected point(s) (edges)"
 msgstr ""
 
 #: tformmain.ashowbackframe.caption
-msgid "aShowBackFrame"
+msgid "Show &backframe"
 msgstr ""
 
 #: tformmain.ashowbackframe.hint
@@ -450,7 +455,7 @@ msgid "Show links to background frame"
 msgstr ""
 
 #: tformmain.ashownumpoints.caption
-msgid "aShowNumPoints"
+msgid "Show &number of points"
 msgstr ""
 
 #: tformmain.ashownumpoints.hint
@@ -459,7 +464,7 @@ msgid "Show numbers of points"
 msgstr ""
 
 #: tformmain.ashowpoints.caption
-msgid "aShowPoints"
+msgid "&Show points"
 msgstr ""
 
 #: tformmain.ashowpoints.hint
@@ -737,10 +742,6 @@ msgstr ""
 msgid "&Mouse position"
 msgstr ""
 
-#: tformmain.mimovenoredraw.caption
-msgid "Move points &without redraw"
-msgstr ""
-
 #: tformmain.minoimg.caption
 msgid "Dont display image"
 msgstr ""
@@ -799,18 +800,6 @@ msgstr ""
 
 #: tformmain.misettings.caption
 msgid "&Settings"
-msgstr ""
-
-#: tformmain.mishowbackframe.caption
-msgid "Show &backframe"
-msgstr ""
-
-#: tformmain.mishownoofpoints.caption
-msgid "Show &number of points"
-msgstr ""
-
-#: tformmain.mishowpoints.caption
-msgid "&Show points"
 msgstr ""
 
 #: tformmain.mitimeline.caption

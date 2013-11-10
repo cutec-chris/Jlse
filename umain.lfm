@@ -1716,33 +1716,20 @@ object FormMain: TFormMain
       Caption = '&Settings'
       HelpContext = 5
       object miMoveNoRedraw: TMenuItem
+        Action = aMovePointswithoutRedraw
         AutoCheck = True
-        Caption = 'Move points &without redraw'
-        HelpContext = 5
-        OnClick = miMoveNoRedrawClick
       end
       object miShowPoints: TMenuItem
+        Action = aShowPoints
         AutoCheck = True
-        Caption = '&Show points'
-        Checked = True
-        HelpContext = 5
-        ShortCut = 16464
-        OnClick = miShowPointsClick
       end
       object miShowNoOfPoints: TMenuItem
+        Action = aShowNumPoints
         AutoCheck = True
-        Caption = 'Show &number of points'
-        Checked = True
-        HelpContext = 5
-        OnClick = miShowNoOfPointsClick
       end
       object miShowBackframe: TMenuItem
-        AutoCheck = True
-        Caption = 'Show &backframe'
-        HelpContext = 5
+        Action = aShowBackFrame
         RadioItem = True
-        ShortCut = 16450
-        OnClick = miShowBackframeClick
       end
       object miShowLinks: TMenuItem
         Action = aShowLinks
@@ -5297,10 +5284,11 @@ object FormMain: TFormMain
     object aShowPoints: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aShowPoints'
+      Caption = '&Show points'
       Hint = 'Show points along frame'
       ImageIndex = 43
       OnExecute = DoRedraw
+      ShortCut = 16464
     end
     object aNoImg: TAction
       Category = 'Options'
@@ -5313,17 +5301,18 @@ object FormMain: TFormMain
     object aShowNumPoints: TAction
       Category = 'Options'
       AutoCheck = True
-      Caption = 'aShowNumPoints'
+      Caption = 'Show &number of points'
       Hint = 'Show numbers of points'
       ImageIndex = 44
       OnExecute = DoRedraw
     end
     object aShowBackFrame: TAction
       Category = 'Options'
-      Caption = 'aShowBackFrame'
+      Caption = 'Show &backframe'
       Hint = 'Show background frame'
       ImageIndex = 45
       OnExecute = DoRedraw
+      ShortCut = 16450
     end
     object aShowLinks: TAction
       Category = 'Options'
@@ -5364,6 +5353,11 @@ object FormMain: TFormMain
       Hint = 'Flip at Y-Axis'
       ImageIndex = 28
       OnExecute = DoRedraw
+    end
+    object aMovePointswithoutRedraw: TAction
+      Category = 'Options'
+      AutoCheck = True
+      Caption = 'Move points &without redraw'
     end
   end
   object pmLastFiles: TPopupMenu

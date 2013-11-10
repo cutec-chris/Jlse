@@ -94,6 +94,7 @@ type
     aColor: TAction;
     aBlank: TAction;
     aCloseLoop: TAction;
+    aMovePointswithoutRedraw: TAction;
     aFlipY: TAction;
     aFlipX: TAction;
     aShowreal: TAction;
@@ -447,7 +448,6 @@ type
     procedure miLicenseClick(Sender: TObject);
     procedure miLinkOverlayClick(Sender: TObject);
     procedure miMousePosPanelClick(Sender: TObject);
-    procedure miMoveNoRedrawClick(Sender: TObject);
     procedure miNoImgClick(Sender: TObject);
     procedure miOpenAgainClick(Sender: TObject);
     procedure miOpt2xZoomClick(Sender: TObject);
@@ -458,9 +458,6 @@ type
     procedure miRotateFrameClick(Sender: TObject);
     procedure miScaleClick(Sender: TObject);
     procedure miSetRotPointClick(Sender: TObject);
-    procedure miShowBackframeClick(Sender: TObject);
-    procedure miShowNoOfPointsClick(Sender: TObject);
-    procedure miShowPointsClick(Sender: TObject);
     procedure miShowRealClick(Sender: TObject);
     procedure miTimelineClick(Sender: TObject);
     procedure miToolAuxPointsClick(Sender: TObject);
@@ -692,11 +689,11 @@ begin
     Inc(ay, 256);
   //lastpoint.x := ax;
   //lastpoint.y := ay;
-  if miFlipY.Checked then
+  if aFlipY.Checked then
     bx := 255 - ax
   else
     bx := ax;
-  if miFlipX.Checked then
+  if aFlipX.Checked then
     by := ay
   else
     by := 255 - ay;
@@ -853,12 +850,12 @@ begin
     ps[1].y := i;
     for j := 0 to 1 do
       begin
-      if miFlipY.Checked then
+      if aFlipY.Checked then
         psz[j].x := (256 * ZoomFactor) - (ps[j].x * ZoomFactor) -
           FormSketchpad.sbX.Position
       else
         psz[j].x := (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position;
-      if miFlipX.Checked then
+      if aFlipX.Checked then
         psz[j].y := (256 * ZoomFactor) - (ps[j].y * ZoomFactor) -
           FormSketchpad.sbY.Position
       else
@@ -884,12 +881,12 @@ begin
     ps[1].x := i;
     for j := 0 to 1 do
       begin
-      if miFlipY.Checked then
+      if aFlipY.Checked then
         psz[j].x := (256 * ZoomFactor) - (ps[j].x * ZoomFactor) -
           FormSketchpad.sbX.Position
       else
         psz[j].x := (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position;
-      if miFlipX.Checked then
+      if aFlipX.Checked then
         psz[j].y := (256 * ZoomFactor) - (ps[j].y * ZoomFactor) -
           FormSketchpad.sbY.Position
       else
@@ -973,7 +970,7 @@ begin
         MoveTo(x, 3);
         LineTo(x, th - 4);
         end;
-      if miFlipY.Checked then
+      if aFlipY.Checked then
         s := IntToStr(256 - i)
       else
         s := IntToStr(i);
@@ -986,7 +983,7 @@ begin
       y := (i * ZoomFactor - FormSketchpad.sbY.Position) + 1;
       MoveTo(4, y);
       LineTo(lw - 4, y);
-      if miFlipX.Checked then
+      if aFlipX.Checked then
         s := IntToStr(256 - i)
       else
         s := IntToStr(i);
@@ -1361,7 +1358,7 @@ begin
     begin
     Drawing := True;
     myf := FFile.Frames[currentframe];
-    if miShowRuler.Checked then
+    if aRuler.Checked then
       begin
       FormSketchpad.iTopRuler.Height := TopRulerHeight;
       FormSketchpad.iLeftRuler.Width := LeftRulerWidth;
@@ -1928,12 +1925,6 @@ end;
 
 procedure TFormMain.FormActivate(Sender: TObject);
 begin
-  Redraw;
-end;
-
-procedure TFormMain.miMoveNoRedrawClick(Sender: TObject);
-begin
-  miMoveNoRedraw.Checked := not miMoveNoRedraw.Checked;
   Redraw;
 end;
 
@@ -2768,7 +2759,7 @@ begin
   if doit then
     begin
     FFile.Clear;
-    myf := TLaserFrame.Create;
+    myf := FFile.Add;
     FormSketchpad.sbFrames.Position := 0;
     FormSketchpad.sbFrames.Max := 0;
     FormSketchpad.panelFrameSwitcher.Caption := '0';
@@ -2777,7 +2768,6 @@ begin
     FormSketchpad.Parent := Self;
     FormSketchpad.Align := alClient;
     FFile.Filename := '';
-    FFile.Add(myf);
     lbThumbs.Items.Clear;
     lbThumbs.Items.Add('');
     end;
@@ -3838,27 +3828,6 @@ begin
     MessageDlg('Everything''s fine!', mtInformation, [mbOK], 0)
   else
     MessageDlg(s, mtWarning, [mbOK], 0);
-end;
-
-procedure TFormMain.miShowPointsClick(Sender: TObject);
-begin
-  miShowPoints.Checked := not miShowPoints.Checked;
-  sbShowPoints.Down := miShowPoints.Checked;
-  Redraw;
-end;
-
-procedure TFormMain.miShowNoOfPointsClick(Sender: TObject);
-begin
-  miShowNoOfPoints.Checked := not miShowNoOfPoints.Checked;
-  sbShowNumPoints.Down := miShowNoOfPoints.Checked;
-  Redraw;
-end;
-
-procedure TFormMain.miShowBackframeClick(Sender: TObject);
-begin
-  miShowBackframe.Checked := not miShowBackframe.Checked;
-  sbShowBackFrame.Down := miShowBackframe.Checked;
-  Redraw;
 end;
 
 procedure TFormMain.miFullImgClick(Sender: TObject);
