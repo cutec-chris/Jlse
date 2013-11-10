@@ -356,8 +356,8 @@ begin
         ((Button = mbRight) or (ssAlt in Shift))) then
         begin
         FormMain.FileChanged := True;
-        if (((x + FormSketchpad.sbX.Position) / ZoomFactor) < 256) and
-          (((y + FormSketchpad.sbY.Position) / ZoomFactor) < 256) then
+        if (((x + FormSketchpad.sbX.Position) / ZoomFactor) < myf.FrameWidth) and
+          (((y + FormSketchpad.sbY.Position) / ZoomFactor) < myf.FrameWidth) then
           begin
           myp := TLaserPoint.Create;
           myp.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
@@ -371,14 +371,14 @@ begin
             myp.y := (myp.y + (FormMain.GridWidth div 2)) div
               FormMain.GridWidth * FormMain.GridWidth;
             if (ox > FormMain.GridWidth) and (myp.x < FormMain.GridWidth) then
-              myp.x := 255;
+              myp.x := myf.FrameWidth-1;
             if (oy > FormMain.GridWidth) and (myp.y < FormMain.GridWidth) then
-              myp.y := 255;
+              myp.y := myf.FrameWidth-1;
             end;
           if FormMain.miFlipY.Checked then
-            myp.x := 255 - myp.x;
+            myp.x := myf.FrameWidth-1 - myp.x;
           if FormMain.miFlipX.Checked then
-            myp.y := 255 - myp.y;
+            myp.y := myf.FrameWidth-1 - myp.y;
           myp.Caption := IntToStr(myf.Points.Count);
           FormMain.undo.op := sAdd;
           if ((SelectedPoint < myf.Points.Count) and (SelectedPoint > -1)) and
@@ -483,9 +483,9 @@ begin
           myp.y := (myp.y + (FormMain.GridWidth div 2)) div
             FormMain.GridWidth * FormMain.GridWidth;
           if (ox > FormMain.GridWidth) and (myp.x < FormMain.GridWidth) then
-            myp.x := 255;
+            myp.x := myf.FrameWidth-1;
           if (oy > FormMain.GridWidth) and (myp.y < FormMain.GridWidth) then
-            myp.y := 255;
+            myp.y := myf.FrameWidth-1;
           end;
         if not miMoveNoReDraw.Checked then
           Redraw;
@@ -595,14 +595,14 @@ begin
         begin
         myp := myf.Points[i];
         erg.x := myp.x + p1.x;
-        if erg.x > 255 then
-          erg.x := 255;
+        if erg.x > myf.FrameWidth-1 then
+          erg.x := myf.FrameWidth-1;
         if erg.x < 0 then
           erg.x := 0;
         myp.x := erg.x;
         erg.y := myp.y + p1.y;
-        if erg.y > 255 then
-          erg.y := 255;
+        if erg.y > myf.FrameWidth-1 then
+          erg.y := myf.FrameWidth-1;
         if erg.y < 0 then
           erg.y := 0;
         myp.y := erg.y;

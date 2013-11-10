@@ -849,7 +849,7 @@ begin
         LineTo(psz[1].x, psz[1].y);
         pen.style := psSolid;
         end;
-      Inc(i, GridWidth*256);
+      Inc(i, GridWidth*(FFile.FrameWidth div 256));
     end;
   i := GridWidth;
   ps[0].y := 0;
@@ -878,7 +878,7 @@ begin
           LineTo(psz[1].x, psz[1].y);
           pen.style := psSolid;
         end;
-      Inc(i, GridWidth*256);
+      Inc(i, GridWidth*(FFile.FrameWidth div 256));
     end;
 end;
 procedure TFormMain.DrawRulers;
@@ -1468,8 +1468,8 @@ begin
   Drawing := False;
   FileChanged := False;
   EquilateralSides := 6;
-  EquilateralCenter.x := 128;
-  EquilateralCenter.y := 128;
+  EquilateralCenter.x := FFile.FrameMiddle;
+  EquilateralCenter.y := FFile.FrameMiddle;
   EquilateralFinished := True;
    {$IFNDEF WINDOWS}
   reg := TRegIniFile.Create('settings.ini');
@@ -1535,7 +1535,7 @@ begin
               i := 2;
               end;
             end;
-          ZoomFactor := i;
+          ZoomFactor := i/256;
           i := GetValueDefault('Grid', 16);
           case i of
             4: miGrid4.Checked := True;
@@ -1911,7 +1911,7 @@ begin
           SetValue('Image', 1)
         else if sbFullImg.Down then
           SetValue('Image', 2);
-        //SetValue('Zoom', ZoomFactor);
+        SetValue('Zoom', round(ZoomFactor*256));
         SetValue('Grid', GridWidth);
         SetValue('Circles', CircleSize);
         SetValue('WinLeft', FormMain.Left);
