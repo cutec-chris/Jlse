@@ -468,13 +468,6 @@ type
     procedure miToolSharpenClick(Sender: TObject);
     procedure miUndoClick(Sender: TObject);
     procedure miZoom1Click(Sender: TObject);
-    procedure miZoom2Click(Sender: TObject);
-    procedure miZoom3Click(Sender: TObject);
-    procedure miZoom4Click(Sender: TObject);
-    procedure miZoom5Click(Sender: TObject);
-    procedure miZoom6Click(Sender: TObject);
-    procedure miZoom7Click(Sender: TObject);
-    procedure miZoom8Click(Sender: TObject);
     procedure miZoomClick(Sender: TObject);
     procedure mpPreviewNotify(Sender: TObject);
     procedure pmiChoosePartClick(Sender: TObject);
@@ -831,61 +824,61 @@ var
 begin
   i := GridWidth;
   ps[0].x := 0;
-  ps[1].x := 256;
-  while i < 255 do
+  ps[1].x := FFile.FrameWidth;
+  while i < FFile.FrameWidth do
     begin
-    ps[0].y := i;
-    ps[1].y := i;
-    for j := 0 to 1 do
-      begin
-      if aFlipY.Checked then
-        psz[j].x := round((256 * ZoomFactor) - (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position)
-      else
-        psz[j].x := round((ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position);
-      if aFlipX.Checked then
-        psz[j].y := round((256 * ZoomFactor) - (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position)
-      else
-        psz[j].y := round((ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position);
-      end;
-    with cv do
-      begin
-      pen.color := clGrid;
-      pen.Width := 1;
-      pen.style := psDot;
-      MoveTo(psz[0].x, psz[0].y);
-      LineTo(psz[1].x, psz[1].y);
-      pen.style := psSolid;
-      end;
-    Inc(i, GridWidth);
+      ps[0].y := i;
+      ps[1].y := i;
+      for j := 0 to 1 do
+        begin
+        if aFlipY.Checked then
+          psz[j].x := round((FFile.FrameWidth * ZoomFactor) - (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position)
+        else
+          psz[j].x := round((ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position);
+        if aFlipX.Checked then
+          psz[j].y := round((FFile.FrameWidth * ZoomFactor) - (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position)
+        else
+          psz[j].y := round((ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position);
+        end;
+      with cv do
+        begin
+        pen.color := clGrid;
+        pen.Width := 1;
+        pen.style := psDot;
+        MoveTo(psz[0].x, psz[0].y);
+        LineTo(psz[1].x, psz[1].y);
+        pen.style := psSolid;
+        end;
+      Inc(i, GridWidth*256);
     end;
   i := GridWidth;
   ps[0].y := 0;
-  ps[1].y := 256;
-  while i < 255 do
+  ps[1].y := FFile.FrameWidth;
+  while i < FFile.FrameWidth do
     begin
-    ps[0].x := i;
-    ps[1].x := i;
-    for j := 0 to 1 do
-      begin
-      if aFlipY.Checked then
-        psz[j].x := round((256 * ZoomFactor) - (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position)
-      else
-        psz[j].x := round((ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position);
-      if aFlipX.Checked then
-        psz[j].y := round((256 * ZoomFactor) - (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position)
-      else
-        psz[j].y := round((ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position);
-      end;
-    with cv do
-      begin
-      pen.color := clGrid;
-      pen.Width := 1;
-      pen.style := psDot;
-      MoveTo(psz[0].x, psz[0].y);
-      LineTo(psz[1].x, psz[1].y);
-      pen.style := psSolid;
-      end;
-    Inc(i, GridWidth);
+      ps[0].x := i;
+      ps[1].x := i;
+      for j := 0 to 1 do
+        begin
+          if aFlipY.Checked then
+            psz[j].x := round((FFile.FrameWidth * ZoomFactor) - (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position)
+          else
+            psz[j].x := round((ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position);
+          if aFlipX.Checked then
+            psz[j].y := round((FFile.FrameWidth * ZoomFactor) - (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position)
+          else
+            psz[j].y := round((ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position);
+        end;
+      with cv do
+        begin
+          pen.color := clGrid;
+          pen.Width := 1;
+          pen.style := psDot;
+          MoveTo(psz[0].x, psz[0].y);
+          LineTo(psz[1].x, psz[1].y);
+          pen.style := psSolid;
+        end;
+      Inc(i, GridWidth*256);
     end;
 end;
 procedure TFormMain.DrawRulers;
@@ -902,80 +895,80 @@ begin
   lh := FormSketchpad.iLeftRuler.Height;
   with FormSketchpad.iTopRuler.canvas do
     begin
-    Brush.Color := clBtnFace;
-    FillRect(Rect(0, 0, tw, th));
-    Brush.Color := clWhite;
-    FillRect(Rect({lw+}4, 3, tw - 4, th - 4));
-    FillRect(Rect(4, 3, lw - 4, th));
-    Pen.Width := 1;
-    Pen.Color := clDkGray;
-    MoveTo(tw - 1, 0);
-    LineTo(tw - 1, th - 1);
-    LineTo(lw - 2, th - 1);
-    MoveTo(tw - 5, 2);
-    LineTo({lw+}2, 2);
-    LineTo({lw+}2, th{-3});
-    Pen.Color := clWhite;
-    MoveTo(0, th - 1);
-    LineTo(0, 0);
-    LineTo(tw - 2, 0);
-    Font.Color := clBlack;
+      Brush.Color := clBtnFace;
+      FillRect(Rect(0, 0, tw, th));
+      Brush.Color := clWhite;
+      FillRect(Rect({lw+}4, 3, tw - 4, th - 4));
+      FillRect(Rect(4, 3, lw - 4, th));
+      Pen.Width := 1;
+      Pen.Color := clDkGray;
+      MoveTo(tw - 1, 0);
+      LineTo(tw - 1, th - 1);
+      LineTo(lw - 2, th - 1);
+      MoveTo(tw - 5, 2);
+      LineTo({lw+}2, 2);
+      LineTo({lw+}2, th{-3});
+      Pen.Color := clWhite;
+      MoveTo(0, th - 1);
+      LineTo(0, 0);
+      LineTo(tw - 2, 0);
+      Font.Color := clBlack;
     end;
   with FormSketchpad.iLeftRuler.Canvas do
     begin
-    Brush.Color := clBtnFace;
-    FillRect(Rect(0, 0, lw, lh));
-    Brush.Color := clWhite;
-    //FillRect(Rect(4,4,lw-4,lh-4));
-    FillRect(Rect(4, 0, lw - 4, lh - 4));
-    Pen.Width := 1;
-    Pen.Color := clDkGray;
-    //MoveTo(lw-1,0); LineTo(lw-1,lh-1); LineTo(0,lh-1);
-    MoveTo(2, 0);
-    LineTo(2, lh - 2);
-    //MoveTo(lw-4,4); LineTo(2,4); LineTo(2,lh-4);
-    Pen.Color := clWhite;
-    MoveTo(0, 0);
-    LineTo(0, lh - 1);
-    Font.Color := clBlack;
+      Brush.Color := clBtnFace;
+      FillRect(Rect(0, 0, lw, lh));
+      Brush.Color := clWhite;
+      //FillRect(Rect(4,4,lw-4,lh-4));
+      FillRect(Rect(4, 0, lw - 4, lh - 4));
+      Pen.Width := 1;
+      Pen.Color := clDkGray;
+      //MoveTo(lw-1,0); LineTo(lw-1,lh-1); LineTo(0,lh-1);
+      MoveTo(2, 0);
+      LineTo(2, lh - 2);
+      //MoveTo(lw-4,4); LineTo(2,4); LineTo(2,lh-4);
+      Pen.Color := clWhite;
+      MoveTo(0, 0);
+      LineTo(0, lh - 1);
+      Font.Color := clBlack;
     end;
   gw := GridWidth;
-  while (gw * ZoomFactor) < FormSketchpad.iTopRuler.Canvas.TextWidth('-250') do
+  while (gw * (ZoomFactor*256)) < FormSketchpad.iTopRuler.Canvas.TextWidth('-250') do
     gw := gw * 2;
   i := gw;
   while i < 255 do
     begin
-    with FormSketchpad.iTopRuler.canvas do
-      begin
-      x := round((i * ZoomFactor - FormSketchpad.sbX.Position) + lw);
-      if x > lw + 7 then
+      with FormSketchpad.iTopRuler.canvas do
         begin
-        MoveTo(x, 3);
-        LineTo(x, th - 4);
+          x := round((i * (ZoomFactor*256) - FormSketchpad.sbX.Position) + lw);
+          if x > lw + 7 then
+            begin
+            MoveTo(x, 3);
+            LineTo(x, th - 4);
+            end;
+          if aFlipY.Checked then
+            s := IntToStr(256 - i)
+          else
+            s := IntToStr(i);
+          txw := TextWidth(s);
+          if ((x - (txw div 2)) > (lw - 6)) and ((x + (txw div 2)) + 6 < tw) then
+            TextOut(x - (txw div 2), 3, s);
         end;
-      if aFlipY.Checked then
-        s := IntToStr(256 - i)
-      else
-        s := IntToStr(i);
-      txw := TextWidth(s);
-      if ((x - (txw div 2)) > (lw - 6)) and ((x + (txw div 2)) + 6 < tw) then
-        TextOut(x - (txw div 2), 3, s);
-      end;
-    with FormSketchpad.iLeftRuler.canvas do
-      begin
-      y := round((i * ZoomFactor - FormSketchpad.sbY.Position) + 1);
-      MoveTo(4, y);
-      LineTo(lw - 4, y);
-      if aFlipX.Checked then
-        s := IntToStr(256 - i)
-      else
-        s := IntToStr(i);
-      txw := TextWidth(s);
-      txh := TextHeight(s);
-      if ((y - (txh div 2)) > 0) and ((y + (txh div 2)) + 6 < lh) then
-        TextOut((lw div 2) - (txw div 2), y - (txh div 2), s);
-      end;
-    Inc(i, gw);
+      with FormSketchpad.iLeftRuler.canvas do
+        begin
+          y := round((i * (ZoomFactor*256) - FormSketchpad.sbY.Position) + 1);
+          MoveTo(4, y);
+          LineTo(lw - 4, y);
+          if aFlipX.Checked then
+            s := IntToStr(256 - i)
+          else
+            s := IntToStr(i);
+          txw := TextWidth(s);
+          txh := TextHeight(s);
+          if ((y - (txh div 2)) > 0) and ((y + (txh div 2)) + 6 < lh) then
+            TextOut((lw div 2) - (txw div 2), y - (txh div 2), s);
+        end;
+      Inc(i, gw);
     end;
 end;
 procedure TFormMain.DrawHelpLines(f: TLaserFrame; cv: TCanvas; clLines: TColor);
@@ -1271,7 +1264,6 @@ begin
         end;
     end;
 end;
-
 procedure TFormMain.DrawLinks(fThis, fOld: TLaserFrame; cv: TCanvas; clLink: TColor);
 var
   pThis, pOld: TLaserPoint;
@@ -1326,7 +1318,6 @@ begin
       end; // for j
     end; // for i
 end;
-
 procedure TFormMain.Redraw;
 var
   mycopyrect: TRect;
@@ -1335,106 +1326,103 @@ var
 begin
   if (FFile <> nil) and (FFile.Count > 0) and (not DontDraw) then
     begin
-    Drawing := True;
-    myf := FFile.Frames[currentframe];
-    if aRuler.Checked then
-      begin
-      FormSketchpad.iTopRuler.Height := TopRulerHeight;
-      FormSketchpad.iLeftRuler.Width := LeftRulerWidth;
-      DrawRulers;
-      end
-    else
-      begin
-      FormSketchpad.iTopRuler.Height := 0;
-      FormSketchpad.iLeftRuler.Width := 0;
-      end;
-    with FormSketchpad.pad.canvas do
-      begin
-      if FormSketchpad.pad.Width < 256 * ZoomFactor then
-        FormSketchpad.sbX.Max := round(256 * ZoomFactor - FormSketchpad.pad.Width)
-      else
-        FormSketchpad.sbX.Max := 0;
-      if FormSketchpad.pad.Height < 256 * ZoomFactor then
-        FormSketchpad.sbY.Max := round(256 * ZoomFactor - FormSketchpad.pad.Height)
-      else
-        FormSketchpad.sbY.Max := 0;
-      Brush.Color := clBtnFace;
-      FillRect(Rect(0, round(256 * ZoomFactor), FormSketchpad.pad.ClientRect.Right,
-        FormSketchpad.pad.ClientRect.Bottom));
-      FillRect(Rect(round(256 * ZoomFactor), 0, FormSketchpad.pad.ClientRect.Right,
-        FormSketchpad.pad.ClientRect.Bottom));
-      Brush.Color := MyOtherColors[myoc_bg];
-      FillRect(Rect(0, 0, round(256 * ZoomFactor), round(256 * ZoomFactor)));
-      if (myf.Bitmap <> nil) and (not miNoImg.Checked) then
+      Drawing := True;
+      myf := FFile.Frames[currentframe];
+      if aRuler.Checked then
         begin
-        if not myf.Bitmap.Empty then
-          begin
-          if miFullImg.Checked then
-            mycopyrect := Rect(0, 0, myf.Bitmap.Width, myf.Bitmap.Height)
-          else if miPartImg.Checked then
-            begin
-            mycopyrect := myf.ImgRect;
-            end
-          else
-            begin
-            mycopyrect := Rect(0, 0, 256, 256);
-            end;
-          FormSketchpad.pad.Canvas.CopyRect(
-            Rect(0 - FormSketchpad.sbX.Position, 0 -
-            FormSketchpad.sbY.Position, round(256 * ZoomFactor -
-            FormSketchpad.sbX.Position), round(256 * ZoomFactor -
-            FormSketchpad.sbY.Position)),
-            myf.Bitmap.Canvas, mycopyrect);
-          end;
-        end;
-      if miUseGrid.Checked then
-        DrawGrid(FormSketchpad.pad.canvas, clDkGray);
-      if miSnapHelp.Checked then
-        DrawHelpLines(myf, FormSketchpad.pad.canvas, MyOtherColors[myoc_help]);
-      if (currentframe > 0) and (miShowBackframe.Checked) then
-        begin
-        if (FFile.Frames[Pred(currentframe)].Bits and 1) = 0 then
-          begin
-          c := MyColors[0, myc_back];
-          c2 := MyColors[0, myc_real];
-          //c3 := MyColors[0,myc_link];
-          end
-        else
-          begin
-          c := MyColors[1, myc_back];
-          c2 := MyColors[1, myc_real];
-          //c3 := MyColors[1,myc_link];
-          end;
-        DrawFrame(FFile.frames[Pred(currentframe)],
-          FormSketchpad.pad.canvas, False, False, c, c, c2, MyOtherColors[myoc_help]);
-        //if miShowLinks.Checked and (CurrentFrame>0) then DrawLinks(myf,FFile.frames[currentframe-1],FormSketchpad.pad.canvas,c3);
-        //### nach den nächsten frame setzen
-        end;
-      if ((myf.Bits and 1) = 0) then
-        begin
-        c := MyColors[0, myc_norm];
-        c2 := MyColors[0, myc_sel];
-        c3 := MyColors[0, myc_real];
+          FormSketchpad.iTopRuler.Height := TopRulerHeight;
+          FormSketchpad.iLeftRuler.Width := LeftRulerWidth;
+          DrawRulers;
         end
       else
         begin
-        c := MyColors[1, myc_norm];
-        c2 := MyColors[1, myc_sel];
-        c3 := MyColors[1, myc_real];
+          FormSketchpad.iTopRuler.Height := 0;
+          FormSketchpad.iLeftRuler.Width := 0;
         end;
-      DrawFrame(myf, FormSketchpad.pad.canvas, miShowReal.Checked,
-        True, c, c2, c3, MyOtherColors[myoc_help]);
-      //### test von oben
-      if (currentframe > 0) and (miShowBackframe.Checked) and (miShowLinks.Checked) then
+      with FormSketchpad.pad.canvas do
         begin
-        if ((FFile.frames[Pred(currentframe)].Bits and 1) = 0) then
-          c3 := MyColors[0, myc_link]
+          if FormSketchpad.pad.Width < FFile.FrameWidth * ZoomFactor then
+            FormSketchpad.sbX.Max := round(FFile.FrameWidth * ZoomFactor - FormSketchpad.pad.Width)
         else
-          c3 := MyColors[1, myc_link];
-        DrawLinks(myf, FFile.frames[Pred(currentframe)], FormSketchpad.pad.canvas, c3);
+          FormSketchpad.sbX.Max := 0;
+        if FormSketchpad.pad.Height < FFile.FrameWidth * ZoomFactor then
+          FormSketchpad.sbY.Max := round(FFile.FrameWidth * ZoomFactor - FormSketchpad.pad.Height)
+        else
+          FormSketchpad.sbY.Max := 0;
+        //Draw Background
+        Brush.Color := clBtnFace;
+        FillRect(Rect(0, round(FFile.FrameWidth * ZoomFactor), FormSketchpad.pad.ClientRect.Right,
+          FormSketchpad.pad.ClientRect.Bottom));
+        FillRect(Rect(round(FFile.FrameWidth * ZoomFactor), 0, FormSketchpad.pad.ClientRect.Right,
+          FormSketchpad.pad.ClientRect.Bottom));
+        Brush.Color := MyOtherColors[myoc_bg];
+        FillRect(Rect(0, 0, round(FFile.FrameWidth * ZoomFactor), round(FFile.FrameWidth * ZoomFactor)));
+        if (myf.Bitmap <> nil) and (not miNoImg.Checked) then
+          begin
+            if not myf.Bitmap.Empty then
+              begin
+                if miFullImg.Checked then
+                  mycopyrect := Rect(0, 0, myf.Bitmap.Width, myf.Bitmap.Height)
+                else if miPartImg.Checked then
+                  begin
+                  mycopyrect := myf.ImgRect;
+                  end
+                else
+                  begin
+                  mycopyrect := Rect(0, 0, FFile.FrameWidth, FFile.FrameWidth);
+                  end;
+                FormSketchpad.pad.Canvas.CopyRect(
+                  Rect(0 - FormSketchpad.sbX.Position, 0 -
+                  FormSketchpad.sbY.Position, round(FFile.FrameWidth * ZoomFactor -
+                  FormSketchpad.sbX.Position), round(FFile.FrameWidth * ZoomFactor -
+                  FormSketchpad.sbY.Position)),
+                  myf.Bitmap.Canvas, mycopyrect);
+              end;
+          end;
+        if miUseGrid.Checked then
+          DrawGrid(FormSketchpad.pad.canvas, clDkGray);
+        if miSnapHelp.Checked then
+          DrawHelpLines(myf, FormSketchpad.pad.canvas, MyOtherColors[myoc_help]);
+        if (currentframe > 0) and (miShowBackframe.Checked) then
+          begin
+            if (FFile.Frames[Pred(currentframe)].Bits and 1) = 0 then
+              begin
+                c := MyColors[0, myc_back];
+                c2 := MyColors[0, myc_real];
+              end
+            else
+              begin
+                c := MyColors[1, myc_back];
+                c2 := MyColors[1, myc_real];
+              end;
+            DrawFrame(FFile.frames[Pred(currentframe)],
+              FormSketchpad.pad.canvas, False, False, c, c, c2, MyOtherColors[myoc_help]);
+          end;
+        if ((myf.Bits and 1) = 0) then
+          begin
+            c := MyColors[0, myc_norm];
+            c2 := MyColors[0, myc_sel];
+            c3 := MyColors[0, myc_real];
+          end
+        else
+          begin
+            c := MyColors[1, myc_norm];
+            c2 := MyColors[1, myc_sel];
+            c3 := MyColors[1, myc_real];
+          end;
+        DrawFrame(myf, FormSketchpad.pad.canvas, miShowReal.Checked,
+          True, c, c2, c3, MyOtherColors[myoc_help]);
+        //### test von oben
+        if (currentframe > 0) and (miShowBackframe.Checked) and (miShowLinks.Checked) then
+          begin
+            if ((FFile.frames[Pred(currentframe)].Bits and 1) = 0) then
+              c3 := MyColors[0, myc_link]
+          else
+              c3 := MyColors[1, myc_link];
+            DrawLinks(myf, FFile.frames[Pred(currentframe)], FormSketchpad.pad.canvas, c3);
+          end;
         end;
-      end;
-    Drawing := False;
+      Drawing := False;
     end;
   TimeLineRedraw;
 end;
@@ -2224,41 +2212,6 @@ begin
   miZoom1.Checked := True;
   miZoom.Caption := '&Zoom: ' + IntToStr(round(ZoomFactor*256)) + 'x...';
   Redraw;
-end;
-
-procedure TFormMain.miZoom2Click(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.miZoom3Click(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.miZoom4Click(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.miZoom5Click(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.miZoom6Click(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.miZoom7Click(Sender: TObject);
-begin
-
-end;
-
-procedure TFormMain.miZoom8Click(Sender: TObject);
-begin
-
 end;
 
 procedure TFormMain.miCircles1Click(Sender: TObject);

@@ -5069,15 +5069,17 @@ object FormMain: TFormMain
     end
   end
   object pmZoom: TPopupMenu
-    left = 232
-    top = 160
+    left = 152
+    top = 96
     object miZoom1: TMenuItem
+      Tag = 1
       Caption = '&1'
       GroupIndex = 1
       RadioItem = True
       OnClick = miZoom1Click
     end
     object miZoom2: TMenuItem
+      Tag = 2
       Caption = '&2'
       Checked = True
       GroupIndex = 1
@@ -5085,36 +5087,42 @@ object FormMain: TFormMain
       OnClick = miZoom1Click
     end
     object miZoom3: TMenuItem
+      Tag = 3
       Caption = '&3'
       GroupIndex = 1
       RadioItem = True
       OnClick = miZoom1Click
     end
     object miZoom4: TMenuItem
+      Tag = 4
       Caption = '&4'
       GroupIndex = 1
       RadioItem = True
       OnClick = miZoom1Click
     end
     object miZoom5: TMenuItem
+      Tag = 5
       Caption = '&5'
       GroupIndex = 1
       RadioItem = True
       OnClick = miZoom1Click
     end
     object miZoom6: TMenuItem
+      Tag = 6
       Caption = '&6'
       GroupIndex = 1
       RadioItem = True
       OnClick = miZoom1Click
     end
     object miZoom7: TMenuItem
+      Tag = 7
       Caption = '&7'
       GroupIndex = 1
       RadioItem = True
       OnClick = miZoom1Click
     end
     object miZoom8: TMenuItem
+      Tag = 8
       Caption = '&8'
       GroupIndex = 1
       RadioItem = True
