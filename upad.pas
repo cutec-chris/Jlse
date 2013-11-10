@@ -116,23 +116,23 @@ var
 begin
   x := -x;
   y := -y;
-  if FormMain.ZoomFactor < 8 then
+  if FormMain.ZoomFactor < (8/256) then
     with FormMain do
       begin
-      Inc(ZoomFactor);
-      cps.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-      cps.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
-      if FormSketchpad.pad.Width < 256 * ZoomFactor then
-        FormSketchpad.sbX.Max := 256 * ZoomFactor - FormSketchpad.pad.Width
+      ZoomFactor := ZoomFactor+(1/256);
+      cps.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+      cps.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
+      if FormSketchpad.pad.Width < round(256 * ZoomFactor) then
+        FormSketchpad.sbX.Max := round(256 * ZoomFactor) - FormSketchpad.pad.Width
       else
         FormSketchpad.sbX.Max := 0;
-      if FormSketchpad.pad.Height < 256 * ZoomFactor then
-        FormSketchpad.sbY.Max := 256 * ZoomFactor - FormSketchpad.pad.Height
+      if FormSketchpad.pad.Height < round(256 * ZoomFactor) then
+        FormSketchpad.sbY.Max := round(256 * ZoomFactor) - FormSketchpad.pad.Height
       else
         FormSketchpad.sbY.Max := 0;
-      FormSketchpad.sbX.Position := ((cps.x - (128 div ZoomFactor)) * ZoomFactor);
-      FormSketchpad.sbY.Position := ((cps.y - (128 div ZoomFactor)) * ZoomFactor);
-      case FormMain.ZoomFactor of
+      FormSketchpad.sbX.Position := round((cps.x - (128 / ZoomFactor)) * ZoomFactor);
+      FormSketchpad.sbY.Position := round((cps.y - (128 / ZoomFactor)) * ZoomFactor);
+      case trunc(FormMain.ZoomFactor*256) of
         1: FormMain.miZoom1.Checked := True;
         2: FormMain.miZoom2.Checked := True;
         3: FormMain.miZoom3.Checked := True;
@@ -147,7 +147,7 @@ begin
           FormMain.ZoomFactor := 2;
           end;
         end;
-      FormMain.miZoom.Caption := 'Zoom: ' + IntToStr(ZoomFactor) + 'x...';
+      FormMain.miZoom.Caption := 'Zoom: ' + IntToStr(trunc(ZoomFactor*256)) + 'x...';
       end;
   FormMain.Redraw;
 end;
@@ -156,9 +156,9 @@ procedure TFormSketchpad.ZoomOut(x, y: word);
 begin
   x := -x;
   y := -y;
-  if FormMain.ZoomFactor > 1 then
-    Dec(FormMain.ZoomFactor);
-  case FormMain.ZoomFactor of
+  if FormMain.ZoomFactor > (1/256) then
+    FormMain.ZoomFactor:=FormMain.ZoomFactor-(1/256);
+  case trunc(FormMain.ZoomFactor*256) of
     1: FormMain.miZoom1.Checked := True;
     2: FormMain.miZoom2.Checked := True;
     3: FormMain.miZoom3.Checked := True;
@@ -173,7 +173,7 @@ begin
       FormMain.ZoomFactor := 2;
       end;
     end;
-  FormMain.miZoom.Caption := 'Zoom: ' + IntToStr(FormMain.ZoomFactor) + 'x...';
+  FormMain.miZoom.Caption := 'Zoom: ' + IntToStr(trunc(FormMain.ZoomFactor*256)) + 'x...';
   FormMain.Redraw;
 end;
 
@@ -204,8 +204,8 @@ begin
         if Button = mbLeft then
           begin
           FormSketchpad.pad.tag := 3;
-          FormMain.RotStart.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-          FormMain.RotStart.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
+          FormMain.RotStart.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+          FormMain.RotStart.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
           dp.x := FormMain.RotStart.x - myf.RotCenter.x;
           dp.y := FormMain.RotStart.y - myf.RotCenter.y;
           FormMain.tbPointTools.Tag := 0;
@@ -213,8 +213,8 @@ begin
         else if Button = mbRight then
           begin
           FormSketchpad.pad.tag := 2;
-          FormMain.RotStart.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-          FormMain.RotStart.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
+          FormMain.RotStart.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+          FormMain.RotStart.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
           dp.x := FormMain.RotStart.x - myf.RotCenter.x;
           dp.y := FormMain.RotStart.y - myf.RotCenter.y;
           FormMain.tbPointTools.Tag := 0;
@@ -224,14 +224,14 @@ begin
         begin
         if (Button = mbLeft) then
           begin
-          EquilateralCenter.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-          EquilateralCenter.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
+          EquilateralCenter.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+          EquilateralCenter.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
           EquilateralFinished := False;
           end
         else if (Button = mbRight) then
           begin
-          EquilateralStart.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-          EquilateralStart.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
+          EquilateralStart.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+          EquilateralStart.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
           EquilateralFinished := True;
           Equilateral(EquilateralCenter, EquilateralStart);
           end;
@@ -241,8 +241,8 @@ begin
         begin
         if (Button = mbLeft) then
           begin
-          myf.RotCenter.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-          myf.RotCenter.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
+          myf.RotCenter.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+          myf.RotCenter.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
           if FormMain.miSnapGrid.Checked then
             begin
             //ox := myf.RotCenter.x; oy := myf.RotCenter.y;
@@ -256,8 +256,8 @@ begin
           end
         else if (Button = mbRight) then
           begin
-          myf.AuxCenter.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-          myf.AuxCenter.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
+          myf.AuxCenter.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+          myf.AuxCenter.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
           if FormMain.miSnapGrid.Checked then
             begin
             //ox := myf.RotCenter.x; oy := myf.RotCenter.y;
@@ -281,13 +281,13 @@ begin
             begin
             myp := myf.Points[i];
             if sbFlipY.Down then
-              cps.x := 256 * ZoomFactor - myp.x * ZoomFactor - FormSketchpad.sbX.Position
+              cps.x := round(256 * ZoomFactor) - round(myp.x * ZoomFactor) - FormSketchpad.sbX.Position
             else
-              cps.x := myp.x * ZoomFactor - FormSketchpad.sbX.Position;
+              cps.x := round(myp.x * ZoomFactor) - FormSketchpad.sbX.Position;
             if sbFlipX.Down then
-              cps.y := 256 * ZoomFactor - myp.y * ZoomFactor - FormSketchpad.sbY.Position
+              cps.y := round(256 * ZoomFactor) - round(myp.y * ZoomFactor) - FormSketchpad.sbY.Position
             else
-              cps.y := myp.y * ZoomFactor - FormSketchpad.sbY.Position;
+              cps.y := round(myp.y * ZoomFactor) - FormSketchpad.sbY.Position;
             if (Abs(cps.x - x) < CircleFactor * CircleSize) and
               (Abs(cps.y - y) < CircleFactor * CircleSize) then
               begin
@@ -356,12 +356,12 @@ begin
         ((Button = mbRight) or (ssAlt in Shift))) then
         begin
         FormMain.FileChanged := True;
-        if (((x + FormSketchpad.sbX.Position) div ZoomFactor) < 256) and
-          (((y + FormSketchpad.sbY.Position) div ZoomFactor) < 256) then
+        if (((x + FormSketchpad.sbX.Position) / ZoomFactor) < 256) and
+          (((y + FormSketchpad.sbY.Position) / ZoomFactor) < 256) then
           begin
           myp := TLaserPoint.Create;
-          myp.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-          myp.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
+          myp.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+          myp.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
           if FormMain.miSnapGrid.Checked then
             begin
             ox := myp.x;
@@ -413,15 +413,13 @@ begin
             begin
             myoldp := myf.Points[i];
             if miFlipY.Checked then
-              cps.x := 256 * ZoomFactor - myoldp.x * ZoomFactor -
-                FormSketchpad.sbX.Position
+              cps.x := round(256 * ZoomFactor - myoldp.x * ZoomFactor) - FormSketchpad.sbX.Position
             else
-              cps.x := myoldp.x * ZoomFactor - FormSketchpad.sbX.Position;
+              cps.x := round(myoldp.x * ZoomFactor) - FormSketchpad.sbX.Position;
             if miFlipX.Checked then
-              cps.y := 256 * ZoomFactor - myoldp.y * ZoomFactor -
-                FormSketchpad.sbY.Position
+              cps.y := round(256 * ZoomFactor - myoldp.y * ZoomFactor) - FormSketchpad.sbY.Position
             else
-              cps.y := myoldp.y * ZoomFactor - FormSketchpad.sbY.Position;
+              cps.y := round(myoldp.y * ZoomFactor) - FormSketchpad.sbY.Position;
             if (Abs(cps.x - x) < CircleFactor * CircleSize) and
               (Abs(cps.y - y) < CircleFactor * CircleSize) then
               begin
@@ -459,8 +457,8 @@ begin
     begin
     myf := FFile.Frames[FormMain.currentframe];
     sbFrame.panels[0].Text :=
-      'X:' + IntToStr((x + FormSketchpad.sbX.Position) div ZoomFactor) +
-      '  Y:' + IntToStr((y + FormSketchpad.sbY.Position) div ZoomFactor);
+      'X:' + IntToStr(round((x + FormSketchpad.sbX.Position) / ZoomFactor)) +
+      '  Y:' + IntToStr(round((y + FormSketchpad.sbY.Position) / ZoomFactor));
     if FormSketchpad.pad.tag = 1 then
       begin
       FormMain.Undo.Op := sMove;
@@ -469,15 +467,13 @@ begin
         begin
         myp := myf.Points[SelectedPoint];
         if FormMain.sbFlipY.Down then
-          myp.x := 256 * FormMain.ZoomFactor -
-            ((x + FormSketchpad.sbX.Position) div FormMain.ZoomFactor)
+          myp.x := round(256 * FormMain.ZoomFactor - ((x + FormSketchpad.sbX.Position) / FormMain.ZoomFactor))
         else
-          myp.x := (x + FormSketchpad.sbX.Position) div FormMain.ZoomFactor;
+          myp.x := round((x + FormSketchpad.sbX.Position) / FormMain.ZoomFactor);
         if FormMain.sbFlipX.Down then
-          myp.y := 256 * FormMain.ZoomFactor -
-            ((y + FormSketchpad.sbY.Position) div FormMain.ZoomFactor)
+          myp.y := round(256 * FormMain.ZoomFactor - ((y + FormSketchpad.sbY.Position) / FormMain.ZoomFactor))
         else
-          myp.y := (y + FormSketchpad.sbY.Position) div FormMain.ZoomFactor;
+          myp.y := round((y + FormSketchpad.sbY.Position) / FormMain.ZoomFactor);
         if FormMain.miSnapGrid.Checked then
           begin
           ox := myp.x;
@@ -505,20 +501,20 @@ begin
         Pen.Color := MyOtherColors[myoc_rotcenter];
         Pen.Width := 1;
         Pen.Style := psSolid;
-        p1.x := (myf.RotCenter.x * ZoomFactor) - FormSketchpad.sbX.Position;
+        p1.x := round((myf.RotCenter.x * ZoomFactor) - FormSketchpad.sbX.Position);
         if FormMain.sbFlipY.Down then
-          p1.x := 256 * FormMain.ZoomFactor - p1.x;
-        p1.y := (myf.RotCenter.y * ZoomFactor) - FormSketchpad.sbY.Position;
+          p1.x := round(256 * FormMain.ZoomFactor - p1.x);
+        p1.y := round((myf.RotCenter.y * ZoomFactor) - FormSketchpad.sbY.Position);
         if FormMain.sbFlipX.Down then
-          p1.y := 256 * FormMain.ZoomFactor - p2.y;
-        p2.x := (FormMain.RotStart.x * ZoomFactor) - FormSketchpad.sbX.Position;
+          p1.y := round(256 * FormMain.ZoomFactor - p2.y);
+        p2.x := round((FormMain.RotStart.x * ZoomFactor) - FormSketchpad.sbX.Position);
         if FormMain.sbFlipY.Down then
-          p2.x := 256 * FormMain.ZoomFactor - p2.x;
-        p2.y := (FormMain.RotStart.y * ZoomFactor) - FormSketchpad.sbY.Position;
+          p2.x := round(256 * FormMain.ZoomFactor - p2.x);
+        p2.y := round((FormMain.RotStart.y * ZoomFactor) - FormSketchpad.sbY.Position);
         if FormMain.sbFlipX.Down then
-          p2.y := 256 * FormMain.ZoomFactor - p2.y;
-        FormMain.RotEnd.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-        FormMain.RotEnd.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
+          p2.y := round(256 * FormMain.ZoomFactor - p2.y);
+        FormMain.RotEnd.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+        FormMain.RotEnd.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
         MoveTo(p1.x, p1.y);
         LineTo(p2.x, p2.y);
         Pen.Style := psDash;
@@ -540,14 +536,14 @@ begin
         begin
         Pen.Color := MyOtherColors[myoc_rotcenter];
         Pen.Width := 1;
-        p2.x := (FormMain.RotStart.x * ZoomFactor) - FormSketchpad.sbX.Position;
+        p2.x := round((FormMain.RotStart.x * ZoomFactor) - FormSketchpad.sbX.Position);
         if FormMain.sbFlipY.Down then
-          p2.x := 256 * FormMain.ZoomFactor - p2.x;
-        p2.y := (FormMain.RotStart.y * ZoomFactor) - FormSketchpad.sbY.Position;
+          p2.x := round(256 * FormMain.ZoomFactor - p2.x);
+        p2.y := round((FormMain.RotStart.y * ZoomFactor) - FormSketchpad.sbY.Position);
         if FormMain.sbFlipX.Down then
-          p2.y := 256 * FormMain.ZoomFactor - p2.y;
-        FormMain.RotEnd.x := (x + FormSketchpad.sbX.Position) div ZoomFactor;
-        FormMain.RotEnd.y := (y + FormSketchpad.sbY.Position) div ZoomFactor;
+          p2.y := round(256 * FormMain.ZoomFactor - p2.y);
+        FormMain.RotEnd.x := round((x + FormSketchpad.sbX.Position) / ZoomFactor);
+        FormMain.RotEnd.y := round((y + FormSketchpad.sbY.Position) / ZoomFactor);
         Pen.Style := psDot;
         MoveTo(p2.x, p2.y);
         LineTo(x, y);
@@ -654,8 +650,8 @@ begin
   if (Key = '+') then
     begin
     if FormMain.ZoomFactor < 8 then
-      Inc(FormMain.ZoomFactor);
-    case FormMain.ZoomFactor of
+      FormMain.ZoomFactor:=FormMain.ZoomFactor+(1/256);
+    case trunc(FormMain.ZoomFactor*256) of
       1: FormMain.miZoom1.Checked := True;
       2: FormMain.miZoom2.Checked := True;
       3: FormMain.miZoom3.Checked := True;
@@ -670,14 +666,14 @@ begin
         FormMain.ZoomFactor := 2;
         end;
       end;
-    FormMain.miZoom.Caption := 'Zoom: ' + IntToStr(FormMain.ZoomFactor) + 'x...';
+    FormMain.miZoom.Caption := 'Zoom: ' + IntToStr(round(FormMain.ZoomFactor*256)) + 'x...';
     FormMain.Redraw;
     end;
   if (Key = '-') then
     begin
-    if FormMain.ZoomFactor > 1 then
-      Dec(FormMain.ZoomFactor);
-    case FormMain.ZoomFactor of
+    if FormMain.ZoomFactor > (1/256) then
+      FormMain.ZoomFactor := FormMain.ZoomFactor-(1/256);
+    case trunc(FormMain.ZoomFactor*256) of
       1: FormMain.miZoom1.Checked := True;
       2: FormMain.miZoom2.Checked := True;
       3: FormMain.miZoom3.Checked := True;
@@ -692,7 +688,7 @@ begin
         FormMain.ZoomFactor := 2;
         end;
       end;
-    FormMain.miZoom.Caption := 'Zoom: ' + IntToStr(FormMain.ZoomFactor) + 'x...';
+    FormMain.miZoom.Caption := 'Zoom: ' + IntToStr(round(FormMain.ZoomFactor*256)) + 'x...';
     FormMain.Redraw;
     end;
 end;
@@ -759,9 +755,9 @@ begin
     Pen.Style := psSolid;
     end;
   myf := FormMain.FFile.Frames[FormMain.CurrentFrame];
-  myx := (((x - iLeftRuler.Width) + FormSketchpad.sbX.Position) div FormMain.ZoomFactor);
+  myx := round((((x - iLeftRuler.Width) + FormSketchpad.sbX.Position) / FormMain.ZoomFactor));
   if FormMain.miFlipY.Checked then
-    myx := 256 * FormMain.ZoomFactor - myx;
+    myx := round(256 * FormMain.ZoomFactor - myx);
   found := -1;
   if Length(myf.HelpLines.x) > 0 then
     for i := 0 to Length(myf.HelpLines.x) - 1 do
@@ -803,9 +799,9 @@ var
   found, i: integer;
 begin
   myf := FormMain.FFile.Frames[FormMain.CurrentFrame];
-  mx := (((x - iLeftRuler.Width) + FormSketchpad.sbX.Position) div FormMain.ZoomFactor);
+  mx := round((((x - iLeftRuler.Width) + FormSketchpad.sbX.Position) / FormMain.ZoomFactor));
   if FormMain.miFlipY.Checked then
-    mx := 256 * FormMain.ZoomFactor - mx;
+    mx := round(256 * FormMain.ZoomFactor - mx);
 
   found := -1;
   if Length(myf.HelpLines.x) > 0 then
@@ -853,9 +849,9 @@ begin
     Pen.Style := psSolid;
     end;
   myf := FormMain.FFile.Frames[FormMain.CurrentFrame];
-  myy := ((y + FormSketchpad.sbY.Position) div FormMain.ZoomFactor);
+  myy := round(((y + FormSketchpad.sbY.Position) / FormMain.ZoomFactor));
   if FormMain.miFlipX.Checked then
-    myy := 256 * FormMain.ZoomFactor - myy;
+    myy := round(256 * FormMain.ZoomFactor - myy);
   found := -1;
   if Length(myf.HelpLines.y) > 0 then
     for i := 0 to Length(myf.HelpLines.y) - 1 do
@@ -897,9 +893,9 @@ var
   found, i: integer;
 begin
   myf := FormMain.FFile.Frames[FormMain.CurrentFrame];
-  my := (y + FormSketchpad.sbY.Position) div FormMain.ZoomFactor;
+  my := round((y + FormSketchpad.sbY.Position) / FormMain.ZoomFactor);
   if FormMain.miFlipX.Checked then
-    my := 256 * FormMain.ZoomFactor - my;
+    my := round(256 * FormMain.ZoomFactor - my);
 
   found := -1;
   if Length(myf.HelpLines.y) > 0 then

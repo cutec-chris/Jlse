@@ -58,9 +58,9 @@ var
 begin
   Result := True;
   aStream.Read(si,2);
-  x := BEtoN(si);
+  x := BEtoN(si)+($FFFF div 2);
   aStream.Read(si,2);
-  y := BEtoN(si);
+  y := BEtoN(si)+($FFFF div 2);
   if TILDAFrame(Parent).FFrameType = 0 then //3d Point
     begin
       aStream.Read(si,2);
@@ -84,8 +84,7 @@ end;
 
 function TILDAFrames.Add: TLaserFrame;
 begin
-  Result:=TILDAFrame.Create;
-  Result.Parent:=Self;
+  Result:=TILDAFrame.Create(Self);
   Add(Result);
 end;
 

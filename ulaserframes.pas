@@ -40,6 +40,8 @@ type
   { TLaserFrame }
 
   TLaserFrame = class(TPersistent)
+  private
+    function GetIndex: Integer;
   protected
     procedure Assign(sf: TLaserFrame); reintroduce;
   public
@@ -56,11 +58,12 @@ type
     ImgRect: TRect;
     Points: TList;
     Parent : TLaserFrames;
+    property FrameIndex : Integer read GetIndex;
     function Add: TLaserPoint;virtual;
     function FrameWidth : Integer;
     function FrameMiddle : Integer;
     function FrameLeft : Integer;
-    constructor Create;
+    constructor Create(aParent: TLaserFrames);
     destructor Destroy; reintroduce;
     function LoadFromStream(aStream : TStream) : Boolean;virtual;
     procedure SaveToStream(aStream : TStream);virtual;
@@ -79,10 +82,12 @@ type
     function GetCount: integer;
     function GetFrames(FrameIndex: integer): TLaserFrame;
     function Getleft: Integer;
+  protected
   public
     Filename: string;
     constructor Create;virtual;
     destructor Destroy; reintroduce;
+    procedure Assign(f: TLaserFrames);
     property FileVersion : byte read FFileVersion;
     property FrameWidth : Integer read FFrameWidth write FFrameWidth;
     property FrameMiddle : Integer read FFrameMiddle write FFrameMiddle;
@@ -98,6 +103,7 @@ type
     procedure LoadFromStream(aStream : TStream);virtual;
     procedure SaveToStream(aStream : TStream);virtual;
     procedure LoadFromFile(Filename: string);
+    procedure SaveToFile(Filename: string);
     property Count: integer read GetCount;
     property Frames[FrameIndex: integer]: TLaserFrame read GetFrames;
   end;
@@ -109,7 +115,7 @@ type
   TLaserPoint = class(TObject)
   public
     Caption: string[5];
-    X, Y: Integer;
+    X, Y: word;
     p: smallint;
     bits: word;
     overlay: boolean;
@@ -235,8 +241,7 @@ end;
 
 function TLaserFrames.Add: TLaserFrame;
 begin
-  Result := TLaserFrame.Create;
-  Result.Parent:=Self;
+  Result := TLaserFrame.Create(Self);
   FFrames.Add(Result);
 end;
 
@@ -277,8 +282,14 @@ begin
 end;
 
 procedure TLaserFrames.SaveHeaderToStream(aStream: TStream);
+var
+  sMagic: String;
+  b : byte;
 begin
-
+  sMagic := 'LC1Y';
+  aStream.Write(sMagic[1],4); //magic
+  b := 6;
+  aStream.Write(b,1); //version
 end;
 
 procedure TLaserFrames.LoadFromStream(aStream: TStream);
@@ -298,16 +309,20 @@ begin
 end;
 
 procedure TLaserFrames.SaveToStream(aStream: TStream);
+var
+  i: Integer;
 begin
-
+  SaveHeaderToStream(aStream);
+  for i := 0 to Count-1 do
+    Frames[i].SaveToStream(aStream);
 end;
 
 constructor TLaserFrames.Create;
 begin
   FFrames := TList.Create;
   Filename := '';
-  FFrameWidth:=256;
-  FFrameMiddle:=127;
+  FFrameWidth:=$FFFF;
+  FFrameMiddle:=$FFFF div 2;
   inherited Create;
 end;
 
@@ -321,6 +336,19 @@ destructor TLaserFrames.Destroy;
 begin
   FreeAndNil(FFrames);
   inherited Destroy;
+end;
+
+procedure TLaserFrames.Assign(f: TLaserFrames);
+var
+  aFr: TLaserFrame;
+  i: Integer;
+begin
+  Clear;
+  for i := 0 to f.Count-1 do
+    begin
+      aFr := Add;
+      aFr.Assign(f.Frames[i]);
+    end;
 end;
 
 function TLaserFrames.GetCount: integer;
@@ -356,10 +384,21 @@ begin
     end;
 end;
 
+procedure TLaserFrames.SaveToFile(Filename: string);
+var
+  aStream: TFileStream;
+begin
+  aStream := TfileStream.Create(Filename,fmCreate);
+  Self.Filename := Filename;
+  SaveToStream(aStream);
+  aStream.Free;
+end;
+
 { TLaserFrame }
 
-constructor TLaserFrame.Create;
+constructor TLaserFrame.Create(aParent : TLaserFrames);
 begin
+  Parent := aParent;
   Points := TList.Create;
   FrameName := '';
   ImgName := '';
@@ -368,10 +407,10 @@ begin
   Bitmap := TBitmap.Create;
   Delay := 1000;
   Morph := 0;
-  RotCenter.X := 128;
-  RotCenter.Y := 128;
-  AuxCenter.X := 128;
-  AuxCenter.Y := 128;
+  RotCenter.X := FrameMiddle;
+  RotCenter.Y := FrameMiddle;
+  AuxCenter.X := FrameMiddle;
+  AuxCenter.Y := FrameMiddle;
   HelpLines := THelpLines.Create;
   SetLength(HelpLines.x, 0);
   SetLength(HelpLines.y, 0);
@@ -427,8 +466,8 @@ begin
     end
   else
     begin
-      RotCenter.x := 128;
-      RotCenter.y := 128;
+      RotCenter.x := FrameMiddle;
+      RotCenter.y := FrameMiddle;
     end;
   // rotcenter
   if Parent.FileVersion > 5 then
@@ -438,8 +477,8 @@ begin
     end
   else
     begin
-      AuxCenter.x := 128;
-      AuxCenter.y := 128;
+      AuxCenter.x := FrameMiddle;
+      AuxCenter.y := FrameMiddle;
     end;
   // bits for stuff
   if Parent.FileVersion > 1 then
@@ -528,8 +567,138 @@ begin
 end;
 
 procedure TLaserFrame.SaveToStream(aStream: TStream);
+var
+  wSize: Integer;
+  bData: byte;
+  pPoint: TLaserPoint;
+  aPoint: array[1..11] of byte;
+  j, l: integer;
+  mThis, mOld, cThis, cOld, wWord: word;
 begin
+  // frame name
+  wSize := Length(FrameName);
+  aStream.Write( wSize, 2);
+  for j := 0 to Pred(Length(FrameName)) do
+    begin
+      bData := Ord(FrameName[j + 1]);
+      aStream.Write( bData, 1);
+    end;
+  // frame delay
+  aStream.Write(Delay, 2);
+  // frame morph time
+  aStream.Write(Morph, 2);
+  // effect type
+  aStream.Write(Effect, 2);
+  // effect param
+  aStream.Write(EffectParam, 2);
+  // rotcenter & auxcenter
+  aStream.Write(RotCenter.x, 1);
+  aStream.Write(RotCenter.y, 1);
+  aStream.Write(AuxCenter.x, 1);
+  aStream.Write(AuxCenter.y, 1);
+  // bits for some stuff
+  aStream.Write(Bits, 2);
+  // image name
+  wSize := Length(ImgName);
+  aStream.Write( wSize, 2);
+  for j := 0 to Pred(Length(ImgName)) do
+    begin
+      bData := Ord(ImgName[j + 1]);
+      aStream.Write( bData, 1);
+    end;
+  // image size
+  aStream.Write(ImgRect, sizeof(TRect));
+  // helplines
+  wSize := Length(HelpLines.x);
+  aStream.Write( wSize, 2);
+  for j := 0 to Pred(Length(HelpLines.x)) do
+    begin
+      aStream.Write(HelpLines.x[j], 1);
+    end;
+  wSize := Length(HelpLines.y);
+  aStream.Write( wSize, 2);
+  for j := 0 to Pred(Length(HelpLines.y)) do
+    begin
+      aStream.Write(HelpLines.y[j], 1);
+    end;
+  wSize := Length(HelpLines.d[0]);
+  aStream.Write( wSize, 2);
+  for j := 0 to Pred(Length(HelpLines.d[0])) do
+    begin
+      aStream.Write(HelpLines.d[0, j].x, 1);
+      aStream.Write(HelpLines.d[0, j].y, 1);
+      aStream.Write(HelpLines.d[1, j].x, 1);
+      aStream.Write(HelpLines.d[1, j].y, 1);
+    end;
+  // points
+  wSize :=Points.Count;
+  aStream.Write( wSize, 2);
+  for j := 0 to Pred(Points.Count) do
+    begin
+      pPoint :=Points[j];
+      for l := 1 to 5 do
+        begin
+          aPoint[l] := Ord(pPoint.Caption[l]);
+        end;
+      aPoint[6] := byte(pPoint.x);
+      aPoint[7] := byte(pPoint.y);
+      aPoint[8] := byte(Hi(pPoint.p));
+      aPoint[9] := byte(Lo(pPoint.p));
+      aPoint[10] := byte(Hi(pPoint.bits));
+      aPoint[11] := byte(Lo(pPoint.bits));
+      aStream.Write( aPoint, 11);
+    end;
+  // link-matrix
+  mThis :=Points.Count;
+  if FrameIndex > 0 then
+    begin
+      mOld := Parent.frames[Pred(FrameIndex)].Points.Count;
+    end
+  else
+    begin
+      mOld := 0;
+    end;
+  SetLength(links, mThis, mOld);
+  aStream.Write( mThis, 2);
+  aStream.Write( mOld, 2);
+  if (mThis > 0) and (mOld > 0) then
+    begin
+      for cOld := 0 to Pred(mOld) do
+        begin
+          cThis := 0;
+          wWord := 0;
+          while cThis < mThis do
+            begin
+              if links[cThis, cOld] then
+                begin
+                  l := (1 shl (cThis mod 16));
+                end
+              else
+                begin
+                  l := 0;
+                end;
+              wWord := wWord or l;
+              if ((cThis mod 16) = 15) or ((cThis + 1) >= mThis) then
+                begin
+                  aStream.Write( wWord, 2);
+                end;
+              Inc(cThis);
+            end; // while
+        end; // for
+    end; // if matrix > 0
+end;
 
+function TLaserFrame.GetIndex: Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := 0 to Parent.Count-1 do
+    if Parent.Frames[i] = Self then
+      begin
+        Result := i;
+        break;
+      end;
 end;
 
 procedure TLaserFrame.Assign(sf: TLaserFrame);
@@ -638,6 +807,11 @@ begin
     Caption := Copy(Caption, 1, Pos(#0, Caption) - 1);
   x := Ord(s2[6]);
   y := Ord(s2[7]);
+  if Parent.Parent.FileVersion < 7 then
+    begin
+      x := x*(Parent.FrameWidth div 256);
+      y := y*(Parent.FrameWidth div 256);
+    end;
   p := 0;
   if Parent.Parent.FileVersion > 1 then
     begin

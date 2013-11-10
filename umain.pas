@@ -367,6 +367,7 @@ type
     procedure aFrameEffectParamExecute(Sender: TObject);
     procedure aFrameMorphExecute(Sender: TObject);
     procedure aFramePreviewExecute(Sender: TObject);
+    procedure aFullImgExecute(Sender: TObject);
     procedure aGeoExecute(Sender: TObject);
     procedure aImportFrameExecute(Sender: TObject);
     procedure aImportShowExecute(Sender: TObject);
@@ -514,7 +515,8 @@ type
     Undo: TUndoData;
     RotStart, RotEnd: TPoint;
     ClipBoardFrame: TLaserFrame;
-    CircleSize, ZoomFactor: byte;
+    CircleSize: byte;
+    ZoomFactor : Double;
     SelectedPoint: integer;
     EquilateralSides: integer;
     EquilateralCenter: TPoint;
@@ -578,7 +580,6 @@ uses
   uILDAFrames;
 
 {$R *.lfm}
-
 function arg(x, y: integer): real;
 var
   ret: real;
@@ -597,7 +598,6 @@ begin
     ret := 0;
   arg := ret;
 end;
-
 procedure CreateWaveHeader(var ms: TStream; framesamples, datasize: longint);
 var
   l, l2: longint;
@@ -626,7 +626,6 @@ begin
   ms.Write('data', 4);
   ms.Write(l2, 4);         // RIFFsize = 36 + block(=4) * samples
 end;
-
 function TRegistryHelper.GetValueDefault(const ValueName: string;
   Default: boolean): boolean;
 begin
@@ -636,7 +635,6 @@ begin
     Result := Default;
     end;
 end;
-
 function TRegistryHelper.GetValueDefault(const ValueName: string;
   Default: string): string;
 begin
@@ -646,7 +644,6 @@ begin
     Result := Default;
     end;
 end;
-
 function TRegistryHelper.GetValueDefault(const ValueName: string;
   Default: cardinal): cardinal;
 begin
@@ -656,22 +653,18 @@ begin
     Result := Default;
     end;
 end;
-
 procedure TRegistryHelper.SetValue(const ValueName: string; Data: boolean);
 begin
   Self.WriteBool(ValueName, Data);
 end;
-
 procedure TRegistryHelper.SetValue(const ValueName: string; Data: string);
 begin
   Self.WriteString(ValueName, Data);
 end;
-
 procedure TRegistryHelper.SetValue(const ValueName: string; Data: cardinal);
 begin
   Self.WriteInteger(ValueName, Data);
 end;
-
 procedure TFormMain.WritePoints(var ms: TStream; x, y: longint; color, blank: boolean);
 var
   l, ax, ay: longint;
@@ -704,7 +697,6 @@ begin
     Inc(l, 2);
   ms.Write(l, 4);
 end;
-
 procedure TFormMain.WritePointArray(var ms: TStream; a: atp; b: atb;
   color: boolean; var ws: longint; var lp: TPoint);
 var
@@ -720,7 +712,6 @@ begin
     lp := a[Pred(Length(a))];
     end;
 end;
-
 procedure TFormMain.FrameToArray(f: TLaserFrame; var mya: atp;
   var myb: atb; var framed: longint);
 var
@@ -793,7 +784,6 @@ begin
       end;
     end; // end framework
 end;
-
 procedure TFormMain.AddUsedFile(fn: string);
 var
   s: string;
@@ -826,7 +816,6 @@ begin
     miLastfile1.Visible := True;
     end;
 end;
-
 function TFormMain.CurrentFrame: integer;
 begin
   if FormSketchpad <> nil then
@@ -834,7 +823,6 @@ begin
   else
     Result := 0;
 end;
-
 procedure TFormMain.DrawGrid(cv: TCanvas; clGrid: TColor);
 var
   ps: array[0..1] of TPoint;
@@ -851,15 +839,13 @@ begin
     for j := 0 to 1 do
       begin
       if aFlipY.Checked then
-        psz[j].x := (256 * ZoomFactor) - (ps[j].x * ZoomFactor) -
-          FormSketchpad.sbX.Position
+        psz[j].x := round((256 * ZoomFactor) - (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position)
       else
-        psz[j].x := (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position;
+        psz[j].x := round((ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position);
       if aFlipX.Checked then
-        psz[j].y := (256 * ZoomFactor) - (ps[j].y * ZoomFactor) -
-          FormSketchpad.sbY.Position
+        psz[j].y := round((256 * ZoomFactor) - (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position)
       else
-        psz[j].y := (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position;
+        psz[j].y := round((ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position);
       end;
     with cv do
       begin
@@ -882,15 +868,13 @@ begin
     for j := 0 to 1 do
       begin
       if aFlipY.Checked then
-        psz[j].x := (256 * ZoomFactor) - (ps[j].x * ZoomFactor) -
-          FormSketchpad.sbX.Position
+        psz[j].x := round((256 * ZoomFactor) - (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position)
       else
-        psz[j].x := (ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position;
+        psz[j].x := round((ps[j].x * ZoomFactor) - FormSketchpad.sbX.Position);
       if aFlipX.Checked then
-        psz[j].y := (256 * ZoomFactor) - (ps[j].y * ZoomFactor) -
-          FormSketchpad.sbY.Position
+        psz[j].y := round((256 * ZoomFactor) - (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position)
       else
-        psz[j].y := (ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position;
+        psz[j].y := round((ps[j].y * ZoomFactor) - FormSketchpad.sbY.Position);
       end;
     with cv do
       begin
@@ -904,7 +888,6 @@ begin
     Inc(i, GridWidth);
     end;
 end;
-
 procedure TFormMain.DrawRulers;
 var
   i: integer;
@@ -964,7 +947,7 @@ begin
     begin
     with FormSketchpad.iTopRuler.canvas do
       begin
-      x := (i * ZoomFactor - FormSketchpad.sbX.Position) + lw;
+      x := round((i * ZoomFactor - FormSketchpad.sbX.Position) + lw);
       if x > lw + 7 then
         begin
         MoveTo(x, 3);
@@ -980,7 +963,7 @@ begin
       end;
     with FormSketchpad.iLeftRuler.canvas do
       begin
-      y := (i * ZoomFactor - FormSketchpad.sbY.Position) + 1;
+      y := round((i * ZoomFactor - FormSketchpad.sbY.Position) + 1);
       MoveTo(4, y);
       LineTo(lw - 4, y);
       if aFlipX.Checked then
@@ -995,7 +978,6 @@ begin
     Inc(i, gw);
     end;
 end;
-
 procedure TFormMain.DrawHelpLines(f: TLaserFrame; cv: TCanvas; clLines: TColor);
 var
   i: integer;
@@ -1018,11 +1000,11 @@ begin
       for i := 0 to Pred(Length(f.HelpLines.x)) do
         begin
         b := f.HelpLines.x[i];
-        x := (b * ZoomFactor - FormSketchpad.sbX.Position);
+        x := round((b * ZoomFactor - FormSketchpad.sbX.Position));
         with cv do
           begin
           MoveTo(x, 0);
-          LineTo(x, 256 * ZoomFactor);
+          LineTo(x, round(256 * ZoomFactor));
           end;
         with FormSketchpad.iTopRuler.Canvas do
           begin
@@ -1036,11 +1018,11 @@ begin
       for i := 0 to Pred(Length(f.HelpLines.y)) do
         begin
         b := f.HelpLines.y[i];
-        y := (b * ZoomFactor - FormSketchpad.sbY.Position);
+        y := round((b * ZoomFactor - FormSketchpad.sbY.Position));
         with cv do
           begin
           MoveTo(0, y);
-          LineTo(256 * ZoomFactor, y);
+          LineTo(round(256 * ZoomFactor), y);
           end;
         with FormSketchpad.iLeftRuler.Canvas do
           begin
@@ -1054,10 +1036,10 @@ begin
         begin
         p1 := f.HelpLines.d[0, i];
         p2 := f.HelpLines.d[1, i];
-        wp1.x := (p1.x * ZoomFactor - FormSketchpad.sbX.Position);
-        wp1.y := (p1.y * ZoomFactor - FormSketchpad.sbY.Position);
-        wp2.x := (p2.x * ZoomFactor - FormSketchpad.sbX.Position);
-        wp2.y := (p2.y * ZoomFactor - FormSketchpad.sbY.Position);
+        wp1.x := round((p1.x * ZoomFactor - FormSketchpad.sbX.Position));
+        wp1.y := round((p1.y * ZoomFactor - FormSketchpad.sbY.Position));
+        wp2.x := round((p2.x * ZoomFactor - FormSketchpad.sbX.Position));
+        wp2.y := round((p2.y * ZoomFactor - FormSketchpad.sbY.Position));
         with cv do
           begin
           MoveTo(wp1.x, wp1.y);
@@ -1066,7 +1048,6 @@ begin
         end;
     end;
 end;
-
 procedure TFormMain.DrawThumb(f: TLaserFrame; cv: TCanvas;
   offx, offy, divider: word; clNorm: TColor);
 var
@@ -1075,16 +1056,17 @@ var
   iPointCount: integer;
   myp: TLaserPoint;
 begin
+  divider:=divider*(FFile.FrameWidth div 256);
   iPointCount := f.Points.Count;
   SetLength(ps, iPointCount);
   for i := 0 to Pred(iPointCount) do
     begin
       myp := f.Points[i];
-      if miFlipX.Checked then
+      if aFlipX.Checked then
         ps[i].x := (f.FrameWidth-1) - myp.x
       else
         ps[i].x := myp.x;
-      if miFlipY.Checked then
+      if aFlipY.Checked then
         ps[i].y := (f.FrameWidth-1) - myp.y
       else
         ps[i].y := myp.y;
@@ -1104,7 +1086,6 @@ begin
       end;
     end; // with
 end;
-
 procedure TFormMain.DrawFrame(f: TLaserFrame; cv: TCanvas;
   drawreal, drawover: boolean; clNorm, clSel, clReal, clLines: TColor);
 var
@@ -1121,8 +1102,8 @@ begin
   circlefactor := 2; //ZoomFactor;
   with cv do
     begin
-      x := (f.RotCenter.x * ZoomFactor - FormSketchpad.sbX.Position);
-      y := (f.RotCenter.y * ZoomFactor - FormSketchpad.sbY.Position);
+      x := round((f.RotCenter.x * ZoomFactor - FormSketchpad.sbX.Position));
+      y := round((f.RotCenter.y * ZoomFactor - FormSketchpad.sbY.Position));
       Pen.Width := 2;
       Pen.Color := MyOtherColors[myoc_rotcenter];
       Pen.Style := psSolid;
@@ -1131,17 +1112,17 @@ begin
       MoveTo(x - 5, y + 6);
       LineTo(x + 6, y - 5);
       Pen.Width := 1;
-      x := (f.AuxCenter.x * ZoomFactor - FormSketchpad.sbX.Position);
-      y := (f.AuxCenter.y * ZoomFactor - FormSketchpad.sbY.Position);
+      x := round((f.AuxCenter.x * ZoomFactor - FormSketchpad.sbX.Position));
+      y := round((f.AuxCenter.y * ZoomFactor - FormSketchpad.sbY.Position));
       MoveTo(x - 5, y - 5);
       LineTo(x + 6, y + 6);
       MoveTo(x - 5, y + 6);
       LineTo(x + 6, y - 5);
       Pen.Style := psDot;
-      MoveTo((f.RotCenter.x * ZoomFactor - FormSketchpad.sbX.Position),
-        (f.RotCenter.y * ZoomFactor - FormSketchpad.sbY.Position));
-      LineTo((f.AuxCenter.x * ZoomFactor - FormSketchpad.sbX.Position),
-        (f.AuxCenter.y * ZoomFactor - FormSketchpad.sbY.Position));
+      MoveTo(round((f.RotCenter.x * ZoomFactor - FormSketchpad.sbX.Position)),
+        round((f.RotCenter.y * ZoomFactor - FormSketchpad.sbY.Position)));
+      LineTo(round((f.AuxCenter.x * ZoomFactor - FormSketchpad.sbX.Position)),
+        round((f.AuxCenter.y * ZoomFactor - FormSketchpad.sbY.Position)));
       Pen.Color := clLines; //clAqua; //###
     end;
   SetLength(ps, iPointCount);
@@ -1149,13 +1130,13 @@ begin
     begin
       myp := f.Points[i];
       if miFlipY.Checked then
-        ps[i].x := (f.FrameWidth * ZoomFactor) - (myp.x * ZoomFactor) - FormSketchpad.sbX.Position
+        ps[i].x := round((f.FrameWidth * ZoomFactor) - (myp.x * ZoomFactor) - FormSketchpad.sbX.Position)
       else
-        ps[i].x := (myp.x * ZoomFactor) - FormSketchpad.sbX.Position;
+        ps[i].x := round((myp.x * ZoomFactor) - FormSketchpad.sbX.Position);
       if miFlipX.Checked then
-        ps[i].y := (f.FrameWidth * ZoomFactor) - (myp.y * ZoomFactor) - FormSketchpad.sbY.Position
+        ps[i].y := round((f.FrameWidth * ZoomFactor) - (myp.y * ZoomFactor) - FormSketchpad.sbY.Position)
       else
-        ps[i].y := (myp.y * ZoomFactor) - FormSketchpad.sbY.Position;
+        ps[i].y := round((myp.y * ZoomFactor) - FormSketchpad.sbY.Position);
     end;
   if Length(ps) > 0 then
     with cv do
@@ -1271,15 +1252,13 @@ begin
     begin
       cl := clFuchsia;
       if miFlipY.Checked then
-        p1.x := (f.FrameWidth * ZoomFactor) - (EquilateralCenter.x * ZoomFactor) -
-          FormSketchpad.sbX.Position
+        p1.x := round((f.FrameWidth * ZoomFactor) - (EquilateralCenter.x * ZoomFactor) - FormSketchpad.sbX.Position)
       else
-        p1.x := (EquilateralCenter.x * ZoomFactor) - FormSketchpad.sbX.Position;
+        p1.x := round((EquilateralCenter.x * ZoomFactor) - FormSketchpad.sbX.Position);
       if miFlipX.Checked then
-        p1.y := (f.FrameWidth * ZoomFactor) - (EquilateralCenter.y * ZoomFactor) -
-          FormSketchpad.sbY.Position
+        p1.y := round((f.FrameWidth * ZoomFactor) - (EquilateralCenter.y * ZoomFactor) - FormSketchpad.sbY.Position)
       else
-        p1.y := (EquilateralCenter.y * ZoomFactor) - FormSketchpad.sbY.Position;
+        p1.y := round((EquilateralCenter.y * ZoomFactor) - FormSketchpad.sbY.Position);
       with cv do
         begin
           Pen.Color := cl;
@@ -1306,26 +1285,26 @@ begin
     begin
     pOld := fOld.Points[i];
     if miFlipY.Checked then
-      pfrom.x := 256 * ZoomFactor - pOld.x * ZoomFactor - FormSketchpad.sbX.Position
+      pfrom.x := round(256 * ZoomFactor - pOld.x * ZoomFactor - FormSketchpad.sbX.Position)
     else
-      pfrom.x := pOld.x * ZoomFactor - FormSketchpad.sbX.Position;
+      pfrom.x := round(pOld.x * ZoomFactor - FormSketchpad.sbX.Position);
     if miFlipX.Checked then
-      pfrom.y := 256 * ZoomFactor - pOld.y * ZoomFactor - FormSketchpad.sbY.Position
+      pfrom.y := round(256 * ZoomFactor - pOld.y * ZoomFactor - FormSketchpad.sbY.Position)
     else
-      pfrom.y := pOld.y * ZoomFactor - FormSketchpad.sbY.Position;
+      pfrom.y := round(pOld.y * ZoomFactor - FormSketchpad.sbY.Position);
     for j := 0 to Pred(fThis.Points.Count) do
       begin
       if fThis.Links[j, i] then
         begin
         pThis := fThis.Points[j];
         if miFlipY.Checked then
-          pto.x := 256 * ZoomFactor - pThis.x * ZoomFactor - FormSketchpad.sbX.Position
+          pto.x := round(256 * ZoomFactor - pThis.x * ZoomFactor - FormSketchpad.sbX.Position)
         else
-          pto.x := pThis.x * ZoomFactor - FormSketchpad.sbX.Position;
+          pto.x := round(pThis.x * ZoomFactor - FormSketchpad.sbX.Position);
         if miFlipX.Checked then
-          pto.y := 256 * ZoomFactor - pThis.y * ZoomFactor - FormSketchpad.sbY.Position
+          pto.y := round(256 * ZoomFactor - pThis.y * ZoomFactor - FormSketchpad.sbY.Position)
         else
-          pto.y := pThis.y * ZoomFactor - FormSketchpad.sbY.Position;
+          pto.y := round(pThis.y * ZoomFactor - FormSketchpad.sbY.Position);
         with cv do
           begin
           pen.color := clLink;
@@ -1372,20 +1351,20 @@ begin
     with FormSketchpad.pad.canvas do
       begin
       if FormSketchpad.pad.Width < 256 * ZoomFactor then
-        FormSketchpad.sbX.Max := 256 * ZoomFactor - FormSketchpad.pad.Width
+        FormSketchpad.sbX.Max := round(256 * ZoomFactor - FormSketchpad.pad.Width)
       else
         FormSketchpad.sbX.Max := 0;
       if FormSketchpad.pad.Height < 256 * ZoomFactor then
-        FormSketchpad.sbY.Max := 256 * ZoomFactor - FormSketchpad.pad.Height
+        FormSketchpad.sbY.Max := round(256 * ZoomFactor - FormSketchpad.pad.Height)
       else
         FormSketchpad.sbY.Max := 0;
       Brush.Color := clBtnFace;
-      FillRect(Rect(0, 256 * ZoomFactor, FormSketchpad.pad.ClientRect.Right,
+      FillRect(Rect(0, round(256 * ZoomFactor), FormSketchpad.pad.ClientRect.Right,
         FormSketchpad.pad.ClientRect.Bottom));
-      FillRect(Rect(256 * ZoomFactor, 0, FormSketchpad.pad.ClientRect.Right,
+      FillRect(Rect(round(256 * ZoomFactor), 0, FormSketchpad.pad.ClientRect.Right,
         FormSketchpad.pad.ClientRect.Bottom));
       Brush.Color := MyOtherColors[myoc_bg];
-      FillRect(Rect(0, 0, 256 * ZoomFactor, 256 * ZoomFactor));
+      FillRect(Rect(0, 0, round(256 * ZoomFactor), round(256 * ZoomFactor)));
       if (myf.Bitmap <> nil) and (not miNoImg.Checked) then
         begin
         if not myf.Bitmap.Empty then
@@ -1402,9 +1381,9 @@ begin
             end;
           FormSketchpad.pad.Canvas.CopyRect(
             Rect(0 - FormSketchpad.sbX.Position, 0 -
-            FormSketchpad.sbY.Position, 256 * ZoomFactor -
-            FormSketchpad.sbX.Position, 256 * ZoomFactor -
-            FormSketchpad.sbY.Position),
+            FormSketchpad.sbY.Position, round(256 * ZoomFactor -
+            FormSketchpad.sbX.Position), round(256 * ZoomFactor -
+            FormSketchpad.sbY.Position)),
             myf.Bitmap.Canvas, mycopyrect);
           end;
         end;
@@ -1489,7 +1468,7 @@ begin
   FFile := TLaserFrames.Create;
   msLivePreview := TMemoryStream.Create;
   Undo.Op := sNone;
-  ZoomFactor := 2;
+  ZoomFactor := 2/256;
   CircleSize := 3;
   oldmovepos.x := -1;
   oldmovepos.y := -1;
@@ -1781,145 +1760,16 @@ begin
 end;
 
 procedure TFormMain.SaveToFile(fn: string; var y: TLaserFrames);
-var //f: file of TPoint;
-  fLC1File: file;
-  iFrame, j, l: integer;
-  bData: byte;
-  wFrameCount: word;
-  fFrame: TLaserFrame;
-  pPoint: TLaserPoint;
-  sMagic: array[1..4] of AnsiChar;
-  aPoint: array[1..11] of byte;
-  wSize: word;
-  mThis, mOld, cThis, cOld, wWord: word;
+var
+  aClass: TLaserFramesClass;
+  yNew: TLaserFrames;
 begin
   Dontdraw := True;
-  wFrameCount := y.Count;
-  FileMode := 2;
-  AssignFile(fLC1File, fn);
-  ReWrite(fLC1File, 1);
-  sMagic := 'LC1Y';
-  BlockWrite(fLC1File, sMagic, 4);
-  bData := 6; // Dateiversion
-  BlockWrite(fLC1File, bData, 1);
-  for iFrame := 0 to Pred(wFrameCount) do
-    begin
-    fFrame := y.frames[iFrame];
-    // frame name
-    wSize := Length(fFrame.FrameName);
-    BlockWrite(fLC1File, wSize, 2);
-    for j := 0 to Pred(Length(fFrame.FrameName)) do
-      begin
-      bData := Ord(fFrame.FrameName[j + 1]);
-      BlockWrite(fLC1File, bData, 1);
-      end;
-    // frame delay
-    BlockWrite(fLC1File, fFrame.Delay, 2);
-    // frame morph time
-    BlockWrite(fLC1File, fFrame.Morph, 2);
-    // effect type
-    BlockWrite(fLC1File, fFrame.Effect, 2);
-    // effect param
-    BlockWrite(fLC1File, fFrame.EffectParam, 2);
-    // rotcenter & auxcenter
-    BlockWrite(fLC1File, fFrame.RotCenter.x, 1);
-    BlockWrite(fLC1File, fFrame.RotCenter.y, 1);
-    BlockWrite(fLC1File, fFrame.AuxCenter.x, 1);
-    BlockWrite(fLC1File, fFrame.AuxCenter.y, 1);
-    // bits for some stuff
-    BlockWrite(fLC1File, fFrame.Bits, 2);
-    // image name
-    wSize := Length(fFrame.ImgName);
-    BlockWrite(fLC1File, wSize, 2);
-    for j := 0 to Pred(Length(fFrame.ImgName)) do
-      begin
-      bData := Ord(fFrame.ImgName[j + 1]);
-      BlockWrite(fLC1File, bData, 1);
-      end;
-    // image size
-    BlockWrite(fLC1File, fFrame.ImgRect, sizeof(TRect));
-    // helplines
-    wSize := Length(fFrame.HelpLines.x);
-    BlockWrite(fLC1File, wSize, 2);
-    for j := 0 to Pred(Length(fFrame.HelpLines.x)) do
-      begin
-      BlockWrite(fLC1File, fFrame.HelpLines.x[j], 1);
-      end;
-    wSize := Length(fFrame.HelpLines.y);
-    BlockWrite(fLC1File, wSize, 2);
-    for j := 0 to Pred(Length(fFrame.HelpLines.y)) do
-      begin
-      BlockWrite(fLC1File, fFrame.HelpLines.y[j], 1);
-      end;
-    wSize := Length(fFrame.HelpLines.d[0]);
-    BlockWrite(fLC1File, wSize, 2);
-    for j := 0 to Pred(Length(fFrame.HelpLines.d[0])) do
-      begin
-      BlockWrite(fLC1File, fFrame.HelpLines.d[0, j].x, 1);
-      BlockWrite(fLC1File, fFrame.HelpLines.d[0, j].y, 1);
-      BlockWrite(fLC1File, fFrame.HelpLines.d[1, j].x, 1);
-      BlockWrite(fLC1File, fFrame.HelpLines.d[1, j].y, 1);
-      end;
-    // points
-    wSize := fFrame.Points.Count;
-    BlockWrite(fLC1File, wSize, 2);
-    for j := 0 to Pred(fFrame.Points.Count) do
-      begin
-      pPoint := fFrame.Points[j];
-      for l := 1 to 5 do
-        begin
-        aPoint[l] := Ord(pPoint.Caption[l]);
-        end;
-      aPoint[6] := byte(pPoint.x);
-      aPoint[7] := byte(pPoint.y);
-      aPoint[8] := byte(Hi(pPoint.p));
-      aPoint[9] := byte(Lo(pPoint.p));
-      aPoint[10] := byte(Hi(pPoint.bits));
-      aPoint[11] := byte(Lo(pPoint.bits));
-      BlockWrite(fLC1File, aPoint, 11);
-      end;
-    // link-matrix
-    mThis := fFrame.Points.Count;
-    if iFrame > 0 then
-      begin
-      mOld := y.frames[Pred(iFrame)].Points.Count;
-      end
-    else
-      begin
-      mOld := 0;
-      end;
-    SetLength(fFrame.links, mThis, mOld);
-    BlockWrite(fLC1File, mThis, 2);
-    BlockWrite(fLC1File, mOld, 2);
-    if (mThis > 0) and (mOld > 0) then
-      begin
-      for cOld := 0 to Pred(mOld) do
-        begin
-        cThis := 0;
-        wWord := 0;
-        while cThis < mThis do
-          begin
-          if fFrame.links[cThis, cOld] then
-            begin
-            l := (1 shl (cThis mod 16));
-            end
-          else
-            begin
-            l := 0;
-            end;
-          wWord := wWord or l;
-          if ((cThis mod 16) = 15) or ((cThis + 1) >= mThis) then
-            begin
-            BlockWrite(fLC1File, wWord, 2);
-            end;
-          Inc(cThis);
-          end; // while
-        end; // for
-      end; // if matrix > 0
-    end;
-  CloseFile(fLC1File);
-  FormSketchpad.Caption := fn;
-  MessageDlg('File was saved.', mtConfirmation, [mbOK], 0);
+  aClass := FileFormats.FindFromFileName(fn,[fcLoad]);
+  yNew := aClass.Create;
+  yNew.Assign(y);
+  yNew.SaveToFile(fn);
+  yNew.Free;
   Dontdraw := False;
 end;
 
@@ -1961,11 +1811,11 @@ var
   s: string;
   i, ec: integer;
 begin
-  s := InputBox('Enter zoom factor', 'new factor', IntToStr(ZoomFactor));
+  s := InputBox('Enter zoom factor', 'new factor', IntToStr(round(ZoomFactor*256)));
   Val(s, i, ec);
   if ec = 0 then
-    ZoomFactor := i;
-  case ZoomFactor of
+    ZoomFactor := i/256;
+  case round(ZoomFactor*256) of
     1: miZoom1.Checked := True;
     2: miZoom2.Checked := True;
     3: miZoom3.Checked := True;
@@ -1980,7 +1830,7 @@ begin
       ZoomFactor := 2;
       end;
     end;
-  miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
+  miZoom.Caption := '&Zoom: ' + IntToStr(round(ZoomFactor*256)) + 'x...';
   Redraw;
 end;
 
@@ -2073,7 +1923,7 @@ begin
           SetValue('Image', 1)
         else if sbFullImg.Down then
           SetValue('Image', 2);
-        SetValue('Zoom', ZoomFactor);
+        //SetValue('Zoom', ZoomFactor);
         SetValue('Grid', GridWidth);
         SetValue('Circles', CircleSize);
         SetValue('WinLeft', FormMain.Left);
@@ -2370,73 +2220,44 @@ end;
 
 procedure TFormMain.miZoom1Click(Sender: TObject);
 begin
-  ZoomFactor := 1;
+  ZoomFactor := TMenuItem(Sender).Tag/256;
   miZoom1.Checked := True;
-  miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
+  miZoom.Caption := '&Zoom: ' + IntToStr(round(ZoomFactor*256)) + 'x...';
   Redraw;
-
 end;
 
 procedure TFormMain.miZoom2Click(Sender: TObject);
 begin
-  ZoomFactor := 2;
-  miZoom2.Checked := True;
-  miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
-  Redraw;
 
 end;
 
 procedure TFormMain.miZoom3Click(Sender: TObject);
 begin
-  ZoomFactor := 3;
-  miZoom3.Checked := True;
-  miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
-  Redraw;
 
 end;
 
 procedure TFormMain.miZoom4Click(Sender: TObject);
 begin
-  ZoomFactor := 4;
-  miZoom4.Checked := True;
-  miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
-  Redraw;
 
 end;
 
 procedure TFormMain.miZoom5Click(Sender: TObject);
 begin
-  ZoomFactor := 5;
-  miZoom5.Checked := True;
-  miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
-  Redraw;
 
 end;
 
 procedure TFormMain.miZoom6Click(Sender: TObject);
 begin
-  ZoomFactor := 6;
-  miZoom6.Checked := True;
-  miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
-  Redraw;
 
 end;
 
 procedure TFormMain.miZoom7Click(Sender: TObject);
 begin
-  ZoomFactor := 7;
-  miZoom7.Checked := True;
-  miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
-  Redraw;
 
 end;
 
 procedure TFormMain.miZoom8Click(Sender: TObject);
 begin
-  ZoomFactor := 8;
-  miZoom8.Checked := True;
-  miZoom.Caption := '&Zoom: ' + IntToStr(ZoomFactor) + 'x...';
-  Redraw;
 
 end;
 
@@ -3298,6 +3119,12 @@ begin
    FormDebug.Show;}
 end;
 
+procedure TFormMain.aFullImgExecute(Sender: TObject);
+begin
+  miFullImg.Checked:=aFullImg.Checked;
+  Redraw;
+end;
+
 procedure TFormMain.aGeoExecute(Sender: TObject);
 begin
   case tbGeo.ImageIndex of
@@ -3592,7 +3419,7 @@ var
       dummyp := nil;
       while (iMorphDuration < iMorphSamples) do
         begin
-        frameDummy := TLaserFrame.Create;
+        frameDummy := TLaserFrame.Create(myf.Parent);
           try
           for i := 0 to Pred(mypf.Points.Count) do
             begin
@@ -4340,7 +4167,7 @@ procedure TFormMain.aCopyFrameToClipboardExecute(Sender: TObject);
 var
   myf: TLaserFrame;
 begin
-  ClipBoardFrame := TLaserFrame.Create;
+  ClipBoardFrame := TLaserFrame.Create(FFile);
   myf := FFile.frames[CurrentFrame];
   ClipBoardFrame.Assign(myf);
   aPasteFrameFromClipboard.Enabled := True;
@@ -4352,7 +4179,7 @@ var
 begin
   if ClipBoardFrame <> nil then
     begin
-    newf := TLaserFrame.Create;
+    newf := TLaserFrame.Create(FFile);
     newf.Assign(ClipBoardFrame);
     InsertFrame(newf, CurrentFrame);
     end;
