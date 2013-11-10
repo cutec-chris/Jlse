@@ -828,8 +828,8 @@ end;
 
 initialization
   FileFormats := TFileFormatsList.Create;
-  FileFormats.Add('LC1','Youghurt Format',TLaserFrames,[fcSave,fcLoad]);
-  //FileFormats.Add('lc1-frame','Youghurt Frame',TLC1Frames,[fcSave,fcLoad]);
+  FileFormats.Add('LC1','Heathcliff Youghurt Format',TLaserFrames,[fcSave,fcLoad]);
+  //FileFormats.Add('lc1-frame','Heathcliff Youghurt Frame',TLC1Frames,[fcSave,fcLoad]);
 
 finalization
   FileFormats.Free;

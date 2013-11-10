@@ -1049,6 +1049,7 @@ var
   iPointCount: integer;
   myp: TLaserPoint;
 begin
+  if not Assigned(f) then exit;
   divider:=divider*(FFile.FrameWidth div 256);
   iPointCount := f.Points.Count;
   SetLength(ps, iPointCount);
@@ -1122,11 +1123,11 @@ begin
   for i := 0 to Pred(iPointCount) do
     begin
       myp := f.Points[i];
-      if miFlipY.Checked then
+      if aFlipY.Checked then
         ps[i].x := round((f.FrameWidth * ZoomFactor) - (myp.x * ZoomFactor) - FormSketchpad.sbX.Position)
       else
         ps[i].x := round((myp.x * ZoomFactor) - FormSketchpad.sbX.Position);
-      if miFlipX.Checked then
+      if aFlipX.Checked then
         ps[i].y := round((f.FrameWidth * ZoomFactor) - (myp.y * ZoomFactor) - FormSketchpad.sbY.Position)
       else
         ps[i].y := round((myp.y * ZoomFactor) - FormSketchpad.sbY.Position);
@@ -1187,7 +1188,7 @@ begin
                 LineTo(ps[i + 1].x, ps[i + 1].y);
               end;
         end;
-      if (miCloseLoop.Checked) and (Length(ps) > 2) then
+      if (aCloseLoop.Checked) and (Length(ps) > 2) then
         begin
           if ((TLaserPoint(f.Points[Length(ps) - 1]).bits and 2) = 0) then
             begin
@@ -1202,7 +1203,7 @@ begin
           MoveTo(ps[Length(ps) - 1].x, ps[Length(ps) - 1].y);
           LineTo(ps[0].x, ps[0].y);
         end;
-      if miShowPoints.Checked then
+      if aShowPoints.Checked then
         begin
           for i := 0 to iPointCount - 1 do
             begin
@@ -1233,7 +1234,7 @@ begin
                   ps[i].x + (CircleSize * CircleFactor),
                   ps[i].y + (CircleSize * CircleFactor));
               Brush.Color := clBlack;
-              if miShowNoOfPoints.Checked then
+              if aShowNumPoints.Checked then
                 TextOut(ps[i].x + (CircleSize * CircleFactor) + 2,
                   ps[i].y - (CircleSize * CircleFactor),
                   myp.Caption);
@@ -1244,11 +1245,11 @@ begin
   if not EquilateralFinished then
     begin
       cl := clFuchsia;
-      if miFlipY.Checked then
+      if aFlipY.Checked then
         p1.x := round((f.FrameWidth * ZoomFactor) - (EquilateralCenter.x * ZoomFactor) - FormSketchpad.sbX.Position)
       else
         p1.x := round((EquilateralCenter.x * ZoomFactor) - FormSketchpad.sbX.Position);
-      if miFlipX.Checked then
+      if aFlipX.Checked then
         p1.y := round((f.FrameWidth * ZoomFactor) - (EquilateralCenter.y * ZoomFactor) - FormSketchpad.sbY.Position)
       else
         p1.y := round((EquilateralCenter.y * ZoomFactor) - FormSketchpad.sbY.Position);
@@ -1276,11 +1277,11 @@ begin
   for i := 0 to Pred(fOld.Points.Count) do
     begin
     pOld := fOld.Points[i];
-    if miFlipY.Checked then
+    if aFlipY.Checked then
       pfrom.x := round(256 * ZoomFactor - pOld.x * ZoomFactor - FormSketchpad.sbX.Position)
     else
       pfrom.x := round(pOld.x * ZoomFactor - FormSketchpad.sbX.Position);
-    if miFlipX.Checked then
+    if aFlipX.Checked then
       pfrom.y := round(256 * ZoomFactor - pOld.y * ZoomFactor - FormSketchpad.sbY.Position)
     else
       pfrom.y := round(pOld.y * ZoomFactor - FormSketchpad.sbY.Position);
@@ -1289,11 +1290,11 @@ begin
       if fThis.Links[j, i] then
         begin
         pThis := fThis.Points[j];
-        if miFlipY.Checked then
+        if aFlipY.Checked then
           pto.x := round(256 * ZoomFactor - pThis.x * ZoomFactor - FormSketchpad.sbX.Position)
         else
           pto.x := round(pThis.x * ZoomFactor - FormSketchpad.sbX.Position);
-        if miFlipX.Checked then
+        if aFlipX.Checked then
           pto.y := round(256 * ZoomFactor - pThis.y * ZoomFactor - FormSketchpad.sbY.Position)
         else
           pto.y := round(pThis.y * ZoomFactor - FormSketchpad.sbY.Position);
@@ -1379,11 +1380,11 @@ begin
                   myf.Bitmap.Canvas, mycopyrect);
               end;
           end;
-        if miUseGrid.Checked then
+        if aShowGrid.Checked then
           DrawGrid(FormSketchpad.pad.canvas, clDkGray);
-        if miSnapHelp.Checked then
+        if aSnapHelp.Checked then
           DrawHelpLines(myf, FormSketchpad.pad.canvas, MyOtherColors[myoc_help]);
-        if (currentframe > 0) and (miShowBackframe.Checked) then
+        if (currentframe > 0) and (aShowBackframe.Checked) then
           begin
             if (FFile.Frames[Pred(currentframe)].Bits and 1) = 0 then
               begin
@@ -1410,10 +1411,10 @@ begin
             c2 := MyColors[1, myc_sel];
             c3 := MyColors[1, myc_real];
           end;
-        DrawFrame(myf, FormSketchpad.pad.canvas, miShowReal.Checked,
+        DrawFrame(myf, FormSketchpad.pad.canvas, aShowReal.Checked,
           True, c, c2, c3, MyOtherColors[myoc_help]);
         //### test von oben
-        if (currentframe > 0) and (miShowBackframe.Checked) and (miShowLinks.Checked) then
+        if (currentframe > 0) and (aShowBackframe.Checked) and (aShowLinks.Checked) then
           begin
             if ((FFile.frames[Pred(currentframe)].Bits and 1) = 0) then
               c3 := MyColors[0, myc_link]
@@ -1471,11 +1472,11 @@ begin
   EquilateralCenter.x := FFile.FrameMiddle;
   EquilateralCenter.y := FFile.FrameMiddle;
   EquilateralFinished := True;
-   {$IFNDEF WINDOWS}
+  {$IFNDEF WINDOWS}
   reg := TRegIniFile.Create('settings.ini');
-   {$else}
+  {$else}
   reg := TRegistry.Create;
-   {$endif}
+  {$endif}
   reg.RootKey := HKEY_CURRENT_USER;
     try
     if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff', True) then
@@ -1488,30 +1489,18 @@ begin
             GetValueDefault('OpenDir', ExtractFilePath(ParamStr(0)));
           sdLC1.InitialDir :=
             GetValueDefault('SaveDir', ExtractFilePath(ParamStr(0)));
-          miShowPoints.Checked := GetValueDefault('ShowPoints', True);
-          sbShowPoints.Down := miShowPoints.Checked;
-          miShowNoOfPoints.Checked := GetValueDefault('ShowNumbers', True);
-          sbShowNumPoints.Down := miShowNoOfPoints.Checked;
-          miShowBackframe.Checked := GetValueDefault('ShowBackframe', True);
-          sbShowBackFrame.Down := miShowBackframe.Checked;
-          miShowLinks.Checked := GetValueDefault('ShowLinks', True);
-          sbShowLinks.Down := miShowLinks.Checked;
-          miShowReal.Checked := GetValueDefault('ShowRound', False);
-          sbShowReal.Down := miShowReal.Checked;
-          miUseGrid.Checked := GetValueDefault('ShowGrid', True);
-          sbShowGrid.Down := miUseGrid.Checked;
-          miSnapGrid.Checked := GetValueDefault('SnapGrid', True);
-          sbSnapGrid.Down := miSnapGrid.Checked;
-          miSnapHelp.Checked := GetValueDefault('SnapHelp', False);
-          sbSnapHelp.Down := miSnapHelp.Checked;
-          miShowRuler.Checked := GetValueDefault('ShowRuler', False);
-          sbRuler.Down := miShowRuler.Checked;
-          miFlipX.Checked := GetValueDefault('FlipX', False);
-          sbFlipX.Down := miFlipX.Checked;
-          miFlipY.Checked := GetValueDefault('FlipY', False);
-          sbFlipY.Down := miFlipY.Checked;
-          miCloseLoop.Checked := GetValueDefault('CloseLoop', True);
-          sbCloseLoop.Down := miCloseLoop.Checked;
+          aShowPoints.Checked := GetValueDefault('ShowPoints', True);
+          aShowNumPoints.Checked := GetValueDefault('ShowNumbers', True);
+          aShowBackframe.Checked := GetValueDefault('ShowBackframe', True);
+          aShowLinks.Checked := GetValueDefault('ShowLinks', True);
+          aShowReal.Checked := GetValueDefault('ShowRound', False);
+          aShowGrid.Checked := GetValueDefault('ShowGrid', True);
+          aSnapGrid.Checked := GetValueDefault('SnapGrid', True);
+          aSnapHelp.Checked := GetValueDefault('SnapHelp', False);
+          aRuler.Checked := GetValueDefault('ShowRuler', False);
+          aFlipX.Checked := GetValueDefault('FlipX', False);
+          aFlipY.Checked := GetValueDefault('FlipY', False);
+          aCloseLoop.Checked := GetValueDefault('CloseLoop', True);
           tbRepeat.Down := GetValueDefault('RepeatPlay', True);
           tbLive.Down := GetValueDefault('LivePreview', True);
           case GetValueDefault('Image', 0) of
@@ -1521,53 +1510,53 @@ begin
             end;
           i := GetValueDefault('Zoom', 2);
           case i of
-            1: miZoom1.Checked := True;
-            2: miZoom2.Checked := True;
-            3: miZoom3.Checked := True;
-            4: miZoom4.Checked := True;
-            5: miZoom5.Checked := True;
-            6: miZoom6.Checked := True;
-            7: miZoom7.Checked := True;
-            8: miZoom8.Checked := True;
-            else
-              begin
+          1: miZoom1.Checked := True;
+          2: miZoom2.Checked := True;
+          3: miZoom3.Checked := True;
+          4: miZoom4.Checked := True;
+          5: miZoom5.Checked := True;
+          6: miZoom6.Checked := True;
+          7: miZoom7.Checked := True;
+          8: miZoom8.Checked := True;
+          else
+            begin
               miZoom2.Checked := True;
               i := 2;
-              end;
             end;
+          end;
           ZoomFactor := i/256;
           i := GetValueDefault('Grid', 16);
           case i of
-            4: miGrid4.Checked := True;
-            8: miGrid8.Checked := True;
-            16: miGrid16.Checked := True;
-            32: miGrid32.Checked := True;
-            64: miGrid64.Checked := True;
-            128: miGrid128.Checked := True;
-            else
-              begin
+          4: miGrid4.Checked := True;
+          8: miGrid8.Checked := True;
+          16: miGrid16.Checked := True;
+          32: miGrid32.Checked := True;
+          64: miGrid64.Checked := True;
+          128: miGrid128.Checked := True;
+          else
+            begin
               miGridCustom.Visible := True;
               miGridCustom.Checked := True;
               miGridCustom.Caption := '&' + IntToStr(i);
-              end;
             end;
+          end;
           GridWidth := i;
           i := GetValueDefault('Circles', 3);
           case i of
-            1: miCircles1.Checked := True;
-            2: miCircles2.Checked := True;
-            3: miCircles3.Checked := True;
-            4: miCircles4.Checked := True;
-            5: miCircles5.Checked := True;
-            6: miCircles6.Checked := True;
-            7: miCircles7.Checked := True;
-            8: miCircles8.Checked := True;
-            else
-              begin
+          1: miCircles1.Checked := True;
+          2: miCircles2.Checked := True;
+          3: miCircles3.Checked := True;
+          4: miCircles4.Checked := True;
+          5: miCircles5.Checked := True;
+          6: miCircles6.Checked := True;
+          7: miCircles7.Checked := True;
+          8: miCircles8.Checked := True;
+          else
+            begin
               miCircles3.Checked := True;
               i := 3;
-              end;
             end;
+          end;
           CircleSize := i;
           FormMain.Left := GetValueDefault('WinLeft', 0);
           FormMain.Top := GetValueDefault('WinTop', 0);
@@ -1576,47 +1565,47 @@ begin
           s := GetValueDefault('LastFile0', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
             begin
-            miLastFile0.Caption := '&0 ' + s;
-            miLastFile0.Visible := True;
+              miLastFile0.Caption := '&0 ' + s;
+              miLastFile0.Visible := True;
             end
           else
             miLastFile0.Visible := False;
           s := GetValueDefault('LastFile1', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
             begin
-            miLastFile1.Caption := '&1 ' + s;
-            miLastFile1.Visible := True;
+              miLastFile1.Caption := '&1 ' + s;
+              miLastFile1.Visible := True;
             end
           else
             miLastFile1.Visible := False;
           s := GetValueDefault('LastFile2', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
             begin
-            miLastFile2.Caption := '&2 ' + s;
-            miLastFile2.Visible := True;
+              miLastFile2.Caption := '&2 ' + s;
+              miLastFile2.Visible := True;
             end
           else
             miLastFile2.Visible := False;
           s := GetValueDefault('LastFile3', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
             begin
-            miLastFile3.Caption := '&3 ' + s;
-            miLastFile3.Visible := True;
+              miLastFile3.Caption := '&3 ' + s;
+              miLastFile3.Visible := True;
             end
           else
             miLastFile3.Visible := False;
           s := GetValueDefault('LastFile4', '');
           if FileExistsUTF8(s) { *Converted from FileExists* } then
             begin
-            miLastFile4.Caption := '&4 ' + s;
-            miLastFile4.Visible := True;
+              miLastFile4.Caption := '&4 ' + s;
+              miLastFile4.Visible := True;
             end
           else
             miLastFile4.Visible := False;
           // benutzerdefinierte farben
           end;
         finally
-        reg.CloseKey;
+          reg.CloseKey;
         end;
       end;
     if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff\Colors', True) then
@@ -1624,33 +1613,33 @@ begin
         try
         with reg do
           begin
-          MyColors[0, 0] := GetValueDefault('Norm0', clRed);
-          MyColors[1, 0] := GetValueDefault('Norm1', clBlue);
-          MyColors[0, 1] := GetValueDefault('Real0', $004080FF);
-          MyColors[1, 1] := GetValueDefault('Real1', $00FF8080);
-          MyColors[0, 2] := GetValueDefault('Back0', clMaroon);
-          MyColors[1, 2] := GetValueDefault('Back1', $00A00000);
-          MyColors[0, 3] := GetValueDefault('Sel0', clGreen);
-          MyColors[1, 3] := GetValueDefault('Sel1', clGreen);
-          MyColors[0, 4] := GetValueDefault('Link0', clYellow);
-          MyColors[1, 4] := GetValueDefault('Link1', clYellow);
-          MyColorNames[0] := GetValueDefault('Name0', '&Red');
-          MyColorNames[1] := GetValueDefault('Name1', '&Blue');
-          MyTextColors[0] := GetValueDefault('ThumbText', clLime);
-          MyOtherColors[myoc_bg] := GetValueDefault('Background', clBlack);
-          MyOtherColors[myoc_help] := GetValueDefault('HelpLines', clLime);
-          MyOtherColors[myoc_rotcenter] := GetValueDefault('Rotation', clAqua);
-          MyTimeLineColors[mytlc_lines] := GetValueDefault('TimelineLines', clRed);
-          MyTimeLineColors[mytlc_areas] :=
-            GetValueDefault('TimelineAreas', $00404080);
-          MyTimeLineColors[mytlc_text] := GetValueDefault('TimelineText', clLime);
-          MyTimeLineColors[mytlc_back] :=
-            GetValueDefault('TimelineBackground', $00004000);
-          MyTimes[0] := GetValueDefault('Time5Degree', 30);
-          MyTimes[1] := GetValueDefault('Time10Degree', 55);
-          MyTimes[2] := GetValueDefault('Time40Degree', 66);
-          MyTimes[3] := GetValueDefault('TimeEdges', 30);
-          //RegLoadToolbarPositionsEx(Self,HKEY_CURRENT_USER,'\SOFTWARE\PepiMK Software\Heathcliff\Panels');
+            MyColors[0, 0] := GetValueDefault('Norm0', clRed);
+            MyColors[1, 0] := GetValueDefault('Norm1', clBlue);
+            MyColors[0, 1] := GetValueDefault('Real0', $004080FF);
+            MyColors[1, 1] := GetValueDefault('Real1', $00FF8080);
+            MyColors[0, 2] := GetValueDefault('Back0', clMaroon);
+            MyColors[1, 2] := GetValueDefault('Back1', $00A00000);
+            MyColors[0, 3] := GetValueDefault('Sel0', clGreen);
+            MyColors[1, 3] := GetValueDefault('Sel1', clGreen);
+            MyColors[0, 4] := GetValueDefault('Link0', clYellow);
+            MyColors[1, 4] := GetValueDefault('Link1', clYellow);
+            MyColorNames[0] := GetValueDefault('Name0', '&Red');
+            MyColorNames[1] := GetValueDefault('Name1', '&Blue');
+            MyTextColors[0] := GetValueDefault('ThumbText', clLime);
+            MyOtherColors[myoc_bg] := GetValueDefault('Background', clBlack);
+            MyOtherColors[myoc_help] := GetValueDefault('HelpLines', clLime);
+            MyOtherColors[myoc_rotcenter] := GetValueDefault('Rotation', clAqua);
+            MyTimeLineColors[mytlc_lines] := GetValueDefault('TimelineLines', clRed);
+            MyTimeLineColors[mytlc_areas] :=
+              GetValueDefault('TimelineAreas', $00404080);
+            MyTimeLineColors[mytlc_text] := GetValueDefault('TimelineText', clLime);
+            MyTimeLineColors[mytlc_back] :=
+              GetValueDefault('TimelineBackground', $00004000);
+            MyTimes[0] := GetValueDefault('Time5Degree', 30);
+            MyTimes[1] := GetValueDefault('Time10Degree', 55);
+            MyTimes[2] := GetValueDefault('Time40Degree', 66);
+            MyTimes[3] := GetValueDefault('TimeEdges', 30);
+            //RegLoadToolbarPositionsEx(Self,HKEY_CURRENT_USER,'\SOFTWARE\PepiMK Software\Heathcliff\Panels');
           end;
         finally
         reg.CloseKey;
@@ -1776,20 +1765,20 @@ begin
   if ec = 0 then
     Circlesize := i;
   case CircleSize of
-    1: miCircles1.Checked := True;
-    2: miCircles2.Checked := True;
-    3: miCircles3.Checked := True;
-    4: miCircles4.Checked := True;
-    5: miCircles5.Checked := True;
-    6: miCircles6.Checked := True;
-    7: miCircles7.Checked := True;
-    8: miCircles8.Checked := True;
-    else
-      begin
+  1: miCircles1.Checked := True;
+  2: miCircles2.Checked := True;
+  3: miCircles3.Checked := True;
+  4: miCircles4.Checked := True;
+  5: miCircles5.Checked := True;
+  6: miCircles6.Checked := True;
+  7: miCircles7.Checked := True;
+  8: miCircles8.Checked := True;
+  else
+    begin
       miCircles3.Checked := True;
       CircleSize := 3;
-      end;
     end;
+  end;
   miCirclesize.Caption := 'Circlesize: ' + IntToStr(CircleSize) + '...';
   Redraw;
 end;
@@ -1804,20 +1793,20 @@ begin
   if ec = 0 then
     ZoomFactor := i/256;
   case round(ZoomFactor*256) of
-    1: miZoom1.Checked := True;
-    2: miZoom2.Checked := True;
-    3: miZoom3.Checked := True;
-    4: miZoom4.Checked := True;
-    5: miZoom5.Checked := True;
-    6: miZoom6.Checked := True;
-    7: miZoom7.Checked := True;
-    8: miZoom8.Checked := True;
-    else
-      begin
+  1: miZoom1.Checked := True;
+  2: miZoom2.Checked := True;
+  3: miZoom3.Checked := True;
+  4: miZoom4.Checked := True;
+  5: miZoom5.Checked := True;
+  6: miZoom6.Checked := True;
+  7: miZoom7.Checked := True;
+  8: miZoom8.Checked := True;
+  else
+    begin
       miZoom2.Checked := True;
       ZoomFactor := 2;
-      end;
     end;
+  end;
   miZoom.Caption := '&Zoom: ' + IntToStr(round(ZoomFactor*256)) + 'x...';
   Redraw;
 end;
@@ -1862,19 +1851,19 @@ begin
   if ec = 0 then
     GridWidth := i;
   case GridWidth of
-    4: miGrid4.Checked := True;
-    8: miGrid4.Checked := True;
-    16: miGrid4.Checked := True;
-    32: miGrid4.Checked := True;
-    64: miGrid4.Checked := True;
-    128: miGrid4.Checked := True;
-    else
-      begin
+  4: miGrid4.Checked := True;
+  8: miGrid4.Checked := True;
+  16: miGrid4.Checked := True;
+  32: miGrid4.Checked := True;
+  64: miGrid4.Checked := True;
+  128: miGrid4.Checked := True;
+  else
+    begin
       miGridCustom.Visible := True;
       miGridCustom.Checked := True;
       miGridCustom.Caption := '&' + IntToStr(GridWidth);
-      end;
     end;
+  end;
   miGrid.Caption := 'Grid: ' + IntToStr(GridWidth) + '...';
   Redraw;
 end;
@@ -1883,85 +1872,89 @@ procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   reg: TRegistry;
 begin
+  {$IFNDEF WINDOWS}
+  reg := TRegIniFile.Create('settings.ini');
+  {$else}
   reg := TRegistry.Create;
+  {$endif}
   reg.RootKey := HKEY_CURRENT_USER;
     try
     if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff', True) then
       with reg do
         begin
-        SetValue('OpenDir', odLC1.InitialDir);
-        SetValue('SaveDir', sdLC1.InitialDir);
-        SetValue('ShowPoints', sbShowPoints.Down);
-        SetValue('ShowNumbers', sbShowNumPoints.Down);
-        SetValue('ShowBackframe', sbShowBackframe.Down);
-        SetValue('ShowLinks', sbShowLinks.Down);
-        SetValue('ShowRound', sbShowReal.Down);
-        SetValue('ShowGrid', sbShowGrid.Down);
-        SetValue('SnapGrid', sbSnapGrid.Down);
-        SetValue('SnapHelp', sbSnapHelp.Down);
-        SetValue('ShowRuler', sbRuler.Down);
-        SetValue('FlipX', sbFlipX.Down);
-        SetValue('FlipY', sbFlipY.Down);
-        SetValue('CloseLoop', sbCloseLoop.Down);
-        SetValue('RepeatPlay', tbRepeat.Down);
-        SetValue('LivePreview', tbLive.Down);
-        if sbNoImg.Down then
-          SetValue('Image', 0)
-        else if miChoosePart.Checked then
-          SetValue('Image', 1)
-        else if sbFullImg.Down then
-          SetValue('Image', 2);
-        SetValue('Zoom', round(ZoomFactor*256));
-        SetValue('Grid', GridWidth);
-        SetValue('Circles', CircleSize);
-        SetValue('WinLeft', FormMain.Left);
-        SetValue('WinTop', FormMain.Top);
-        SetValue('WinWidth', FormMain.Width);
-        SetValue('WinHeight', FormMain.Height);
-        SetValue('Lastfile0', Copy(miLastfile0.Caption, 4,
-          Length(miLastfile0.Caption) - 3));
-        SetValue('Lastfile1', Copy(miLastfile1.Caption, 4,
-          Length(miLastfile1.Caption) - 3));
-        SetValue('Lastfile2', Copy(miLastfile2.Caption, 4,
-          Length(miLastfile2.Caption) - 3));
-        SetValue('Lastfile3', Copy(miLastfile3.Caption, 4,
-          Length(miLastfile3.Caption) - 3));
-        SetValue('Lastfile4', Copy(miLastfile4.Caption, 4,
-          Length(miLastfile4.Caption) - 3));
-        CloseKey;
+          SetValue('OpenDir', odLC1.InitialDir);
+          SetValue('SaveDir', sdLC1.InitialDir);
+          SetValue('ShowPoints', sbShowPoints.Down);
+          SetValue('ShowNumbers', sbShowNumPoints.Down);
+          SetValue('ShowBackframe', sbShowBackframe.Down);
+          SetValue('ShowLinks', sbShowLinks.Down);
+          SetValue('ShowRound', sbShowReal.Down);
+          SetValue('ShowGrid', sbShowGrid.Down);
+          SetValue('SnapGrid', sbSnapGrid.Down);
+          SetValue('SnapHelp', sbSnapHelp.Down);
+          SetValue('ShowRuler', sbRuler.Down);
+          SetValue('FlipX', sbFlipX.Down);
+          SetValue('FlipY', sbFlipY.Down);
+          SetValue('CloseLoop', sbCloseLoop.Down);
+          SetValue('RepeatPlay', tbRepeat.Down);
+          SetValue('LivePreview', tbLive.Down);
+          if sbNoImg.Down then
+            SetValue('Image', 0)
+          else if miChoosePart.Checked then
+            SetValue('Image', 1)
+          else if sbFullImg.Down then
+            SetValue('Image', 2);
+          SetValue('Zoom', round(ZoomFactor*256));
+          SetValue('Grid', GridWidth);
+          SetValue('Circles', CircleSize);
+          SetValue('WinLeft', FormMain.Left);
+          SetValue('WinTop', FormMain.Top);
+          SetValue('WinWidth', FormMain.Width);
+          SetValue('WinHeight', FormMain.Height);
+          SetValue('Lastfile0', Copy(miLastfile0.Caption, 4,
+            Length(miLastfile0.Caption) - 3));
+          SetValue('Lastfile1', Copy(miLastfile1.Caption, 4,
+            Length(miLastfile1.Caption) - 3));
+          SetValue('Lastfile2', Copy(miLastfile2.Caption, 4,
+            Length(miLastfile2.Caption) - 3));
+          SetValue('Lastfile3', Copy(miLastfile3.Caption, 4,
+            Length(miLastfile3.Caption) - 3));
+          SetValue('Lastfile4', Copy(miLastfile4.Caption, 4,
+            Length(miLastfile4.Caption) - 3));
+          CloseKey;
         end;
     if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff\Colors', True) then
       with reg do
         begin
-        SetValue('Norm0', MyColors[0, 0]);
-        SetValue('Norm1', MyColors[1, 0]);
-        SetValue('Real0', MyColors[0, 1]);
-        SetValue('Real1', MyColors[1, 1]);
-        SetValue('Back0', MyColors[0, 2]);
-        SetValue('Back1', MyColors[1, 2]);
-        SetValue('Sel0', MyColors[0, 3]);
-        SetValue('Sel1', MyColors[1, 3]);
-        SetValue('Link0', MyColors[0, 4]);
-        SetValue('Link1', MyColors[1, 4]);
-        SetValue('Name0', MyColorNames[0]);
-        SetValue('Name1', MyColorNames[1]);
-        SetValue('ThumbText', MyTextColors[0]);
-        SetValue('Background', MyOtherColors[myoc_bg]);
-        SetValue('HelpLines', MyOtherColors[myoc_help]);
-        SetValue('Rotation', MyOtherColors[myoc_rotcenter]);
-        SetValue('TimelineLines', MyTimeLineColors[mytlc_lines]);
-        SetValue('TimelineAreas', MyTimeLineColors[mytlc_areas]);
-        SetValue('TimelineText', MyTimeLineColors[mytlc_text]);
-        SetValue('TimelineBackground', MyTimeLineColors[mytlc_back]);
-        SetValue('Time5Degree', MyTimes[0]);
-        SetValue('Time10Degree', MyTimes[1]);
-        SetValue('Time40Degree', MyTimes[2]);
-        SetValue('TimeEdges', MyTimes[3]);
-        CloseKey;
+          SetValue('Norm0', MyColors[0, 0]);
+          SetValue('Norm1', MyColors[1, 0]);
+          SetValue('Real0', MyColors[0, 1]);
+          SetValue('Real1', MyColors[1, 1]);
+          SetValue('Back0', MyColors[0, 2]);
+          SetValue('Back1', MyColors[1, 2]);
+          SetValue('Sel0', MyColors[0, 3]);
+          SetValue('Sel1', MyColors[1, 3]);
+          SetValue('Link0', MyColors[0, 4]);
+          SetValue('Link1', MyColors[1, 4]);
+          SetValue('Name0', MyColorNames[0]);
+          SetValue('Name1', MyColorNames[1]);
+          SetValue('ThumbText', MyTextColors[0]);
+          SetValue('Background', MyOtherColors[myoc_bg]);
+          SetValue('HelpLines', MyOtherColors[myoc_help]);
+          SetValue('Rotation', MyOtherColors[myoc_rotcenter]);
+          SetValue('TimelineLines', MyTimeLineColors[mytlc_lines]);
+          SetValue('TimelineAreas', MyTimeLineColors[mytlc_areas]);
+          SetValue('TimelineText', MyTimeLineColors[mytlc_text]);
+          SetValue('TimelineBackground', MyTimeLineColors[mytlc_back]);
+          SetValue('Time5Degree', MyTimes[0]);
+          SetValue('Time10Degree', MyTimes[1]);
+          SetValue('Time40Degree', MyTimes[2]);
+          SetValue('TimeEdges', MyTimes[3]);
+          CloseKey;
         end;
     //RegSaveToolbarPositionsEx(Self, HKEY_CURRENT_USER, '\SOFTWARE\PepiMK Software\Heathcliff\Panels');
     finally
-    FreeAndNil(reg);
+      FreeAndNil(reg);
     end;
 end;
 
