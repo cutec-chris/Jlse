@@ -113,18 +113,23 @@ type
   { TLaserPoint }
 
   TLaserPoint = class(TObject)
+  private
+    function GetBlanking: Boolean;
+    procedure SetBlanking(AValue: Boolean);
   public
     Caption: string[5];
-    X, Y: word;
+    X, Y, Z: word;
     p: smallint;
     bits: word;
     overlay: boolean;
     Parent : TLaserFrame;
+    Is3D : Boolean;
     constructor Create;virtual;
     destructor Destroy; reintroduce;
     procedure Assign(sp: TLaserPoint);
     function LoadFromStream(aStream : TStream) : Boolean;virtual;
     procedure SaveToStream(aStream : TStream);virtual;
+    property Blanking : Boolean read GetBlanking write SetBlanking;
   end;
 
   TFileCapTyp = (fcLoad,fcSave);
@@ -772,10 +777,21 @@ end;
 
 { TLaserPoint }
 
+function TLaserPoint.GetBlanking: Boolean;
+begin
+end;
+
+procedure TLaserPoint.SetBlanking(AValue: Boolean);
+begin
+
+end;
+
 constructor TLaserPoint.Create;
 begin
   p := -1;
   overlay := False;
+  Z := 0;
+  Is3D := False;
   inherited Create;
 end;
 

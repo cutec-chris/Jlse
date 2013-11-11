@@ -25,8 +25,6 @@ type
 
   TILDAPoint = class(TLaserPoint)
   public
-    Is3D : Boolean;
-    Z : word;
     constructor Create;override;
     function LoadFromStream(aStream: TStream): Boolean; override;
   end;
