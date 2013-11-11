@@ -1742,11 +1742,15 @@ var
   yNew: TLaserFrames;
 begin
   Dontdraw := True;
-  aClass := FileFormats.FindFromFileName(fn,[fcLoad]);
-  yNew := aClass.Create;
-  yNew.Assign(y);
-  yNew.SaveToFile(fn);
-  yNew.Free;
+  try
+    aClass := FileFormats.FindFromFileName(fn,[fcSave]);
+    yNew := aClass.Create;
+    yNew.Assign(y);
+    yNew.SaveToFile(fn);
+    yNew.Free;
+  except
+    aSaveAsFileExecute(nil);
+  end;
   Dontdraw := False;
 end;
 
@@ -2563,7 +2567,7 @@ end;
 
 procedure TFormMain.aSaveFileExecute(Sender: TObject);
 begin
-  if FileExistsUTF8(FFile.Filename) { *Converted from FileExists* } then
+  if FileExistsUTF8(FFile.Filename) then
     SaveToFile(FFile.Filename, FFile)
   else
     aSaveAsFileExecute(Sender);
@@ -2620,11 +2624,11 @@ begin
   sdLC1.Filename := FFile.Filename;
   if sdLC1.Execute then
     begin
-    sdLC1.InitialDir := ExtractFilePath(sdLC1.Filename);
-    SaveToFile(sdLC1.filename, FFile);
-    AddUsedFile(sdLC1.Filename);
-    FFile.Filename := sdLC1.filename;
-    FileChanged := False;
+      sdLC1.InitialDir := ExtractFilePath(sdLC1.Filename);
+      SaveToFile(sdLC1.filename, FFile);
+      AddUsedFile(sdLC1.Filename);
+      FFile.Filename := sdLC1.filename;
+      FileChanged := False;
     end;
 end;
 
