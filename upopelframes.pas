@@ -82,26 +82,22 @@ begin
   while length(aStr)>0 do
     begin
       aPoint := Add;
-      with aPoint do
-        begin
-          aCol := StrToInt('$'+copy(aStr,0,2));
-          aStr := copy(aStr,3,length(aStr));
-          {
-          case aCol of
-          1:Color := clblack;
-          2:color := clred;
-          4:color := 64592;
-          8:color := clblue;
-          6:color := clyellow;
-          10:color := clpurple;
-          12:color := claqua;
-          14:color := clwhite;
-          end;}
-          X := StrToInt('$'+copy(aStr,0,2))*256;
-          aStr := copy(aStr,3,length(aStr));
-          Y := StrToInt('$'+copy(aStr,0,2))*256;
-          aStr := copy(aStr,3,length(aStr));
-        end;
+      aCol := StrToInt('$'+copy(aStr,0,2));
+      aStr := copy(aStr,3,length(aStr));
+      case aCol of
+      1:aPoint.Color := clblack;
+      2:aPoint.color := clred;
+      4:aPoint.color := 64592;
+      8:aPoint.color := clblue;
+      6:aPoint.color := clyellow;
+      10:aPoint.color := clpurple;
+      12:aPoint.color := claqua;
+      14:aPoint.color := clwhite;
+      end;
+      aPoint.X := StrToInt('$'+copy(aStr,0,2))*(Parent.FrameWidth div 256);
+      aStr := copy(aStr,3,length(aStr));
+      aPoint.Y := StrToInt('$'+copy(aStr,0,2))*(Parent.FrameWidth div 256);
+      aStr := copy(aStr,3,length(aStr));
     end;
 end;
 

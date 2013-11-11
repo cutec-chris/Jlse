@@ -793,6 +793,7 @@ begin
   overlay := False;
   Z := 0;
   Is3D := False;
+  bits := 0;
   inherited Create;
 end;
 
