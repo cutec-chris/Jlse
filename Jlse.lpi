@@ -40,7 +40,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="12">
+    <Units Count="14">
       <Unit0>
         <Filename Value="Jlse.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -128,6 +128,16 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="uILDAFrames"/>
       </Unit11>
+      <Unit12>
+        <Filename Value="upopelframes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="upopelframes"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="ultfframes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ultfframes"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

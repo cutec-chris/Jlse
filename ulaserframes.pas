@@ -88,7 +88,7 @@ type
     constructor Create;virtual;
     destructor Destroy; reintroduce;
     procedure Assign(f: TLaserFrames);
-    property FileVersion : byte read FFileVersion;
+    property FileVersion : byte read FFileVersion write FFileVersion;
     property FrameWidth : Integer read FFrameWidth write FFrameWidth;
     property FrameMiddle : Integer read FFrameMiddle write FFrameMiddle;
     property FrameLeft : Integer read Getleft;

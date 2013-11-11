@@ -570,7 +570,7 @@ implementation
 
 uses
   upick, uPad, uStatus, uImport, ucolors, uPreview, uDelays,
-  uILDAFrames;
+  uILDAFrames,upopelframes,ultfframes;
 
 {$R *.lfm}
 function arg(x, y: integer): real;
