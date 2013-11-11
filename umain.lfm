@@ -355,7 +355,7 @@ object FormMain: TFormMain
       item
         Alignment = taCenter
         Text = 'X:200 Y:200'
-        Width = 70
+        Width = 150
       end    
       item
         Text = 'Heathcliff started'

@@ -1,3 +1,24 @@
+{ Just another Lase Show Editor (Jlse) (based on Heathcliff)
+
+  Copyright (C) 1999,2000,2010 Patrick Michael Kolla.
+                2013 Christian Ulrich (info@cu-tec.de)
+
+  This source is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free
+  Software Foundation; either version 3 of the License, or (at your option)
+  any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  A copy of the GNU General Public License is available on the World Wide Web
+  at <http://www.gnu.org/copyleft/gpl.html>. You can also obtain it by writing
+  to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+  MA 02111-1307, USA.
+}
+
 unit upopelframes;
 
 {$mode delphi}
@@ -5,7 +26,7 @@ unit upopelframes;
 interface
 
 uses
-  Classes, SysUtils, uLaserFrames;
+  Classes, SysUtils, uLaserFrames,Graphics;
 
 type
 
@@ -16,14 +37,13 @@ type
   public
     CompanyName : string;
     function Add: TLaserPoint; override;
-    function LoadFromStream(aStream: TStream): Boolean; override;
+    function LoadFromString(aStr : string): Boolean;
   end;
 
   { TMOTPoint }
 
   TMOTPoint = class(TLaserPoint)
   public
-    function LoadFromStream(aStream: TStream): Boolean; override;
   end;
 
   { TMOTFrames }
@@ -54,12 +74,35 @@ begin
   Result.Parent:=Self;
 end;
 
-function TMOTFrame.LoadFromStream(aStream: TStream): Boolean;
+function TMOTFrame.LoadFromString(aStr: string): Boolean;
+var
+  aCol: Integer;
+  aPoint: TLaserPoint;
 begin
-end;
-
-function TMOTPoint.LoadFromStream(aStream: TStream): Boolean;
-begin
+  while length(aStr)>0 do
+    begin
+      aPoint := Add;
+      with aPoint do
+        begin
+          aCol := StrToInt('$'+copy(aStr,0,2));
+          aStr := copy(aStr,3,length(aStr));
+          {
+          case aCol of
+          1:Color := clblack;
+          2:color := clred;
+          4:color := 64592;
+          8:color := clblue;
+          6:color := clyellow;
+          10:color := clpurple;
+          12:color := claqua;
+          14:color := clwhite;
+          end;}
+          X := StrToInt('$'+copy(aStr,0,2))*256;
+          aStr := copy(aStr,3,length(aStr));
+          Y := StrToInt('$'+copy(aStr,0,2))*256;
+          aStr := copy(aStr,3,length(aStr));
+        end;
+    end;
 end;
 
 { TMOTFrames }
@@ -79,6 +122,31 @@ function TMOTFrames.Add: TLaserFrame;
 begin
   Result:=TMOTFrame.Create(Self);
   Add(Result);
+end;
+
+function TMOTFrames.LoadHeaderFromStream(aStream: TStream): Boolean;
+begin
+  FPointDelay:=StrToIntDef(FSL[0],0);
+  FBlankDelay:=StrToIntDef(FSL[1],0);
+  NumPoints:=StrToIntDef(FSL[2],0);
+end;
+
+procedure TMOTFrames.LoadFromStream(aStream: TStream);
+var
+  i: Integer;
+  aFrame: TMOTFrame;
+begin
+  FSL.LoadFromStream(aStream);
+  if FSL.Count<20 then exit;
+  LoadHeaderFromStream(aStream);
+  for i := FSL.Count-1 downto 21 do
+    begin
+      if trim(FSL[i])<>'' then
+        begin
+          aFrame := TMOTFrame(Add);
+          aFrame.LoadfromString(FSL[i]);
+        end;
+    end;
 end;
 
 {
@@ -107,25 +175,6 @@ end;
 ...
 021C9002504802985002849002589402646C [color][x][y] - first frame
 }
-function TMOTFrames.LoadHeaderFromStream(aStream: TStream): Boolean;
-begin
-  FPointDelay:=StrToIntDef(FSL[0],0);
-  FBlankDelay:=StrToIntDef(FSL[1],0);
-  NumPoints:=StrToIntDef(FSL[2],0);
-end;
-
-procedure TMOTFrames.LoadFromStream(aStream: TStream);
-var
-  i: Integer;
-begin
-  FSL.LoadFromStream(aStream);
-  if FSL.Count<20 then exit;
-  LoadHeaderFromStream(aStream);
-  for i := 21 to FSL.Count-1 do
-    begin
-
-    end;
-end;
 
 initialization
   FileFormats.Add('mot','Popelscan Format',TMOTFrames,[fcLoad]);

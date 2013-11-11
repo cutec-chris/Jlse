@@ -124,6 +124,7 @@ type
     overlay: boolean;
     Parent : TLaserFrame;
     Is3D : Boolean;
+    Color : TColor;
     constructor Create;virtual;
     destructor Destroy; reintroduce;
     procedure Assign(sp: TLaserPoint);
