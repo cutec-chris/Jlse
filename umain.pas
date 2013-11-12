@@ -2796,26 +2796,26 @@ begin
   myf := FFile.frames[currentframe];
   if FormSketchpad.MultiSelect then
     begin
-    for i := 0 to Pred(myf.Points.Count) do
-      begin
-      myp := myf.Points[i];
-      if ((myp.p and 1) > 0) then
-        if ((myp.bits and 2) = 0) then
-          Inc(myp.bits, 2)
-        else
-          Dec(myp.bits, 2);
-      end;
+      for i := 0 to Pred(myf.Points.Count) do
+        begin
+          myp := myf.Points[i];
+          if ((myp.p and 1) > 0) then
+            if ((myp.bits and 2) = 0) then
+              Inc(myp.bits, 2)
+            else
+              Dec(myp.bits, 2);
+        end;
     end
   else
     begin
-    if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
-      begin
-      myp := myf.Points[SelectedPoint];
-      if ((myp.bits and 2) = 0) then
-        Inc(myp.bits, 2)
-      else
-        Dec(myp.bits, 2);
-      end;
+      if (SelectedPoint > -1) and (SelectedPoint < myf.Points.Count) then
+        begin
+          myp := myf.Points[SelectedPoint];
+          if ((myp.bits and 2) = 0) then
+            Inc(myp.bits, 2)
+          else
+            Dec(myp.bits, 2);
+        end;
     end;
   Redraw;
 end;

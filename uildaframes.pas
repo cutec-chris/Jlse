@@ -51,7 +51,6 @@ end;
 function TILDAPoint.LoadFromStream(aStream: TStream): Boolean;
 var
   status,color : byte;
-  Blanking: Boolean;
   si : SmallInt;
 begin
   Result := True;

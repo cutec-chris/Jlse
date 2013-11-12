@@ -86,7 +86,11 @@ begin
       aCol := StrToInt('$'+copy(aStr,0,2));
       aStr := copy(aStr,3,length(aStr));
       case aCol of
-      1:aPoint.Color := clblack;
+      1:
+        begin
+          aPoint.Color := clblack;
+          aPoint.Blanking:=True;
+        end;
       2:aPoint.color := clred;
       4:aPoint.color := 64592;
       8:aPoint.color := clblue;

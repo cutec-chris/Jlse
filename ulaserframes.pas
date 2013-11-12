@@ -780,11 +780,15 @@ end;
 
 function TLaserPoint.GetBlanking: Boolean;
 begin
+  Result := ((bits and 2) = 2);
 end;
 
 procedure TLaserPoint.SetBlanking(AValue: Boolean);
 begin
-
+  if AValue then
+    bits := bits or 2
+  else if GetBlanking then
+    dec(bits,2);
 end;
 
 constructor TLaserPoint.Create;
