@@ -3,7 +3,7 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="40">
+    <Units Count="41">
       <Unit0>
         <Filename Value="Jlse.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -11,7 +11,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
@@ -24,7 +24,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="20"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
@@ -37,7 +37,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
@@ -50,7 +50,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
@@ -60,11 +60,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uhelplines"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="8"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
@@ -78,7 +78,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
@@ -90,9 +90,9 @@
         <UnitName Value="uMain"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="2788"/>
-        <CursorPos X="1" Y="2807"/>
-        <UsageCount Value="93"/>
+        <TopLine Value="1168"/>
+        <CursorPos X="13" Y="1177"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -104,13 +104,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPad"/>
-        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="162"/>
-        <CursorPos X="48" Y="201"/>
-        <UsageCount Value="93"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <TopLine Value="659"/>
+        <CursorPos X="30" Y="663"/>
+        <UsageCount Value="95"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit7>
       <Unit8>
@@ -123,7 +120,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit8>
       <Unit9>
@@ -133,11 +130,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPreview"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="9"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="15" Y="11"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -146,11 +143,11 @@
         <Filename Value="ulaserframes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uLaserFrames"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="7"/>
         <WindowIndex Value="0"/>
         <TopLine Value="786"/>
-        <CursorPos X="17" Y="791"/>
-        <UsageCount Value="88"/>
+        <CursorPos X="16" Y="801"/>
+        <UsageCount Value="90"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit10>
@@ -159,11 +156,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="uILDAFrames"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="43"/>
-        <CursorPos X="1" Y="54"/>
-        <UsageCount Value="71"/>
+        <TopLine Value="312"/>
+        <CursorPos X="1" Y="327"/>
+        <UsageCount Value="73"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit11>
@@ -171,11 +168,11 @@
         <Filename Value="upopelframes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="upopelframes"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
         <TopLine Value="72"/>
         <CursorPos X="32" Y="92"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit12>
@@ -183,11 +180,11 @@
         <Filename Value="ultfframes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ultfframes"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="52"/>
         <CursorPos X="1" Y="78"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit13>
@@ -349,11 +346,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Lasersoftware"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1005"/>
         <CursorPos X="11" Y="1025"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -385,11 +382,11 @@
       <Unit36>
         <Filename Value="../Popelscan/Image.pas"/>
         <UnitName Value="Image"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="11" Y="16"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit36>
@@ -403,11 +400,11 @@
       </Unit37>
       <Unit38>
         <Filename Value="../Popelscan/Shows/3.x The Colony/c_1.mot"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="23" Y="22"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit38>
@@ -419,130 +416,137 @@
         <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit39>
+      <Unit40>
+        <Filename Value="../../lazarus/lcl/include/rasterimage.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="281"/>
+        <CursorPos X="1" Y="299"/>
+        <UsageCount Value="10"/>
+      </Unit40>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="99" Column="1" TopLine="75"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="6" Column="99" TopLine="1"/>
       </Position1>
       <Position2>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="100" Column="1" TopLine="75"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="533" Column="24" TopLine="506"/>
       </Position2>
       <Position3>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="101" Column="1" TopLine="75"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1042" Column="30" TopLine="1035"/>
       </Position3>
       <Position4>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="102" Column="1" TopLine="75"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1070" Column="24" TopLine="1054"/>
       </Position4>
       <Position5>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="84" Column="19" TopLine="71"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="6" Column="92" TopLine="1"/>
       </Position5>
       <Position6>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="102" Column="73" TopLine="90"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="534" Column="13" TopLine="513"/>
       </Position6>
       <Position7>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="84" Column="10" TopLine="66"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="536" Column="13" TopLine="513"/>
       </Position7>
       <Position8>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="80" Column="16" TopLine="63"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1043" Column="36" TopLine="1030"/>
       </Position8>
       <Position9>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="99" Column="37" TopLine="79"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1070" Column="26" TopLine="1055"/>
       </Position9>
       <Position10>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="97" Column="1" TopLine="79"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1072" Column="27" TopLine="1055"/>
       </Position10>
       <Position11>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="98" Column="1" TopLine="79"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1179" Column="15" TopLine="1165"/>
       </Position11>
       <Position12>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="99" Column="1" TopLine="79"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1100" Column="27" TopLine="1088"/>
       </Position12>
       <Position13>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="100" Column="1" TopLine="79"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1108" Column="13" TopLine="1088"/>
       </Position13>
       <Position14>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="82" Column="1" TopLine="75"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1110" Column="13" TopLine="1088"/>
       </Position14>
       <Position15>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="97" Column="1" TopLine="75"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1115" Column="13" TopLine="1088"/>
       </Position15>
       <Position16>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="98" Column="1" TopLine="75"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1117" Column="13" TopLine="1089"/>
       </Position16>
       <Position17>
         <Filename Value="umain.pas"/>
-        <Caret Line="558" Column="91" TopLine="545"/>
+        <Caret Line="1121" Column="13" TopLine="1093"/>
       </Position17>
       <Position18>
-        <Filename Value="umain.pas"/>
-        <Caret Line="1044" Column="30" TopLine="1031"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="42" Column="2" TopLine="30"/>
       </Position18>
       <Position19>
-        <Filename Value="umain.pas"/>
-        <Caret Line="516" Column="43" TopLine="495"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="43" Column="15" TopLine="18"/>
       </Position19>
       <Position20>
-        <Filename Value="umain.pas"/>
-        <Caret Line="1050" Column="3" TopLine="1044"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="46" Column="3" TopLine="24"/>
       </Position20>
       <Position21>
-        <Filename Value="umain.pas"/>
-        <Caret Line="1051" Column="1" TopLine="1044"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="299" Column="18" TopLine="156"/>
       </Position21>
       <Position22>
-        <Filename Value="umain.pas"/>
-        <Caret Line="1052" Column="1" TopLine="1044"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="45" Column="4" TopLine="28"/>
       </Position22>
       <Position23>
         <Filename Value="uildaframes.pas"/>
-        <Caret Line="85" Column="1" TopLine="81"/>
+        <Caret Line="44" Column="28" TopLine="27"/>
       </Position23>
       <Position24>
-        <Filename Value="upopelframes.pas"/>
-        <Caret Line="143" Column="26" TopLine="121"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="45" Column="3" TopLine="28"/>
       </Position24>
       <Position25>
-        <Filename Value="ulaserframes.pas"/>
-        <Caret Line="6" Column="85" TopLine="1"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="44" Column="1" TopLine="16"/>
       </Position25>
       <Position26>
-        <Filename Value="ulaserframes.pas"/>
-        <Caret Line="117" Column="22" TopLine="89"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="300" Column="15" TopLine="272"/>
       </Position26>
       <Position27>
-        <Filename Value="ulaserframes.pas"/>
-        <Caret Line="118" Column="23" TopLine="90"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="45" Column="4" TopLine="27"/>
       </Position27>
       <Position28>
-        <Filename Value="ulaserframes.pas"/>
-        <Caret Line="133" Column="64" TopLine="105"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="44" Column="25" TopLine="22"/>
       </Position28>
       <Position29>
-        <Filename Value="umain.pas"/>
-        <Caret Line="1045" Column="83" TopLine="1044"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="406" Column="33" TopLine="394"/>
       </Position29>
       <Position30>
-        <Filename Value="umain.pas"/>
-        <Caret Line="2802" Column="20" TopLine="2785"/>
+        <Filename Value="uildaframes.pas"/>
+        <Caret Line="8" Column="44" TopLine="1"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

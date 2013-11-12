@@ -1067,15 +1067,19 @@ begin
     end;
   with cv do
     begin
-    Pen.Color := clNorm;
-    Pen.Width := 1;
-    Font.Color := clNorm;
-    Polyline(ps);
-    if Length(ps) > 0 then
-      begin
-        MoveTo(ps[Pred(Length(ps))].x, ps[Pred(Length(ps))].y);
-        LineTo(ps[0].x, ps[0].y);
-      end;
+      Pen.Color := clNorm;
+      Pen.Width := 1;
+      Font.Color := clNorm;
+      for i := 0 to high(ps)-1 do
+        begin
+          MoveTo(ps[i].x, ps[i].y);
+          myp := f.Points[i];
+          if myp.Color<>clNone then
+            Pen.Color := myp.Color
+          else Pen.Color := clNorm;
+          if not myp.Blanking then
+            LineTo(ps[i+1].x, ps[i+1].y);
+        end;
     end; // with
 end;
 procedure TFormMain.DrawFrame(f: TLaserFrame; cv: TCanvas;
@@ -1090,6 +1094,7 @@ var
   circlefactor: integer;
   x, y: integer;
 begin
+  cv.LockCanvas;
   iPointCount := f.Points.Count;
   circlefactor := 2; //ZoomFactor;
   with cv do
@@ -1176,6 +1181,10 @@ begin
                 begin
                   Pen.Width := 2;
                   Pen.Style := psSolid;
+                  if TLaserPoint(f.Points[i]).Color=clNone then
+                    Pen.Color := clNorm
+                  else
+                    Pen.Color:=TLaserPoint(f.Points[i]).Color;
                 end
               else
                 begin
@@ -1185,6 +1194,7 @@ begin
                 MoveTo(ps[i].x, ps[i].y);
                 LineTo(ps[i + 1].x, ps[i + 1].y);
               end;
+            Pen.Color := clNorm;
         end;
       if (aCloseLoop.Checked) and (Length(ps) > 2) then
         begin
@@ -1262,6 +1272,7 @@ begin
             p1.y + (CircleSize * CircleFactor));
         end;
     end;
+  cv.UnlockCanvas;
 end;
 procedure TFormMain.DrawLinks(fThis, fOld: TLaserFrame; cv: TCanvas; clLink: TColor);
 var
@@ -1323,6 +1334,7 @@ var
   myf: TLaserFrame;
   c, c2, c3: TColor;
 begin
+  if not FormSketchpad.Visible then exit;
   if (FFile <> nil) and (FFile.Count > 0) and (not DontDraw) then
     begin
       Drawing := True;
@@ -1338,7 +1350,7 @@ begin
           FormSketchpad.iTopRuler.Height := 0;
           FormSketchpad.iLeftRuler.Width := 0;
         end;
-      with FormSketchpad.pad.canvas do
+      with FormSketchpad.FDrawing.canvas do
         begin
           if FormSketchpad.pad.Width < FFile.FrameWidth * ZoomFactor then
             FormSketchpad.sbX.Max := round(FFile.FrameWidth * ZoomFactor - FormSketchpad.pad.Width)
@@ -1370,7 +1382,7 @@ begin
                   begin
                   mycopyrect := Rect(0, 0, FFile.FrameWidth, FFile.FrameWidth);
                   end;
-                FormSketchpad.pad.Canvas.CopyRect(
+                FormSketchpad.FDrawing.Canvas.CopyRect(
                   Rect(0 - FormSketchpad.sbX.Position, 0 -
                   FormSketchpad.sbY.Position, round(FFile.FrameWidth * ZoomFactor -
                   FormSketchpad.sbX.Position), round(FFile.FrameWidth * ZoomFactor -
@@ -1379,9 +1391,9 @@ begin
               end;
           end;
         if aShowGrid.Checked then
-          DrawGrid(FormSketchpad.pad.canvas, clDkGray);
+          DrawGrid(FormSketchpad.FDrawing.Canvas, clDkGray);
         if aSnapHelp.Checked then
-          DrawHelpLines(myf, FormSketchpad.pad.canvas, MyOtherColors[myoc_help]);
+          DrawHelpLines(myf, FormSketchpad.FDrawing.Canvas, MyOtherColors[myoc_help]);
         if (currentframe > 0) and (aShowBackframe.Checked) then
           begin
             if (FFile.Frames[Pred(currentframe)].Bits and 1) = 0 then
@@ -1395,7 +1407,7 @@ begin
                 c2 := MyColors[1, myc_real];
               end;
             DrawFrame(FFile.frames[Pred(currentframe)],
-              FormSketchpad.pad.canvas, False, False, c, c, c2, MyOtherColors[myoc_help]);
+              FormSketchpad.FDrawing.canvas, False, False, c, c, c2, MyOtherColors[myoc_help]);
           end;
         if ((myf.Bits and 1) = 0) then
           begin
@@ -1409,7 +1421,7 @@ begin
             c2 := MyColors[1, myc_sel];
             c3 := MyColors[1, myc_real];
           end;
-        DrawFrame(myf, FormSketchpad.pad.canvas, aShowReal.Checked,
+        DrawFrame(myf, FormSketchpad.FDrawing.canvas, aShowReal.Checked,
           True, c, c2, c3, MyOtherColors[myoc_help]);
         //### test von oben
         if (currentframe > 0) and (aShowBackframe.Checked) and (aShowLinks.Checked) then
@@ -1418,11 +1430,12 @@ begin
               c3 := MyColors[0, myc_link]
           else
               c3 := MyColors[1, myc_link];
-            DrawLinks(myf, FFile.frames[Pred(currentframe)], FormSketchpad.pad.canvas, c3);
+            DrawLinks(myf, FFile.frames[Pred(currentframe)], FormSketchpad.FDrawing.canvas, c3);
           end;
         end;
       Drawing := False;
     end;
+  FormSketchpad.pad.Invalidate;
   TimeLineRedraw;
 end;
 
@@ -2060,8 +2073,7 @@ begin
           c := MyColors[0, myc_norm]
         else
           c := MyColors[1, myc_norm];
-        FormMain.DrawThumb(FFile.frames[index], (Control as TListBox).Canvas,
-          Rect.Left, Rect.Top + 18, 4, c);
+        FormMain.DrawThumb(FFile.frames[index], (Control as TListBox).Canvas, Rect.Left, Rect.Top + 18, 4, c);
         // sperrsymbol
         //..
         if (FFile.frames[index].Bits and 2) = 2 then

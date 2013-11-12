@@ -31,6 +31,9 @@ uses
   ExtCtrls, ComCtrls, StdCtrls, FileUtil, Math, uLaserFrames;
 
 type
+
+  { TFormSketchpad }
+
   TFormSketchpad = class(TForm)
     iLeftRuler: TImage;
     iTopRuler: TImage;
@@ -46,6 +49,7 @@ type
     sbY: TScrollBar;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: boolean);
@@ -70,6 +74,7 @@ type
     procedure padMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
     procedure padPaint(Sender: TObject);
+    procedure padResize(Sender: TObject);
     procedure panelCornerClick(Sender: TObject);
     procedure sbFramesChange(Sender: TObject);
     procedure sbXChange(Sender: TObject);
@@ -78,6 +83,7 @@ type
   public
     MultiSelect: boolean;
     MouseDownPos: TPoint;
+    FDrawing : TBitmap;
     procedure ZoomIn(x, y: word);
     procedure ZoomOut(x, y: word);
   end;
@@ -102,12 +108,18 @@ begin
   FormMain.aNewFileExecute(nil);
   if FormMain.Tag = 1 then
     begin
-    if ParamCount > 0 then
-      if FileExistsUTF8(ParamStr(1)) { *Converted from FileExists* } then
-        FormMain.LoadFromFile(ParamStr(1), FormMain.FFile, True);
-    FormMain.Tag := 0;
+      if ParamCount > 0 then
+        if FileExistsUTF8(ParamStr(1)) { *Converted from FileExists* } then
+          FormMain.LoadFromFile(ParamStr(1), FormMain.FFile, True);
+      FormMain.Tag := 0;
     end;
+  FDrawing := TBitmap.Create;
   //FormMain.ReDraw;
+end;
+
+procedure TFormSketchpad.FormDestroy(Sender: TObject);
+begin
+  FDrawing.Free;
 end;
 
 procedure TFormSketchpad.ZoomIn(x, y: word);
@@ -642,7 +654,13 @@ end;
 
 procedure TFormSketchpad.padPaint(Sender: TObject);
 begin
-  FormMain.Redraw;
+  pad.Canvas.Draw(0,0,FDrawing);
+end;
+
+procedure TFormSketchpad.padResize(Sender: TObject);
+begin
+  FDrawing.Width:=pad.Width;
+  FDrawing.Height:=pad.Height;
 end;
 
 procedure TFormSketchpad.FormKeyPress(Sender: TObject; var Key: char);

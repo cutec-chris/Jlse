@@ -17,6 +17,7 @@ object FormSketchpad: TFormSketchpad
   KeyPreview = True
   OnActivate = FormActivate
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnMouseWheelDown = FormMouseWheelDown
   OnMouseWheelUp = FormMouseWheelUp
@@ -149,6 +150,7 @@ object FormSketchpad: TFormSketchpad
       OnMouseMove = padMouseMove
       OnMouseUp = padMouseUp
       OnPaint = padPaint
+      OnResize = padResize
     end
     object iTopRuler: TImage
       Left = 1
