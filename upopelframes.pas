@@ -72,6 +72,7 @@ function TMOTFrame.Add: TLaserPoint;
 begin
   Result:=TMOTPoint.Create;
   Result.Parent:=Self;
+  Points.Add(Result);
 end;
 
 function TMOTFrame.LoadFromString(aStr: string): Boolean;
@@ -94,9 +95,9 @@ begin
       12:aPoint.color := claqua;
       14:aPoint.color := clwhite;
       end;
-      aPoint.X := StrToInt('$'+copy(aStr,0,2))*(Parent.FrameWidth div 256);
+      aPoint.X := FrameMiddle - StrToInt('$'+copy(aStr,0,2))*(Parent.FrameWidth div 256);
       aStr := copy(aStr,3,length(aStr));
-      aPoint.Y := StrToInt('$'+copy(aStr,0,2))*(Parent.FrameWidth div 256);
+      aPoint.Y := FrameMiddle - StrToInt('$'+copy(aStr,0,2))*(Parent.FrameWidth div 256);
       aStr := copy(aStr,3,length(aStr));
     end;
 end;
@@ -122,6 +123,8 @@ end;
 
 function TMOTFrames.LoadHeaderFromStream(aStream: TStream): Boolean;
 begin
+  OldPointCount := 0;
+  Clear;
   FPointDelay:=StrToIntDef(FSL[0],0);
   FBlankDelay:=StrToIntDef(FSL[1],0);
   NumPoints:=StrToIntDef(FSL[2],0);
@@ -131,17 +134,19 @@ procedure TMOTFrames.LoadFromStream(aStream: TStream);
 var
   i: Integer;
   aFrame: TMOTFrame;
+  a: integer;
 begin
   FSL.LoadFromStream(aStream);
   if FSL.Count<20 then exit;
   LoadHeaderFromStream(aStream);
   for i := FSL.Count-1 downto 21 do
     begin
-      if trim(FSL[i])<>'' then
-        begin
-          aFrame := TMOTFrame(Add);
-          aFrame.LoadfromString(FSL[i]);
-        end;
+      if TryStrToInt('$'+copy(FSL[i],0,2),a) then
+        if trim(FSL[i])<>'' then
+          begin
+            aFrame := TMOTFrame(Add);
+            aFrame.LoadfromString(FSL[i]);
+          end;
     end;
 end;
 

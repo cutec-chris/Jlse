@@ -552,10 +552,8 @@ type
   TRegistryHelper = class helper for TRegistry
     function GetValueDefault(const ValueName: string; Default: boolean): boolean;
       overload;
-    function GetValueDefault(const ValueName: string; Default: string): string;
-      overload;
-    function GetValueDefault(const ValueName: string; Default: cardinal): cardinal;
-      overload;
+    function GetValueDefault(const ValueName: string; Default: string): string;overload;
+    function GetValueDefault(const ValueName: string; Default: cardinal): cardinal; overload;
     procedure SetValue(const ValueName: string; Data: boolean); overload;
     procedure SetValue(const ValueName: string; Data: string); overload;
     procedure SetValue(const ValueName: string; Data: cardinal); overload;

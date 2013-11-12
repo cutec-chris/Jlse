@@ -74,6 +74,7 @@ function TLTFFrame.Add: TLaserPoint;
 begin
   Result:=TLTFPoint.Create;
   Result.Parent:=Self;
+  Points.Add(Result);
 end;
 
 function TLTFFrame.LoadFromStream(aStream: TStream): Boolean;
