@@ -324,7 +324,7 @@ begin
     end;
   aStream.Read(status,1);
   aStream.Read(colori,1);
-  Color := RGBToColor(palette[(colori*4)+1],palette[(colori*4)+1],palette[(colori*4)+1]);
+  Color := RGBToColor(palette[(colori*4)+1],palette[(colori*4)+2],palette[(colori*4)+3]);
   Blanking := (Status and $40 = $40);
   Result := not (Status and $80 = $80); // Last Point
 end;

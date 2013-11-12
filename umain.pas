@@ -317,6 +317,7 @@ type
     sbSnapGrid: TToolButton;
     sbSnapHelp: TToolButton;
     sdLC1: TSaveDialog;
+    Splitter1: TSplitter;
     tbAdd: TToolButton;
     tbCompile: TToolButton;
     tbDel: TToolButton;
@@ -1047,6 +1048,7 @@ var
   iPointCount: integer;
   myp: TLaserPoint;
 begin
+  if DontDraw then exit;
   if not Assigned(f) then exit;
   divider:=divider*(FFile.FrameWidth div 256);
   iPointCount := f.Points.Count;
@@ -1490,7 +1492,7 @@ begin
   {$endif}
   reg.RootKey := HKEY_CURRENT_USER;
     try
-    if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff', True) then
+    if reg.OpenKey('\SOFTWARE\PepiMK Software\Jlse', True) then
       begin
         try
         with reg do
@@ -1619,7 +1621,7 @@ begin
           reg.CloseKey;
         end;
       end;
-    if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff\Colors', True) then
+    if reg.OpenKey('\SOFTWARE\PepiMK Software\Jlse\Colors', True) then
       begin
         try
         with reg do
@@ -1650,7 +1652,7 @@ begin
             MyTimes[1] := GetValueDefault('Time10Degree', 55);
             MyTimes[2] := GetValueDefault('Time40Degree', 66);
             MyTimes[3] := GetValueDefault('TimeEdges', 30);
-            //RegLoadToolbarPositionsEx(Self,HKEY_CURRENT_USER,'\SOFTWARE\PepiMK Software\Heathcliff\Panels');
+            //RegLoadToolbarPositionsEx(Self,HKEY_CURRENT_USER,'\SOFTWARE\PepiMK Software\Jlse\Panels');
           end;
         finally
         reg.CloseKey;
@@ -1894,7 +1896,7 @@ begin
   {$endif}
   reg.RootKey := HKEY_CURRENT_USER;
     try
-    if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff', True) then
+    if reg.OpenKey('\SOFTWARE\PepiMK Software\Jlse', True) then
       with reg do
         begin
           SetValue('OpenDir', odLC1.InitialDir);
@@ -1938,7 +1940,7 @@ begin
             Length(miLastfile4.Caption) - 3));
           CloseKey;
         end;
-    if reg.OpenKey('\SOFTWARE\PepiMK Software\Heathcliff\Colors', True) then
+    if reg.OpenKey('\SOFTWARE\PepiMK Software\Jlse\Colors', True) then
       with reg do
         begin
           SetValue('Norm0', MyColors[0, 0]);
@@ -1967,7 +1969,7 @@ begin
           SetValue('TimeEdges', MyTimes[3]);
           CloseKey;
         end;
-    //RegSaveToolbarPositionsEx(Self, HKEY_CURRENT_USER, '\SOFTWARE\PepiMK Software\Heathcliff\Panels');
+    //RegSaveToolbarPositionsEx(Self, HKEY_CURRENT_USER, '\SOFTWARE\PepiMK Software\Jlse\Panels');
     finally
       FreeAndNil(reg);
     end;
@@ -2522,8 +2524,6 @@ end;
 
 procedure TFormMain.miAboutClick(Sender: TObject);
 begin
-  MessageDlg('Info about Heathcliff: ' + #13#10#13#10 + verinfo +
-    #13#10#13#10 + 'This one goes out to the one i love...', mtInformation, [mbOK], 0);
 end;
 
 

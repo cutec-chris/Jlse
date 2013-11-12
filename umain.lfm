@@ -358,7 +358,6 @@ object FormMain: TFormMain
         Width = 150
       end    
       item
-        Text = 'Heathcliff started'
         Width = 50
       end>
     SimplePanel = False
@@ -570,6 +569,14 @@ object FormMain: TFormMain
         ShowHint = True
       end
     end
+  end
+  object Splitter1: TSplitter
+    Left = 611
+    Height = 487
+    Top = 30
+    Width = 5
+    Align = alRight
+    ResizeAnchor = akRight
   end
   object sdLC1: TSaveDialog
     Title = 'Save Yoghurt file...'

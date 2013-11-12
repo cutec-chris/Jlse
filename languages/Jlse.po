@@ -954,10 +954,6 @@ msgstr ""
 msgid "X:200 Y:200"
 msgstr ""
 
-#: tformmain.sbframe.panels[1].text
-msgid "Heathcliff started"
-msgstr ""
-
 #: tformmain.sdlc1.title
 msgid "Save Yoghurt file..."
 msgstr ""
