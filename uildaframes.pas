@@ -1,3 +1,24 @@
+{ Just another Lase Show Editor (Jlse) (based on Heathcliff)
+
+  Copyright (C) 1999,2000,2010 Patrick Michael Kolla.
+                2013 Christian Ulrich (info@cu-tec.de)
+
+  This source is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free
+  Software Foundation; either version 3 of the License, or (at your option)
+  any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  A copy of the GNU General Public License is available on the World Wide Web
+  at <http://www.gnu.org/copyleft/gpl.html>. You can also obtain it by writing
+  to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+  MA 02111-1307, USA.
+}
+
 unit uILDAFrames;
 
 {$mode delphi}
@@ -19,6 +40,7 @@ type
     function Add: TLaserPoint; override;
     function LoadFromStream(aStream: TStream): Boolean; override;
     procedure LoadColorPalette(aStream : TStream);
+    procedure SaveToStream(aStream: TStream); override;
   end;
 
   { TILDAPoint }
@@ -27,6 +49,7 @@ type
   public
     constructor Create;override;
     function LoadFromStream(aStream: TStream): Boolean; override;
+    procedure SaveToStream(aStream: TStream); override;
   end;
 
   { TILDAFrames }
@@ -36,6 +59,7 @@ type
     constructor Create; override;
     function Add: TLaserFrame; overload; override;
     function LoadHeaderFromStream(aStream: TStream): Boolean;override;
+    procedure SaveHeaderToStream(aStream: TStream); override;
   end;
 
 implementation
@@ -329,6 +353,27 @@ begin
   Result := not (Status and $80 = $80); // Last Point
 end;
 
+procedure TILDAPoint.SaveToStream(aStream: TStream);
+var
+  si : SmallInt;
+  b : byte;
+begin
+  si := NtoBE(x-Parent.FrameMiddle);
+  aStream.Write(si,2);
+  si := NtoBE(y-Parent.FrameMiddle);
+  aStream.Write(si,2);
+  si := NtoBE(z-Parent.FrameMiddle);
+  aStream.Write(si,2);
+  b := 0;
+  if Blanking then
+    b := b or $40;
+  if Parent.Points.IndexOf(Self) = Parent.Points.Count-1 then
+    b := b or $80;//last Point
+  aStream.write(b,1);
+  b := 10;
+  aStream.write(b,1);//TODO:Color
+end;
+
 { TILDAFrames }
 
 constructor TILDAFrames.Create;
@@ -346,6 +391,10 @@ function TILDAFrames.LoadHeaderFromStream(aStream: TStream): Boolean;
 begin
   OldPointCount := 0;
   Clear;
+end;
+
+procedure TILDAFrames.SaveHeaderToStream(aStream: TStream);
+begin
 end;
 
 { TILDAFrame }
@@ -415,6 +464,38 @@ begin
     end;
 end;
 
+procedure TILDAFrame.SaveToStream(aStream: TStream);
+var
+  sBuffer: String[8];
+  b : byte;
+  w : word;
+  i: Integer;
+begin
+  sBuffer := 'ILDA';
+  aStream.Write(sBuffer[1],4); //magic
+  b := 0;
+  aStream.Write(b,1);
+  aStream.Write(b,1);
+  aStream.Write(b,1);
+  aStream.Write(b,1); //Frame Type always 3D
+  sBuffer := FrameName;
+  aStream.Write(sBuffer[1],8); //magic
+  sBuffer := CompanyName;
+  aStream.Write(sBuffer[1],8); //magic
+  w := NtoBE(Points.Count);
+  aStream.Write(w,2);
+  w := NtoBE(FrameIndex);
+  aStream.Write(w,2);
+  w := NtoBE(Parent.Count);
+  aStream.Write(w,2);
+  b := 0; //TODO:Scanner Head
+  aStream.Write(b,1);
+  b := 0;
+  aStream.Write(b,1);
+  for i := 0 to Points.Count-1 do
+    TILDAPoint(Points[i]).SaveToStream(aStream);
+end;
+
 procedure TILDAFrame.LoadColorPalette(aStream: TStream);
 var
   b : byte;
@@ -429,6 +510,6 @@ begin
 end;
 
 initialization
-  FileFormats.Add('ild','ILDA Format',TILDAFrames,[fcLoad]);
+  FileFormats.Add('ild','ILDA Format',TILDAFrames,[fcLoad,fcSave]);
 
 end.
