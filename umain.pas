@@ -30,7 +30,7 @@ uses
   Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ComCtrls, ToolWin, Buttons, Spin, Menus, ImgList,
   ActnList, Registry, ClipBrd, ExtDlgs, FileUtil, Math, uLaserFrames,
-  uhelplines;
+  uhelplines,ulasershow;
 
 const
   myc_norm = 0;
@@ -46,7 +46,6 @@ const
   mytlc_areas = 1;
   mytlc_text = 2;
   mytlc_back = 3;
-  verinfo = 'Release 9 (Build 42)';
   LeftRulerWidth = 32;
   TopRulerHeight = 20;
   crMovePoint = 1;
@@ -67,8 +66,6 @@ const
   effect_drain = 7;
 
 type
-  atp = array of TPoint;
-  atb = array of boolean;
   TStates = (sNone, sMove, sAdd, sDel, sAnim, sZoom, sPointType,
     sMoveRotateFrame, sAuxPoints, sEquilateral);
 
@@ -359,7 +356,6 @@ type
     procedure aCheckFrameLinksExecute(Sender: TObject);
     procedure aChooseImgPartExecute(Sender: TObject);
     procedure aCopyFrameToClipboardExecute(Sender: TObject);
-    procedure aCreateWavefileExecute(Sender: TObject);
     procedure aCutFrameToClipboardExecute(Sender: TObject);
     procedure aDeleteExecute(Sender: TObject);
     procedure aDeleteFrameExecute(Sender: TObject);
@@ -498,8 +494,6 @@ type
     procedure WritePoints(var ms: TStream; x, y: longint; color, blank: boolean);
     procedure WritePointArray(var ms: TStream; a: atp; b: atb;
       color: boolean; var ws: longint; var lp: TPoint);
-    procedure FrameToArray(f: TLaserFrame; var mya: atp; var myb: atb;
-      var framed: longint);
   public
     { Public-Deklarationen }
     oldmovepos: TPoint;
@@ -525,7 +519,6 @@ type
     MyOtherColors: array[0..2] of TColor;
     MyTimeLineColors: array[0..3] of TColor;
     MyIcons: array[0..0] of HIcon;
-    MyTimes: TimingArray;
 
     procedure Redraw;
     procedure DrawGrid(cv: TCanvas; clGrid: TColor);
@@ -544,7 +537,6 @@ type
     procedure AddUsedFile(fn: string);
     procedure SetColorsFromDialog;
     function CheckFrameLinks(fi: integer; var s: string): boolean;
-    procedure ReCreatePreview;
     procedure InsertFrame(f: TLaserFrame; pos: integer);
     procedure DeleteFrame(pos: integer; var f: TLaserFrame);
     procedure RotateFrame(f: TLaserFrame; degrees: real);
@@ -703,78 +695,6 @@ begin
       end;
     lp := a[Pred(Length(a))];
     end;
-end;
-procedure TFormMain.FrameToArray(f: TLaserFrame; var mya: atp;
-  var myb: atb; var framed: longint);
-var
-  i, j: integer;
-  p, np, pp: TLaserPoint;
-  dx, dy: integer;
-  ax, ay: word;
-  tx, ty, t, tsub: word;
-  wp1, wp2: TPoint;
-  mywinkel: real;
-begin
-  for i := 0 to Pred(f.Points.Count) do
-    begin
-    p := f.Points[i];
-    if (i < (Pred(f.Points.Count))) then
-      np := f.Points[i + 1]
-    else
-      np := f.Points[0];
-    if (i > 0) then
-      pp := f.Points[Pred(i)]
-    else
-      pp := f.Points[Pred(f.Points.Count)];
-    dx := integer(np.x) - integer(p.x);
-    dy := integer(np.y) - integer(p.y);
-    if Abs(dx) < 32 then
-      tx := MyTimes[0]
-    else if Abs(dx) < 64 then
-      tx := MyTimes[1]
-    else
-      tx := MyTimes[2];
-    if Abs(dy) < 32 then
-      ty := MyTimes[0]
-    else if Abs(dy) < 64 then
-      ty := MyTimes[1]
-    else
-      ty := MyTimes[2];
-    if tx > ty then
-      t := tx
-    else
-      t := ty;
-    if ((p.bits and 1) = 1) then
-      begin // vorher nach naechster schleife
-      wp1.x := integer(p.x) - integer(pp.x);
-      wp1.y := integer(p.y) - integer(pp.y);
-      wp2.x := integer(np.x) - integer(p.x);
-      wp2.y := integer(np.y) - integer(p.y);
-      //mywinkel := Abs((wp1.x*wp2.x)+(wp1.y*wp2.y))/(Sqrt(Sqr(wp1.x)+Sqr(wp1.y))*Sqrt(Sqr(wp2.x)+Sqr(wp2.y)));
-      mywinkel := Abs(arg(wp2.x, wp2.y) - arg(wp1.x, wp1.y));
-      tsub := Round(MyTimes[3] * 2 * (mywinkel / Pi));
-      Inc(framed, tsub);
-      SetLength(mya, framed);
-      SetLength(myb, framed);
-      for j := 0 to Pred(tsub) do
-        begin
-        TPoint(mya[framed - tsub + j]).x := p.x; // vorher np
-        TPoint(mya[framed - tsub + j]).y := p.y; // vorher np
-        myb[framed - tsub + j] := (p.bits and 2) = 2;
-        end;
-      end;
-    Inc(framed, t);
-    SetLength(mya, framed);
-    SetLength(myb, framed);
-    for j := 0 to Pred(t) do
-      begin
-      ax := p.x + Round(dx * j / t);
-      ay := p.y + Round(dy * j / t);
-      TPoint(mya[framed - t + j]).x := ax;
-      TPoint(mya[framed - t + j]).y := ay;
-      myb[framed - t + j] := (p.bits and 2) = 2;
-      end;
-    end; // end framework
 end;
 procedure TFormMain.AddUsedFile(fn: string);
 var
@@ -1648,10 +1568,10 @@ begin
             MyTimeLineColors[mytlc_text] := GetValueDefault('TimelineText', clLime);
             MyTimeLineColors[mytlc_back] :=
               GetValueDefault('TimelineBackground', $00004000);
-            MyTimes[0] := GetValueDefault('Time5Degree', 30);
-            MyTimes[1] := GetValueDefault('Time10Degree', 55);
-            MyTimes[2] := GetValueDefault('Time40Degree', 66);
-            MyTimes[3] := GetValueDefault('TimeEdges', 30);
+            Time5Degree := GetValueDefault('Time5Degree', 30);
+            Time10Degree := GetValueDefault('Time10Degree', 55);
+            Time40Degree := GetValueDefault('Time40Degree', 66);
+            TimeEdges := GetValueDefault('TimeEdges', 30);
             //RegLoadToolbarPositionsEx(Self,HKEY_CURRENT_USER,'\SOFTWARE\PepiMK Software\Jlse\Panels');
           end;
         finally
@@ -1963,10 +1883,10 @@ begin
           SetValue('TimelineAreas', MyTimeLineColors[mytlc_areas]);
           SetValue('TimelineText', MyTimeLineColors[mytlc_text]);
           SetValue('TimelineBackground', MyTimeLineColors[mytlc_back]);
-          SetValue('Time5Degree', MyTimes[0]);
-          SetValue('Time10Degree', MyTimes[1]);
-          SetValue('Time40Degree', MyTimes[2]);
-          SetValue('TimeEdges', MyTimes[3]);
+          SetValue('Time5Degree', Time5Degree);
+          SetValue('Time10Degree', Time10Degree);
+          SetValue('Time40Degree', Time40Degree);
+          SetValue('TimeEdges', TimeEdges);
           CloseKey;
         end;
     //RegSaveToolbarPositionsEx(Self, HKEY_CURRENT_USER, '\SOFTWARE\PepiMK Software\Jlse\Panels');
@@ -3095,7 +3015,7 @@ begin
       end;
     end;
 end;
-
+{
 procedure TFormMain.aCreateWavefileExecute(Sender: TObject);
 var
   myf, mynf, mypf, frameDummy: TLaserFrame;
@@ -3113,318 +3033,6 @@ var
   calc, winkel, radius, pw: real;
   writtensamples: longint;
 
-  procedure Stetigkeit(fromp, top: TPoint; color: boolean; blank: boolean);
-  var
-    j: integer;
-    dx, dy: integer;
-    ax, ay: word;
-    tx, ty, t: word;
-    a: atp;
-    b: atb;
-  begin
-    dx := integer(top.x) - integer(fromp.x);
-    dy := integer(top.y) - integer(fromp.y);
-    if Abs(dx) < 32 then
-      tx := MyTimes[0]
-    else if Abs(dx) < 64 then
-      tx := MyTimes[1]
-    else
-      tx := MyTimes[2];
-    if Abs(dy) < 32 then
-      ty := MyTimes[0]
-    else if Abs(dy) < 64 then
-      ty := MyTimes[1]
-    else
-      ty := MyTimes[2];
-    if tx > ty then
-      t := tx
-    else
-      t := ty;
-    SetLength(a, t);
-    SetLength(b, t);
-    for j := 0 to Pred(t) do
-      begin
-      ax := fromp.x + Round(dx * j / t);
-      ay := fromp.y + Round(dy * j / t);
-      TPoint(a[j]).x := ax;
-      TPoint(a[j]).y := ay;
-      b[j] := blank;
-      end;
-    WritePointArray(TStream(ms), a, b, color, writtensamples, lastpoint);
-  end;
-
-  procedure DoEffect(Frame1, Frame2: TLaserFrame; forw: boolean);
-  var
-    j, i: integer;
-    subcolor: boolean;
-    subcalc: real;
-    a, b, c, v, dp: TPoint;
-  begin
-    // ### effect: x-flip,y-flip,plode
-    if (Frame1.Effect in [effect_plode, effect_xflip, effect_yflip]) then
-      begin
-      topoint.x := Frame1.RotCenter.x;
-      topoint.y := Frame1.RotCenter.y;
-      bx := -1;
-      by := -1;
-      // ### stetig: lastpoint -> topoint
-      Stetigkeit(lastpoint, topoint, ((Frame1.Bits and 1) = 1), True);
-      FormStatus.pgMorph.Max := iMorphSamples;
-      for j := 0 to Pred(iMorphSamples div 2) do
-        begin
-        for i := 0 to Pred(Length(wavedata)) do
-          begin
-          calc := (j + ((i + 1) / Length(wavedata))) / (iMorphSamples div 2);
-          if Frame1.EffectParam = 0 then
-            begin
-            if not forw then
-              calc := 1 - calc;
-            end
-          else
-            begin
-            if forw then
-              calc := sin(calc * Pi / 2)
-            else
-              calc := cos(calc * Pi / 2);
-            end;
-          if Frame1.Effect in [effect_yflip, effect_plode] then
-            bx := Round((TPoint(wavedata[i]).x - Frame1.RotCenter.x) *
-              calc + Frame1.RotCenter.x)
-          else
-            bx := TPoint(wavedata[i]).x;
-          if Frame1.Effect in [effect_xflip, effect_plode] then
-            by := Round((TPoint(wavedata[i]).y - Frame1.RotCenter.y) *
-              calc + Frame1.RotCenter.y)
-          else
-            by := TPoint(wavedata[i]).y;
-          subcolor := ((Frame2.Bits and 1) = 1);
-          WritePoints(TStream(ms), bx + 128, by + 128, subcolor, False); //##
-          Inc(writtensamples);
-          end;
-        if forw then
-          FormStatus.pgMorph.Position := j
-        else
-          FormStatus.pgMorph.Position := (FormStatus.pgMorph.Max + j);
-        FormStatus.pgTotal.Position := iTimeDone + (Frame1.Morph * j div iMorphSamples);
-        FormStatus.Repaint;
-        end;
-      end
-    else if (Frame1.Effect in [effect_dflip]) then
-      begin
-      a := Frame1.RotCenter;
-      b.x := Frame1.RotCenter.x - Frame1.AuxCenter.x;
-      b.y := Frame1.RotCenter.y - Frame1.AuxCenter.y;
-      // topoint errechnen
-      if Length(wavedata) > 0 then
-        begin
-        calc := 0;
-        if forw then
-          calc := 1 - calc;
-        c := wavedata[0];
-        subcalc := (((c.x - a.x) * b.x) + ((c.y - a.y) * b.y)) / (Sqr(b.x) + Sqr(b.y));
-        v.x := a.x + Round(subcalc * b.x);
-        v.y := a.y + Round(subcalc * b.y);
-        dp.x := v.x - c.x;
-        dp.y := v.y - c.y;
-        c.x := c.x + Round(calc * dp.x);
-        c.y := c.y + Round(calc * dp.y);
-        if c.x > 255 then
-          c.x := 255;
-        if c.x < 0 then
-          c.x := 0;
-        if c.y > 255 then
-          c.y := 255;
-        if c.y < 0 then
-          c.y := 0;
-        bx := c.x;
-        by := c.y;
-        topoint := c;
-        end;
-      // ### stetig: lastpoint -> topoint
-      Stetigkeit(lastpoint, topoint, ((Frame1.Bits and 1) = 1), True);
-      FormStatus.pgMorph.Max := iMorphSamples;
-      for j := 0 to Pred(iMorphSamples div 2) do
-        begin
-        for i := 0 to Pred(Length(wavedata)) do
-          begin
-          calc := (j + ((i + 1) / Length(wavedata))) / (iMorphSamples div 2);
-          if forw then
-            calc := 1 - calc;
-          c := wavedata[i];
-          subcalc := (((c.x - a.x) * b.x) + ((c.y - a.y) * b.y)) / (Sqr(b.x) + Sqr(b.y));
-          v.x := a.x + Round(subcalc * b.x);
-          v.y := a.y + Round(subcalc * b.y);
-          dp.x := v.x - c.x;
-          dp.y := v.y - c.y;
-          c.x := c.x + Round(calc * dp.x);
-          c.y := c.y + Round(calc * dp.y);
-          if c.x > 255 then
-            c.x := 255;
-          if c.x < 0 then
-            c.x := 0;
-          if c.y > 255 then
-            c.y := 255;
-          if c.y < 0 then
-            c.y := 0;
-          bx := c.x;
-          by := c.y;
-          subcolor := ((Frame2.Bits and 1) = 1);
-          WritePoints(TStream(ms), bx + 128, by + 128, subcolor, False); //##
-          Inc(writtensamples);
-          end;
-        if forw then
-          FormStatus.pgMorph.Position := j
-        else
-          FormStatus.pgMorph.Position := (FormStatus.pgMorph.Max + j);
-        FormStatus.pgTotal.Position := iTimeDone + (Frame1.Morph * j div iMorphSamples);
-        FormStatus.Repaint;
-        end;
-      end
-    else if (Frame1.Effect in [effect_rotate, effect_drain]) then
-      begin
-      // ### effect: rotate
-      bx := -1;
-      by := -1;
-      if Length(wavedata) > 0 then
-        begin
-        if Frame1.Effect = effect_drain then
-          begin
-          topoint.x := Frame1.RotCenter.x;
-          topoint.y := Frame1.RotCenter.y;
-          end
-        else
-          begin
-          winkel := Frame1.EffectParam * Pi / 180;
-          topoint.x := (TPoint(wavedata[0]).x - Frame1.RotCenter.x);
-          topoint.y := (TPoint(wavedata[0]).y - Frame1.RotCenter.y);
-          pw := arg(topoint.x, topoint.y) + winkel;
-          radius := Sqrt(Sqr(topoint.x) + Sqr(topoint.y));
-          topoint.x := Round(radius * Cos(pw)) + Frame1.RotCenter.x;
-          if topoint.x < 0 then
-            topoint.x := 0;
-          if topoint.x > 255 then
-            topoint.x := 255;
-          topoint.y := Round(radius * Sin(pw)) + Frame1.RotCenter.y;
-          if topoint.y < 0 then
-            topoint.y := 0;
-          if topoint.y > 255 then
-            topoint.y := 255;
-          end;
-        Stetigkeit(lastpoint, topoint, ((Frame1.Bits and 1) = 1), True);
-        end;
-      FormStatus.pgMorph.Max := iMorphSamples;
-      for j := 0 to Pred(iMorphSamples div 2) do
-        begin
-        for i := 0 to Pred(Length(wavedata)) do
-          begin
-          calc := 1 - ((j + ((i + 1) / Length(wavedata))) / (iMorphSamples div 2));
-          subcalc := (j + ((i + 1) / Length(wavedata))) / (iMorphSamples div 2);
-          if not forw then
-            calc := 1 - calc;
-          if not forw then
-            subcalc := 1 - subcalc;
-          winkel := Frame1.EffectParam * Pi * calc / 180;
-          if not forw then
-            winkel := -winkel;
-          bx := (TPoint(wavedata[i]).x - Frame1.RotCenter.x);
-          by := (TPoint(wavedata[i]).y - Frame1.RotCenter.y);
-          pw := arg(bx, by) + winkel;
-          radius := Sqrt(Sqr(bx) + Sqr(by));
-          bx := Round(radius * Cos(pw)) + Frame1.RotCenter.x;
-          by := Round(radius * Sin(pw)) + Frame1.RotCenter.y;
-          if Frame1.Effect = effect_drain then
-            begin
-            bx := Round((bx - Frame1.RotCenter.x) * subcalc) + Frame1.RotCenter.x;
-            by := Round((by - Frame1.RotCenter.y) * subcalc) + Frame1.RotCenter.y;
-            end;
-          //if bx<0 then bx := 0; if bx>255 then bx := 255;
-          //if by<0 then by := 0; if by>255 then by := 255;
-          if bx < 1 then
-            bx := 1;
-          if bx > 254 then
-            bx := 254;
-          if by < 1 then
-            by := 1;
-          if by > 254 then
-            by := 254;
-          //### sollte nicht so sein, aber was solls
-          subcolor := ((Frame2.Bits and 1) = 1);
-          WritePoints(TStream(ms), bx + 128, by + 128, subcolor, False);
-          Inc(writtensamples);
-          end;
-        if Frame1.Effect = effect_drain then
-          FormStatus.pgMorph.Position := j
-        else
-          begin
-          if forw then
-            FormStatus.pgMorph.Position := j
-          else
-            FormStatus.pgMorph.Position := (FormStatus.pgMorph.Max + j);
-          end;
-        FormStatus.pgTotal.Position := iTimeDone + (Frame1.Morph * j div iMorphSamples);
-        FormStatus.Repaint;
-        end;
-      end;
-    // ### special effect: morph last frame into this!!! ################
-    if (Frame1.Effect = effect_morph) and (framecounter > 0) and forw then
-      begin
-      mypf := FFile.frames[Pred(framecounter)];
-      // ### stetig: lastpoint -> topoint
-      topoint.x := TLaserPoint(mypf.Points[0]).x;
-      topoint.y := TLaserPoint(mypf.Points[0]).y;
-      Stetigkeit(lastpoint, topoint, ((Frame1.Bits and 1) = 1), True);
-      iMorphDuration := 0;
-      iMorphSamples := Frame1.Morph * 44100 div 1000;
-      FormStatus.pgMorph.Max := iMorphSamples;
-      dummyp := nil;
-      while (iMorphDuration < iMorphSamples) do
-        begin
-        frameDummy := TLaserFrame.Create(myf.Parent);
-          try
-          for i := 0 to Pred(mypf.Points.Count) do
-            begin
-            calc := iMorphDuration / iMorphSamples;
-            if calc > 1 then
-              calc := 1;
-            for j := 0 to Pred(myf.Points.Count) do
-              begin
-              if Frame1.links[j, i] then
-                begin
-                myp := Frame1.Points[j];
-                mypp := mypf.Points[i];
-                dummyp := TLaserPoint.Create;
-                dummyp.x := mypp.x + (Round((myp.x - mypp.x) * calc));
-                dummyp.y := mypp.y + (Round((myp.y - mypp.y) * calc));
-                dummyp.bits := mypp.bits;
-                frameDummy.Points.add(dummyp);
-                end;
-              end;
-            end;
-          FrameToArray(frameDummy, morphdata, morphblank, iMorphDuration);
-          finally
-          FreeAndNil(frameDummy);
-          end;
-        if iMorphDuration < iMorphSamples then
-          FormStatus.pgMorph.Position := iMorphDuration;
-        FormStatus.pgTotal.Position := iTimeDone + Round(Frame1.Morph * calc);
-        FormStatus.Repaint;
-        end;
-      if dummyp <> nil then
-        begin
-        lastpoint.x := dummyp.x;
-        lastpoint.y := dummyp.y;
-        end;
-      WritePointArray(TStream(ms), morphdata, morphblank,
-        ((mypf.Bits and 1) = 1), writtensamples, lastpoint);
-      end;
-    Inc(iTimeDone, Frame1.Morph div 2);
-    if bx > -1 then
-      lastpoint.x := bx;
-    if by > -1 then
-      lastpoint.y := by;
-  end;
-
-  //### Main MakeWave ##########################################################
 begin
   //mpPreview.Close;
   iFrameDuration := 0;
@@ -3435,14 +3043,13 @@ begin
   SetLength(oldblank, 0);
   SetLength(tempdata, 0);
   SetLength(tempblank, 0);
-  // ### main part ###########################################################
   iFrameDuration := 0;
   // Create Wave Header
   s := Copy(ExtractFileName(FFile.Filename), 1, Length(FFile.Filename) -
     Length(ExtractFileExt(FFile.Filename)));
   s := ExtractFilePath(FFile.Filename) + s + '.WAV';
-  if FileExistsUTF8(s) { *Converted from FileExists* } then
-    DeleteFileUTF8(s); { *Converted from DeleteFile* }
+  if FileExistsUTF8(s)  then
+    DeleteFileUTF8(s);
   fs := TFileStream.Create(s, fmCreate);
   ms := TMemoryStream.Create;
     try
@@ -3554,7 +3161,7 @@ begin
   tbPlay.Enabled := True;
   tbShowPreview.Enabled := True;
 end;
-
+}
 
 function TFormMain.CheckFrameLinks(fi: integer; var s: string): boolean;
 var
@@ -3807,7 +3414,7 @@ begin
   lbThumbs.Refresh;
   Redraw;
 end;
-
+{
 procedure TFormMain.ReCreatePreview;
 var
   mya: atp;
@@ -3845,11 +3452,11 @@ begin
     MessageDlg('Sorry, sound can''t be played.', mtError, [mbOK], 0);
     end;
 end;
-
+}
 procedure TFormMain.tbLiveClick(Sender: TObject);
 begin
   tbLive.Down := not tbLive.Down;
-  ReCreatePreview;
+  //ReCreatePreview;
 end;
 
 procedure TFormMain.miFrameFlipYClick(Sender: TObject);
@@ -3962,7 +3569,7 @@ end;
 
 procedure TFormMain.miDelaysClick(Sender: TObject);
 begin
-  FormDelays.Execute(MyTimes[0], MyTimes[1], MyTimes[2], MyTimes[3]);
+  FormDelays.Execute(Time5Degree, Time10Degree, Time40Degree, TimeEdges);
 end;
 
 procedure TFormMain.miUndoClick(Sender: TObject);

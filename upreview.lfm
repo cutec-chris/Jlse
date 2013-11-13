@@ -1,12 +1,12 @@
 object FormPreview: TFormPreview
-  Left = 605
+  Left = 918
   Height = 282
-  Top = 351
-  Width = 256
+  Top = 400
+  Width = 382
   BorderStyle = bsToolWindow
   Caption = 'Show preview'
   ClientHeight = 282
-  ClientWidth = 256
+  ClientWidth = 382
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
@@ -21,14 +21,14 @@ object FormPreview: TFormPreview
     Left = 0
     Height = 240
     Top = 42
-    Width = 256
+    Width = 382
     Align = alClient
   end
   object toolbarPreview: TToolBar
     Left = 0
     Height = 42
     Top = 0
-    Width = 256
+    Width = 382
     AutoSize = True
     ButtonHeight = 23
     ButtonWidth = 27

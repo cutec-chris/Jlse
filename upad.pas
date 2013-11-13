@@ -623,7 +623,7 @@ begin
       FormMain.Redraw;
       end;
     FormSketchpad.pad.tag := 0;
-    ReCreatePreview;
+    //ReCreatePreview;
     end;
 end;
 
@@ -738,7 +738,7 @@ begin
         FormMain.sbLock.Down :=
           (TLaserFrame(FormMain.FFile.Frames[sbFrames.Position]).Bits and 2) = 2;
         FormMain.lbThumbs.ItemIndex := sbFrames.Position;
-        FormMain.ReCreatePreview;
+        //FormMain.ReCreatePreview;
         end;
       FormMain.Redraw;
       end;

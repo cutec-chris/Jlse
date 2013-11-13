@@ -21,7 +21,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="23"/>
+      <BuildNr Value="27"/>
       <StringTable ProductVersion=""/>
     </VersionInfo>
     <BuildModes Count="1">
@@ -40,7 +40,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="14">
+    <Units Count="15">
       <Unit0>
         <Filename Value="Jlse.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -138,6 +138,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="ultfframes"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="ulasershow.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ulasershow"/>
+      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
