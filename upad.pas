@@ -94,8 +94,7 @@ var
 implementation
 
 uses
-  uMain,
-  uhelplines;
+  uMain, uhelplines,ulasershow;
 
 {$R *.lfm}
 

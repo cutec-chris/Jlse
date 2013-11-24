@@ -555,8 +555,6 @@ type
 var
   FormMain: TFormMain;
 
-function arg(x, y: integer): real;
-
 implementation
 
 uses
@@ -564,24 +562,6 @@ uses
   uILDAFrames,upopelframes,ultfframes;
 
 {$R *.lfm}
-function arg(x, y: integer): real;
-var
-  ret: real;
-begin
-  if (x > 0) and (y >= 0) then
-    ret := ArcTan(y / x)
-  else if (x < 0) then
-    ret := Pi + ArcTan(y / x)
-  else if (x > 0) and (y < 0) then
-    ret := 2 * Pi + ArcTan(y / x)
-  else if (x = 0) and (y > 0) then
-    ret := Pi / 2
-  else if (x = 0) and (y < 0) then
-    ret := 3 * Pi / 2
-  else
-    ret := 0;
-  arg := ret;
-end;
 procedure CreateWaveHeader(var ms: TStream; framesamples, datasize: longint);
 var
   l, l2: longint;
@@ -1207,47 +1187,47 @@ begin
   circlefactor := 2; //ZoomFactor;
   for i := 0 to Pred(fOld.Points.Count) do
     begin
-    pOld := fOld.Points[i];
-    if aFlipY.Checked then
-      pfrom.x := round(256 * ZoomFactor - pOld.x * ZoomFactor - FormSketchpad.sbX.Position)
-    else
-      pfrom.x := round(pOld.x * ZoomFactor - FormSketchpad.sbX.Position);
-    if aFlipX.Checked then
-      pfrom.y := round(256 * ZoomFactor - pOld.y * ZoomFactor - FormSketchpad.sbY.Position)
-    else
-      pfrom.y := round(pOld.y * ZoomFactor - FormSketchpad.sbY.Position);
-    for j := 0 to Pred(fThis.Points.Count) do
-      begin
-      if fThis.Links[j, i] then
+      pOld := fOld.Points[i];
+      if aFlipY.Checked then
+        pfrom.x := round(256 * ZoomFactor - pOld.x * ZoomFactor - FormSketchpad.sbX.Position)
+      else
+        pfrom.x := round(pOld.x * ZoomFactor - FormSketchpad.sbX.Position);
+      if aFlipX.Checked then
+        pfrom.y := round(256 * ZoomFactor - pOld.y * ZoomFactor - FormSketchpad.sbY.Position)
+      else
+        pfrom.y := round(pOld.y * ZoomFactor - FormSketchpad.sbY.Position);
+      for j := 0 to Pred(fThis.Points.Count) do
         begin
-        pThis := fThis.Points[j];
-        if aFlipY.Checked then
-          pto.x := round(256 * ZoomFactor - pThis.x * ZoomFactor - FormSketchpad.sbX.Position)
-        else
-          pto.x := round(pThis.x * ZoomFactor - FormSketchpad.sbX.Position);
-        if aFlipX.Checked then
-          pto.y := round(256 * ZoomFactor - pThis.y * ZoomFactor - FormSketchpad.sbY.Position)
-        else
-          pto.y := round(pThis.y * ZoomFactor - FormSketchpad.sbY.Position);
-        with cv do
-          begin
-          pen.color := clLink;
-          pen.Width := 1;
-          if j <> SelectedPoint then
-            pen.style := psDash;
-          dx := Abs(pfrom.x - pto.x);
-          dy := Abs(pfrom.y - pto.y);
-          if (dx < (2 * CircleSize * CircleFactor)) and
-            (dy < (2 * CircleSize * CircleFactor)) then
-            pThis.overlay := True
-          else
-            pThis.overlay := False;
-          MoveTo(pfrom.x, pfrom.y);
-          LineTo(pto.x, pto.y);
-          pen.style := psSolid;
-          end; // with cv
-        end; // if links=true
-      end; // for j
+          if (length(fThis.Links)>j) and (length(fThis.Links[j])>i) then
+            begin
+              pThis := fThis.Points[j];
+              if aFlipY.Checked then
+                pto.x := round(256 * ZoomFactor - pThis.x * ZoomFactor - FormSketchpad.sbX.Position)
+              else
+                pto.x := round(pThis.x * ZoomFactor - FormSketchpad.sbX.Position);
+              if aFlipX.Checked then
+                pto.y := round(256 * ZoomFactor - pThis.y * ZoomFactor - FormSketchpad.sbY.Position)
+              else
+                pto.y := round(pThis.y * ZoomFactor - FormSketchpad.sbY.Position);
+              with cv do
+                begin
+                  pen.color := clLink;
+                  pen.Width := 1;
+                  if j <> SelectedPoint then
+                    pen.style := psDash;
+                  dx := Abs(pfrom.x - pto.x);
+                  dy := Abs(pfrom.y - pto.y);
+                  if (dx < (2 * CircleSize * CircleFactor)) and
+                    (dy < (2 * CircleSize * CircleFactor)) then
+                    pThis.overlay := True
+                  else
+                    pThis.overlay := False;
+                  MoveTo(pfrom.x, pfrom.y);
+                  LineTo(pto.x, pto.y);
+                  pen.style := psSolid;
+                end; // with cv
+            end; // if links=true
+        end; // for j
     end; // for i
 end;
 procedure TFormMain.Redraw;

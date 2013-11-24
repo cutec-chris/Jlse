@@ -17,6 +17,9 @@ type
     Frameindex : Integer;
   end;
 
+  atp = array of TPoint;
+  atb = array of boolean;
+
   TShowData = array of TShowDataItem;
 
   { TShow }
@@ -36,14 +39,12 @@ type
 
   TShowThread = class(TThread)
   private
-    Data : TShowData;
+    f: TLaserFrame;
   public
     procedure Execute;override;
     constructor Create(aFrame : TLaserFrame;aShow : TShow;aIndex : Integer);
   end;
-
-  atp = array of TPoint;
-  atb = array of boolean;
+  function arg(x, y: integer): real;
 
 var
   Time5Degree,
@@ -362,6 +363,25 @@ begin
 end;
 }
 
+function arg(x, y: integer): real;
+var
+  ret: real;
+begin
+  if (x > 0) and (y >= 0) then
+    ret := ArcTan(y / x)
+  else if (x < 0) then
+    ret := Pi + ArcTan(y / x)
+  else if (x > 0) and (y < 0) then
+    ret := 2 * Pi + ArcTan(y / x)
+  else if (x = 0) and (y > 0) then
+    ret := Pi / 2
+  else if (x = 0) and (y < 0) then
+    ret := 3 * Pi / 2
+  else
+    ret := 0;
+  arg := ret;
+end;
+
 procedure TShowThread.Execute;
 var
   i, j: integer;
@@ -371,6 +391,9 @@ var
   tx, ty, t, tsub: word;
   wp1, wp2: TPoint;
   mywinkel: real;
+  framed : Integer = 0;
+  mya: atp;
+  myb: atb;
 begin
   for i := 0 to Pred(f.Points.Count) do
     begin
@@ -437,7 +460,7 @@ constructor TShowThread.Create(aFrame: TLaserFrame; aShow: TShow;
   aIndex: Integer);
 begin
   inherited Create(False);
-
+  f := aFrame;
 end;
 
 procedure TShow.SetFrames(AValue: TLaserFrames);
